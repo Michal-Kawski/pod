@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>120</width>
+    <height>364</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Przekształcenia</string>
+  </property>
+  <widget class="QWidget" name="centralWidget"/>
+  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>120</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuPlik">
+    <property name="title">
+     <string>Obraz</string>
+    </property>
+    <addaction name="actionOtw_rz"/>
+    <addaction name="actionZapisz_2"/>
+    <addaction name="separator"/>
+   </widget>
+   <widget class="QMenu" name="menuD_wi_k">
+    <property name="title">
+     <string>Dźwięk</string>
+    </property>
+    <addaction name="actionOtw_rz_2"/>
+    <addaction name="actionZapisz"/>
+    <addaction name="separator"/>
+   </widget>
+   <addaction name="menuPlik"/>
+   <addaction name="menuD_wi_k"/>
+  </widget>
+  <action name="actionOtw_rz">
+   <property name="text">
+    <string>Otwórz</string>
+   </property>
+  </action>
+  <action name="actionZapisz_2">
+   <property name="text">
+    <string>Zapisz</string>
+   </property>
+  </action>
+  <action name="actionOtw_rz_2">
+   <property name="text">
+    <string>Otwórz</string>
+   </property>
+  </action>
+  <action name="actionZapisz">
+   <property name="text">
+    <string>Zapisz</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
