@@ -23,7 +23,7 @@ class PhotoWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit PhotoWindow(QWidget *parent = 0, QString newUrl = "photo.jpg", uint noumber = 1);
+	explicit PhotoWindow(QString newUrl, QString title, QWidget *parent = 0);
 	~PhotoWindow();
 
 private:

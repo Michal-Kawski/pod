@@ -23,7 +23,8 @@ void MainWindow::on_actionOtw_rz_triggered()
     if(fileUrl.isEmpty())
         return;
 
-    PhotoWindow *p = new PhotoWindow(this, fileUrl, photosList.size()+1);
+	QFileInfo fi(fileUrl);
+	PhotoWindow *p = new PhotoWindow(fileUrl, fi.fileName(), this);
     connect(p, SIGNAL(eraseThis(PhotoWindow*)), this, SLOT(eraseFromList(PhotoWindow*)));
 	connect(p, SIGNAL(markThisAsCurrent(PhotoWindow*)), this, SLOT(setCurrentPhoto(PhotoWindow*)));
     p->show();

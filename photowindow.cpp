@@ -6,7 +6,7 @@
 #include <QImage>
 #include <QPixmap>
 
-PhotoWindow::PhotoWindow(QWidget *parent, QString newUrl, uint noumber) :
+PhotoWindow::PhotoWindow(QString newUrl, QString title, QWidget *parent) :
     QMainWindow(parent),
 	ui(new Ui::PhotoWindow),
 	mImage(newUrl)
@@ -15,7 +15,7 @@ PhotoWindow::PhotoWindow(QWidget *parent, QString newUrl, uint noumber) :
     this->setFocusPolicy(Qt::StrongFocus);
 
 	ui->imageLabel->setPixmap(QPixmap::fromImage(mImage));
-    this->setWindowTitle("Photo" + QString::number(noumber));
+	this->setWindowTitle(title);
 	this->resize(mImage.size());
 
     dockWidget = new DockWidget(this);
