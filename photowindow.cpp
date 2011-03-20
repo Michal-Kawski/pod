@@ -91,4 +91,5 @@ void PhotoWindow::on_actionGeneruj_histogramy_triggered()
 
     dockWidget->setMaxValues(v);
     dockWidget->setKrgb(&krgb);
+	dockWidget->update();
 }
