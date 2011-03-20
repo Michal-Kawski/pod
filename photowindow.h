@@ -1,6 +1,9 @@
 #ifndef PHOTOWINDOW_H
 #define PHOTOWINDOW_H
 
+#include "dockwidget.h"
+#include "filterinterface.h"
+
 #include <QMainWindow>
 #include <QPainter>
 #include <QApplication>
@@ -9,14 +12,12 @@
 //#include <QDockWidget>
 #include <QVector>
 
-#include "dockwidget.h"
-
-
 namespace Ui {
     class PhotoWindow;
 }
 
 class QImage;
+class QAction;
 
 class PhotoWindow : public QMainWindow
 {
@@ -30,16 +31,20 @@ private:
 	Ui::PhotoWindow *ui;
     DockWidget *dockWidget;
     QVector< QVector<int> > krgb;
+	QHash<QUuid, FilterInterface *> mFiltersHash;
+	QMenu *mFiltersMenu;
 	QImage mImage;
     void closeEvent(QCloseEvent *);
     void focusInEvent(QFocusEvent *);
     void drawHistograms(QImage* photo);
+	void appendFilter(FilterInterface *filter);
 
 signals:
     void eraseThis(PhotoWindow* p);
     void markThisAsCurrent(PhotoWindow* p);
 
 private slots:
+	void applyFilter(QAction *action);
 	void on_actionGeneruj_histogramy_triggered();
 	void on_actionSave_triggered();
 };

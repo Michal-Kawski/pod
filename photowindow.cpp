@@ -1,10 +1,14 @@
 #include "photowindow.h"
 #include "ui_photowindow.h"
+#include "negativefilter.h"
 
 #include <QDebug>
 #include <QFileDialog>
 #include <QImage>
 #include <QPixmap>
+#include <QMenu>
+
+Q_DECLARE_METATYPE(QUuid)
 
 PhotoWindow::PhotoWindow(QString newUrl, QString title, QWidget *parent) :
     QMainWindow(parent),
@@ -12,6 +16,7 @@ PhotoWindow::PhotoWindow(QString newUrl, QString title, QWidget *parent) :
 	mImage(newUrl)
 {
 	ui->setupUi(this);
+	mFiltersMenu = menuBar()->addMenu("Filters");
     this->setFocusPolicy(Qt::StrongFocus);
 
 	ui->imageLabel->setPixmap(QPixmap::fromImage(mImage));
@@ -20,6 +25,10 @@ PhotoWindow::PhotoWindow(QString newUrl, QString title, QWidget *parent) :
 
     dockWidget = new DockWidget(this);
     addDockWidget(Qt::LeftDockWidgetArea, dockWidget);
+
+	appendFilter(new NegativeFilter);
+
+	connect(mFiltersMenu, SIGNAL(triggered(QAction*)), this, SLOT(applyFilter(QAction*)));
 }
 
 PhotoWindow::~PhotoWindow()
@@ -27,6 +36,22 @@ PhotoWindow::~PhotoWindow()
     emit eraseThis(this);
 	delete dockWidget;
     delete ui;
+}
+
+void PhotoWindow::applyFilter(QAction *action)
+{
+	qDebug() << action->data().value<QUuid>();
+}
+
+void PhotoWindow::appendFilter(FilterInterface *filter)
+{
+	mFiltersHash.insert(filter->uuid(), filter);
+	QAction *menuAction = new QAction(filter->name(), this);
+	QVariant v;
+	v.setValue(filter->uuid());
+	qDebug() << filter->uuid();
+	menuAction->setData(v);
+	mFiltersMenu->addAction(menuAction);
 }
 
 void PhotoWindow::closeEvent(QCloseEvent *){

@@ -17,11 +17,15 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     photowindow.cpp \
-    dockwidget.cpp
+    dockwidget.cpp \
+    negativefilter.cpp \
+    filterinterface.cpp
 
 HEADERS  += mainwindow.h \
     photowindow.h \
-    dockwidget.h
+    dockwidget.h \
+    filterinterface.h \
+    negativefilter.h
 
 FORMS    += mainwindow.ui \
     photowindow.ui
