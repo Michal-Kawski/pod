@@ -25,15 +25,9 @@ void MainWindow::on_actionOtw_rz_triggered()
 
     PhotoWindow *p = new PhotoWindow(this, fileUrl, photosList.size()+1);
     connect(p, SIGNAL(eraseThis(PhotoWindow*)), this, SLOT(eraseFromList(PhotoWindow*)));
-    connect(p, SIGNAL(markThisAsCurrent(PhotoWindow*)), this, SLOT(setCurrentPhoto(PhotoWindow*)));
-    connect(this, SIGNAL(savePhoto(PhotoWindow*)), p, SLOT(saveToFile(PhotoWindow*)));
+	connect(p, SIGNAL(markThisAsCurrent(PhotoWindow*)), this, SLOT(setCurrentPhoto(PhotoWindow*)));
     p->show();
     photosList.append(p);
-}
-
-void MainWindow::on_actionZapisz_2_triggered()
-{
-    emit savePhoto(currentPhoto);
 }
 
 void MainWindow::on_actionZapisz_triggered()

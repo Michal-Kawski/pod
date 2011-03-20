@@ -19,9 +19,8 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_actionOtw_rz_2_triggered();
-    void on_actionZapisz_2_triggered();
-    void on_actionZapisz_triggered();
+	void on_actionOtw_rz_2_triggered();
+	void on_actionZapisz_triggered();
     void on_actionOtw_rz_triggered();
     void eraseFromList(PhotoWindow* p);
     void setCurrentPhoto(PhotoWindow* p);
@@ -30,9 +29,6 @@ private:
     Ui::MainWindow *ui;
     QList<PhotoWindow*> photosList;
     PhotoWindow* currentPhoto;
-
-signals:
-    void savePhoto(PhotoWindow* p);
 };
 
 #endif // MAINWINDOW_H

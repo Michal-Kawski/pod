@@ -38,15 +38,13 @@ private:
     void focusInEvent(QFocusEvent *);
     void drawHistograms(QImage* photo);
 
-public slots:
-    void saveToFile(PhotoWindow *p);
-
 signals:
     void eraseThis(PhotoWindow* p);
     void markThisAsCurrent(PhotoWindow* p);
 
 private slots:
-    void on_actionGeneruj_histogramy_triggered();
+	void on_actionGeneruj_histogramy_triggered();
+	void on_actionSave_triggered();
 };
 
 #endif // PHOTOWINDOW_H

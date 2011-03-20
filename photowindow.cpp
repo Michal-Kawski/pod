@@ -34,11 +34,6 @@ void PhotoWindow::closeEvent(QCloseEvent *){
     delete this;
 }
 
-void PhotoWindow::saveToFile(PhotoWindow *p){
-    QString url = QFileDialog::getSaveFileName(this, tr("Save Image"), "", tr("Image Files(*.png, *.jpg, *.bmp"));
-    photo->save(url, "JPG");
-}
-
 void PhotoWindow::focusInEvent(QFocusEvent *){
     emit markThisAsCurrent(this);
 }
@@ -92,4 +87,10 @@ void PhotoWindow::on_actionGeneruj_histogramy_triggered()
     dockWidget->setMaxValues(v);
     dockWidget->setKrgb(&krgb);
 	dockWidget->update();
+}
+
+void PhotoWindow::on_actionSave_triggered()
+{
+	QString url = QFileDialog::getSaveFileName(this, tr("Save Image"), "", tr("png image (*.png)"));
+	mImage.save(url);
 }

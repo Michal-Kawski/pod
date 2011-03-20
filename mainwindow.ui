@@ -27,7 +27,7 @@
      <x>0</x>
      <y>0</y>
      <width>120</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuPlik">
@@ -35,7 +35,6 @@
      <string>Obraz</string>
     </property>
     <addaction name="actionOtw_rz"/>
-    <addaction name="actionZapisz_2"/>
     <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuD_wi_k">

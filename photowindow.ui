@@ -39,6 +39,7 @@
     </property>
     <addaction name="actionGeneruj_histogramy"/>
     <addaction name="separator"/>
+    <addaction name="actionSave"/>
    </widget>
    <addaction name="menuPlik"/>
   </widget>
@@ -46,6 +47,11 @@
   <action name="actionGeneruj_histogramy">
    <property name="text">
     <string>Generuj histogramy</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="text">
+    <string>Zapisz</string>
    </property>
   </action>
  </widget>
