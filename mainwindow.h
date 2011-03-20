@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QList>
 
-#include "photo.h"
+#include "photowindow.h"
 
 namespace Ui {
     class MainWindow;
@@ -23,16 +23,16 @@ private slots:
     void on_actionZapisz_2_triggered();
     void on_actionZapisz_triggered();
     void on_actionOtw_rz_triggered();
-    void eraseFromList(Photo* p);
-    void setCurrentPhoto(Photo* p);
+    void eraseFromList(PhotoWindow* p);
+    void setCurrentPhoto(PhotoWindow* p);
 
 private:
     Ui::MainWindow *ui;
-    QList<Photo*> photosList;
-    Photo* currentPhoto;
+    QList<PhotoWindow*> photosList;
+    PhotoWindow* currentPhoto;
 
 signals:
-    void savePhoto(Photo* p);
+    void savePhoto(PhotoWindow* p);
 };
 
 #endif // MAINWINDOW_H

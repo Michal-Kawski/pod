@@ -1,10 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include "photo.h"
-
 #include <QDebug>
 #include <QFileDialog>
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -24,10 +23,10 @@ void MainWindow::on_actionOtw_rz_triggered()
     if(fileUrl.isEmpty())
         return;
 
-    Photo *p = new Photo(this, fileUrl, photosList.size()+1);
-    connect(p, SIGNAL(eraseThis(Photo*)), this, SLOT(eraseFromList(Photo*)));
-    connect(p, SIGNAL(markThisAsCurrent(Photo*)), this, SLOT(setCurrentPhoto(Photo*)));
-    connect(this, SIGNAL(savePhoto(Photo*)), p, SLOT(saveToFile(Photo*)));
+    PhotoWindow *p = new PhotoWindow(this, fileUrl, photosList.size()+1);
+    connect(p, SIGNAL(eraseThis(PhotoWindow*)), this, SLOT(eraseFromList(PhotoWindow*)));
+    connect(p, SIGNAL(markThisAsCurrent(PhotoWindow*)), this, SLOT(setCurrentPhoto(PhotoWindow*)));
+    connect(this, SIGNAL(savePhoto(PhotoWindow*)), p, SLOT(saveToFile(PhotoWindow*)));
     p->show();
     photosList.append(p);
 }
@@ -47,11 +46,11 @@ void MainWindow::on_actionOtw_rz_2_triggered()
     qDebug()<<"otwórz dźwięk";
 }
 
-void MainWindow::setCurrentPhoto(Photo *p){
+void MainWindow::setCurrentPhoto(PhotoWindow *p){
     currentPhoto = p;
 }
 
-void MainWindow::eraseFromList(Photo *p){
+void MainWindow::eraseFromList(PhotoWindow *p){
     for(int i=0; i<photosList.size(); i++){
         if(photosList.at(i) == p){
             photosList.removeAt(i);

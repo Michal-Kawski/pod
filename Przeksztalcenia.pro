@@ -16,10 +16,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    photo.cpp
+    photowindow.cpp \
+    dockwidget.cpp
 
 HEADERS  += mainwindow.h \
-    photo.h
+    photowindow.h \
+    dockwidget.h
 
 FORMS    += mainwindow.ui \
-    photo.ui
+    photowindow.ui
