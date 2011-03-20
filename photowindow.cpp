@@ -25,8 +25,7 @@ PhotoWindow::PhotoWindow(QWidget *parent, QString newUrl, uint noumber) :
 PhotoWindow::~PhotoWindow()
 {
     emit eraseThis(this);
-    delete dockWidget;
-	delete painter;
+	delete dockWidget;
     delete ui;
 }
 

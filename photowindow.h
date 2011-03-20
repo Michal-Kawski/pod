@@ -27,10 +27,7 @@ public:
 	~PhotoWindow();
 
 private:
-    Ui::PhotoWindow *ui;
-    QString url;
-    QImage* photo;
-    QPainter* painter;
+	Ui::PhotoWindow *ui;
     DockWidget *dockWidget;
     QVector< QVector<int> > krgb;
 	QImage mImage;
