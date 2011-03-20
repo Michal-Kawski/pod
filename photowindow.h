@@ -16,14 +16,15 @@ namespace Ui {
     class PhotoWindow;
 }
 
+class QImage;
+
 class PhotoWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
     explicit PhotoWindow(QWidget *parent = 0, QString newUrl = "photo.jpg", uint noumber = 1);
-    ~PhotoWindow();
-    virtual void paintEvent(QPaintEvent *);
+	~PhotoWindow();
 
 private:
     Ui::PhotoWindow *ui;
@@ -32,6 +33,7 @@ private:
     QPainter* painter;
     DockWidget *dockWidget;
     QVector< QVector<int> > krgb;
+	QImage mImage;
     void closeEvent(QCloseEvent *);
     void focusInEvent(QFocusEvent *);
     void drawHistograms(QImage* photo);

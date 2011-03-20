@@ -3,18 +3,20 @@
 
 #include <QDebug>
 #include <QFileDialog>
-
+#include <QImage>
+#include <QPixmap>
 
 PhotoWindow::PhotoWindow(QWidget *parent, QString newUrl, uint noumber) :
     QMainWindow(parent),
-    ui(new Ui::PhotoWindow)
+	ui(new Ui::PhotoWindow),
+	mImage(newUrl)
 {
+	ui->setupUi(this);
     this->setFocusPolicy(Qt::StrongFocus);
 
-    url = newUrl;
-
-    ui->setupUi(this);
+	ui->imageLabel->setPixmap(QPixmap::fromImage(mImage));
     this->setWindowTitle("Photo" + QString::number(noumber));
+	this->resize(mImage.size());
 
     dockWidget = new DockWidget(this);
     addDockWidget(Qt::LeftDockWidgetArea, dockWidget);
@@ -24,28 +26,8 @@ PhotoWindow::~PhotoWindow()
 {
     emit eraseThis(this);
     delete dockWidget;
-    delete painter;
-    delete photo;
+	delete painter;
     delete ui;
-}
-
-void PhotoWindow::paintEvent(QPaintEvent *){
-    photo = new QImage(this->url);
-    painter = new QPainter(this);
-    int maxWidth = QApplication::desktop()->width() - 200;
-    int maxHeight = QApplication::desktop()->height();
-
-    if(photo->width() > maxWidth){
-        *photo = photo->scaledToWidth(maxWidth);
-    }
-
-    if(photo->height() > maxHeight){
-        *photo = photo->scaledToHeight(maxHeight);
-    }
-
-    this->resize(photo->width(), photo->height());
-
-    painter->drawImage(0.0, 0.0, *photo);
 }
 
 void PhotoWindow::closeEvent(QCloseEvent *){
@@ -79,9 +61,9 @@ void PhotoWindow::on_actionGeneruj_histogramy_triggered()
     uint maxG = 0;
     uint maxB = 0;
 
-    for(int i=0; i<photo->width(); i++){
-        for(int j=0; j<photo->height(); j++){
-            color = photo->pixel(i, j);
+	for(int i=0; i < mImage.width(); i++){
+		for(int j=0; j < mImage.height(); j++){
+			color = mImage.pixel(i, j);
 
             krgb[0][color.black()]++;
             if(krgb[0][color.black()] > (int)maxK)
