@@ -4,6 +4,8 @@
 #include <QDockWidget>
 #include <QVector>
 
+#include "slider.h"
+
 
 class DockWidget : public QDockWidget
 {
@@ -19,6 +21,7 @@ private:
     QVector< QVector<int> > *krgb;
     QVector<int> maxValues;
     void paintEvent(QPaintEvent *event);
+    QVector<Slider*> sliders;
 
 signals:
 

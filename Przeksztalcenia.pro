@@ -28,7 +28,8 @@ SOURCES += main.cpp\
     brightnessfilter.cpp \
     grayscalefilter.cpp \
     averagefilter.cpp \
-    contrastfilter.cpp
+    contrastfilter.cpp \
+    slider.cpp
 
 HEADERS  += mainwindow.h \
     photowindow.h \
@@ -43,7 +44,8 @@ HEADERS  += mainwindow.h \
     brightnessfilter.h \
     grayscalefilter.h \
     averagefilter.h \
-    contrastfilter.h
+    contrastfilter.h \
+    slider.h
 
 FORMS    += mainwindow.ui \
     photowindow.ui
