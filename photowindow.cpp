@@ -40,7 +40,12 @@ PhotoWindow::~PhotoWindow()
 
 void PhotoWindow::applyFilter(QAction *action)
 {
-	qDebug() << action->data().value<QUuid>();
+	qDebug() << "applying filter" << action->data().value<QUuid>();
+	FilterInterface *filter = mFiltersHash[action->data().value<QUuid>()];
+	qDebug() << "filter name:" << filter->name();
+	filter->setup(mImage);
+	mImage = filter->apply();
+	ui->imageLabel->setPixmap(QPixmap::fromImage(mImage));
 }
 
 void PhotoWindow::appendFilter(FilterInterface *filter)
