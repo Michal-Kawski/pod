@@ -49,8 +49,8 @@ PhotoWindow::PhotoWindow(QImage img, QString title, QWidget *parent) :
 	dockWidget = new DockWidget(this);
 	addDockWidget(Qt::LeftDockWidgetArea, dockWidget);
 
-	appendFilter(new NegativeFilter);
-	appendFilter(new ConvolutionFilter);
+	appendFilter(new NegativeFilter(this));
+	appendFilter(new ConvolutionFilter(this));
 
 	connect(mFiltersMenu, SIGNAL(triggered(QAction*)), this, SLOT(applyFilter(QAction*)));
 }
