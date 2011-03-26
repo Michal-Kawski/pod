@@ -33,6 +33,28 @@ PhotoWindow::PhotoWindow(QString newUrl, QString title, QWidget *parent) :
 	connect(mFiltersMenu, SIGNAL(triggered(QAction*)), this, SLOT(applyFilter(QAction*)));
 }
 
+PhotoWindow::PhotoWindow(QImage img, QString title, QWidget *parent) :
+	QMainWindow(parent),
+	ui(new Ui::PhotoWindow),
+	mImage(img)
+{
+	ui->setupUi(this);
+	mFiltersMenu = menuBar()->addMenu("Filters");
+	this->setFocusPolicy(Qt::StrongFocus);
+
+	ui->imageLabel->setPixmap(QPixmap::fromImage(mImage));
+	this->setWindowTitle(title);
+	this->resize(mImage.size());
+
+	dockWidget = new DockWidget(this);
+	addDockWidget(Qt::LeftDockWidgetArea, dockWidget);
+
+	appendFilter(new NegativeFilter);
+	appendFilter(new ConvolutionFilter);
+
+	connect(mFiltersMenu, SIGNAL(triggered(QAction*)), this, SLOT(applyFilter(QAction*)));
+}
+
 PhotoWindow::~PhotoWindow()
 {
     emit eraseThis(this);
@@ -46,8 +68,12 @@ void PhotoWindow::applyFilter(QAction *action)
 	FilterInterface *filter = mFiltersHash[action->data().value<QUuid>()];
 	qDebug() << "filter name:" << filter->name();
 	if (filter->setup(mImage)) {
-		mImage = filter->apply();
-		ui->imageLabel->setPixmap(QPixmap::fromImage(mImage));
+		QImage img = filter->apply();
+		// new PhotoWindow should always be a child of MainWindow
+		PhotoWindow *pw = new PhotoWindow(img,
+										  windowTitle() + ", " + filter->name(),
+										  this->parentWidget());
+		pw->show();
 	}
 }
 
