@@ -1,5 +1,6 @@
 #include "convolutionfilter.h"
 #include "kernelvaluesdialog.h"
+#include "sizedialog.h"
 
 #include <QDialog>
 #include <QLayout>
@@ -18,24 +19,13 @@ bool ConvolutionFilter::setup(const QImage &img)
 {
 	// get kernel size
 	{
-		QDialog sizeDialog;
-		QVBoxLayout vbl(&sizeDialog);
-		QWidget maskDataWidget((QWidget *)(&sizeDialog));
-		QHBoxLayout mdl(&maskDataWidget);
-		sizeDialog.layout()->addWidget(&maskDataWidget);
-		QSpinBox widthSpinBox, heightSpinBox;
-		mdl.addWidget(&widthSpinBox);
-		mdl.addWidget(&heightSpinBox);
-		QDialogButtonBox dbb(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-		sizeDialog.layout()->addWidget(&dbb);
-
-		connect(&dbb, SIGNAL(accepted()), &sizeDialog, SLOT(accept()));
-		connect(&dbb, SIGNAL(rejected()), &sizeDialog, SLOT(reject()));
+		SizeDialog sizeDialog;
 		if (sizeDialog.exec() != QDialog::Accepted) {
 			return false;
 		} else {
-			mKernelWidth = widthSpinBox.value();
-			mKernelHeight = heightSpinBox.value();
+			QSize kernelSize = sizeDialog.kernelSize();
+			mKernelWidth = kernelSize.width();
+			mKernelHeight = kernelSize.height();
 		}
 	}
 	// get kernel values
