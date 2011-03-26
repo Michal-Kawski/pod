@@ -39,6 +39,7 @@ private:
     void focusInEvent(QFocusEvent *);
     void drawHistograms(QImage* photo);
 	void appendFilter(FilterInterface *filter);
+	void constructorInternals(const QString &title);
 
 signals:
     void eraseThis(PhotoWindow* p);
