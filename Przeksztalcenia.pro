@@ -19,13 +19,17 @@ SOURCES += main.cpp\
     photowindow.cpp \
     dockwidget.cpp \
     negativefilter.cpp \
-    filterinterface.cpp
+    filterinterface.cpp \
+    convolutionfilter.cpp \
+    kernelvaluesdialog.cpp
 
 HEADERS  += mainwindow.h \
     photowindow.h \
     dockwidget.h \
     filterinterface.h \
-    negativefilter.h
+    negativefilter.h \
+    convolutionfilter.h \
+    kernelvaluesdialog.h
 
 FORMS    += mainwindow.ui \
     photowindow.ui

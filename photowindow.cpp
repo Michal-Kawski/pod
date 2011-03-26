@@ -1,6 +1,7 @@
 #include "photowindow.h"
 #include "ui_photowindow.h"
 #include "negativefilter.h"
+#include "convolutionfilter.h"
 
 #include <QDebug>
 #include <QFileDialog>
@@ -27,6 +28,7 @@ PhotoWindow::PhotoWindow(QString newUrl, QString title, QWidget *parent) :
     addDockWidget(Qt::LeftDockWidgetArea, dockWidget);
 
 	appendFilter(new NegativeFilter);
+	appendFilter(new ConvolutionFilter);
 
 	connect(mFiltersMenu, SIGNAL(triggered(QAction*)), this, SLOT(applyFilter(QAction*)));
 }
