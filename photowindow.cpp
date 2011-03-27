@@ -6,6 +6,7 @@
 #include "slidingvaluedialog.h"
 #include "brightnessfilter.h"
 #include "grayscalefilter.h"
+#include "averagefilter.h"
 
 #include <QDebug>
 #include <QFileDialog>
@@ -54,6 +55,7 @@ void PhotoWindow::constructorInternals(const QString &title)
 	appendFilter(new MedianFilter(this));
 	appendFilter(new BrightnessFilter(this));
 	appendFilter(new GrayScaleFilter(this));
+	appendFilter(new AverageFilter(this));
 
 	connect(mFiltersMenu, SIGNAL(triggered(QAction*)), this, SLOT(applyFilter(QAction*)));
 }
