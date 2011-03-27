@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     convolutionfilter.cpp \
 	kernelvaluesdialog.cpp \
 	medianfilter.cpp \
-    sizedialog.cpp
+    sizedialog.cpp \
+    slidingvaluedialog.cpp
 
 HEADERS  += mainwindow.h \
     photowindow.h \
@@ -33,7 +34,8 @@ HEADERS  += mainwindow.h \
     convolutionfilter.h \
 	kernelvaluesdialog.h \
 	medianfilter.h \
-    sizedialog.h
+    sizedialog.h \
+    slidingvaluedialog.h
 
 FORMS    += mainwindow.ui \
     photowindow.ui
