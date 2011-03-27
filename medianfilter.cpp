@@ -57,20 +57,15 @@ QImage MedianFilter::apply()
 			qSort(green);
 			qSort(blue);
 			QColor median;
-			if (red.count() % 2 == 1) {
-				median.setRed(red.at(red.count() / 2));
+			int count = red.count();
+			if (count % 2 == 1) {
+				median.setRed(red.at(count / 2));
+				median.setGreen(green.at(count / 2));
+				median.setBlue(blue.at(count / 2));
 			} else {
-				median.setRed((red.at(red.count() / 2 - 1) + red.at(red.count() / 2)) / 2);
-			}
-			if (green.count() % 2 == 1) {
-				median.setGreen(green.at(green.count() / 2));
-			} else {
-				median.setGreen((green.at(green.count() / 2 - 1) + green.at(green.count() / 2)) / 2);
-			}
-			if (blue.count() % 2 == 1) {
-				median.setBlue(blue.at(blue.count() / 2));
-			} else {
-				median.setBlue((blue.at(blue.count() / 2 - 1) + blue.at(blue.count() / 2)) / 2);
+				median.setRed((red.at(count / 2 - 1) + red.at(count / 2)) / 2);
+				median.setGreen((green.at(count / 2 - 1) + green.at(count / 2)) / 2);
+				median.setBlue((blue.at(count / 2 - 1) + blue.at(count / 2)) / 2);
 			}
 			result.setPixel(x, y, median.rgb());
 		}
