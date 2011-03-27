@@ -10,7 +10,9 @@ class SlidingValueDialog : public QDialog
 {
 	Q_OBJECT
 public:
-	explicit SlidingValueDialog(QString text, int min = 0, int max = 255, QWidget *parent = 0);
+	explicit SlidingValueDialog(QString text, int defValue = 127, int min = 0,
+								int max = 255, QWidget *parent = 0);
+	int value() const;
 
 signals:
 

@@ -5,7 +5,8 @@
 #include <QSlider>
 #include <QLabel>
 
-SlidingValueDialog::SlidingValueDialog(QString text, int min, int max, QWidget *parent) :
+SlidingValueDialog::SlidingValueDialog(QString text, int defValue, int min,
+									   int max, QWidget *parent) :
 	QDialog(parent),
 	mText(text)
 {
@@ -15,6 +16,7 @@ SlidingValueDialog::SlidingValueDialog(QString text, int min, int max, QWidget *
 	mSlider->setMinimum(min);
 	mSlider->setMaximum(max);
 	connect(mSlider, SIGNAL(valueChanged(int)), this, SLOT(updateText(int)));
+	mSlider->setValue(defValue);
 	QDialogButtonBox *dbb = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, this);
 	connect(dbb, SIGNAL(accepted()), this, SLOT(accept()));
 	connect(dbb, SIGNAL(rejected()), this, SLOT(reject()));
@@ -26,4 +28,9 @@ SlidingValueDialog::SlidingValueDialog(QString text, int min, int max, QWidget *
 void SlidingValueDialog::updateText(int value)
 {
 	mLabel->setText(mText + " " + QString::number(value));
+}
+
+int SlidingValueDialog::value() const
+{
+	return mSlider->value();
 }
