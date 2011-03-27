@@ -27,7 +27,8 @@ SOURCES += main.cpp\
     slidingvaluedialog.cpp \
     brightnessfilter.cpp \
     grayscalefilter.cpp \
-    averagefilter.cpp
+    averagefilter.cpp \
+    contrastfilter.cpp
 
 HEADERS  += mainwindow.h \
     photowindow.h \
@@ -41,7 +42,8 @@ HEADERS  += mainwindow.h \
     slidingvaluedialog.h \
     brightnessfilter.h \
     grayscalefilter.h \
-    averagefilter.h
+    averagefilter.h \
+    contrastfilter.h
 
 FORMS    += mainwindow.ui \
     photowindow.ui
