@@ -17,6 +17,7 @@ SlidingValueDialog::SlidingValueDialog(QString text, int defValue, int min,
 	mSlider->setMaximum(max);
 	connect(mSlider, SIGNAL(valueChanged(int)), this, SLOT(updateText(int)));
 	mSlider->setValue(defValue);
+	updateText(mSlider->value());
 	QDialogButtonBox *dbb = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, this);
 	connect(dbb, SIGNAL(accepted()), this, SLOT(accept()));
 	connect(dbb, SIGNAL(rejected()), this, SLOT(reject()));
