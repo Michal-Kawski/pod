@@ -40,6 +40,8 @@ void PhotoWindow::constructorInternals(const QString &title)
 
 	ui->imageLabel->setPixmap(QPixmap::fromImage(mImage));
 	this->setWindowTitle(title);
+	QSize size = QApplication::desktop()->screenGeometry().size();
+	size = mImage.size().boundedTo(size);
 	this->resize(mImage.size());
 
 	//addDockWidget(Qt::LeftDockWidgetArea, dockWidget);
