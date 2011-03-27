@@ -8,6 +8,7 @@
 #include "grayscalefilter.h"
 #include "averagefilter.h"
 #include "contrastfilter.h"
+#include "rosenfeldfilter.h"
 
 #include <QDebug>
 #include <QFileDialog>
@@ -58,6 +59,7 @@ void PhotoWindow::constructorInternals(const QString &title)
 	appendFilter(new GrayScaleFilter(this));
 	appendFilter(new AverageFilter(this));
 	appendFilter(new ContrastFilter(this));
+	appendFilter(new RosenfeldFilter(this));
 
 	connect(mFiltersMenu, SIGNAL(triggered(QAction*)), this, SLOT(applyFilter(QAction*)));
 }
