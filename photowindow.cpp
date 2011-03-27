@@ -2,6 +2,7 @@
 #include "ui_photowindow.h"
 #include "negativefilter.h"
 #include "convolutionfilter.h"
+#include "medianfilter.h"
 
 #include <QDebug>
 #include <QFileDialog>
@@ -42,6 +43,7 @@ void PhotoWindow::constructorInternals(const QString &title)
 
 	appendFilter(new NegativeFilter(this));
 	appendFilter(new ConvolutionFilter(this));
+	appendFilter(new MedianFilter(this));
 
 	connect(mFiltersMenu, SIGNAL(triggered(QAction*)), this, SLOT(applyFilter(QAction*)));
 }
