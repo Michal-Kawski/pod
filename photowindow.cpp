@@ -31,6 +31,10 @@ PhotoWindow::PhotoWindow(QImage img, QString title, QWidget *parent) :
 void PhotoWindow::constructorInternals(const QString &title)
 {
 	ui->setupUi(this);
+
+	dockWidget = new DockWidget(this);
+	menuBar()->addAction(dockWidget->toggleViewAction());
+
 	mFiltersMenu = menuBar()->addMenu("Filters");
 	this->setFocusPolicy(Qt::StrongFocus);
 
@@ -38,8 +42,7 @@ void PhotoWindow::constructorInternals(const QString &title)
 	this->setWindowTitle(title);
 	this->resize(mImage.size());
 
-	dockWidget = new DockWidget(this);
-	addDockWidget(Qt::LeftDockWidgetArea, dockWidget);
+	//addDockWidget(Qt::LeftDockWidgetArea, dockWidget);
 
 	appendFilter(new NegativeFilter(this));
 	appendFilter(new ConvolutionFilter(this));
