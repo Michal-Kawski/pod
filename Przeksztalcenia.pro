@@ -24,7 +24,8 @@ SOURCES += main.cpp\
 	kernelvaluesdialog.cpp \
 	medianfilter.cpp \
     sizedialog.cpp \
-    slidingvaluedialog.cpp
+    slidingvaluedialog.cpp \
+    brightnessfilter.cpp
 
 HEADERS  += mainwindow.h \
     photowindow.h \
@@ -35,7 +36,8 @@ HEADERS  += mainwindow.h \
 	kernelvaluesdialog.h \
 	medianfilter.h \
     sizedialog.h \
-    slidingvaluedialog.h
+    slidingvaluedialog.h \
+    brightnessfilter.h
 
 FORMS    += mainwindow.ui \
     photowindow.ui

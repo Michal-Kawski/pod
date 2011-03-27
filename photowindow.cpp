@@ -3,6 +3,8 @@
 #include "negativefilter.h"
 #include "convolutionfilter.h"
 #include "medianfilter.h"
+#include "slidingvaluedialog.h"
+#include "brightnessfilter.h"
 
 #include <QDebug>
 #include <QFileDialog>
@@ -49,6 +51,7 @@ void PhotoWindow::constructorInternals(const QString &title)
 	appendFilter(new NegativeFilter(this));
 	appendFilter(new ConvolutionFilter(this));
 	appendFilter(new MedianFilter(this));
+	appendFilter(new BrightnessFilter(this));
 
 	connect(mFiltersMenu, SIGNAL(triggered(QAction*)), this, SLOT(applyFilter(QAction*)));
 }
