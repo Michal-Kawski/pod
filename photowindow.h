@@ -50,7 +50,8 @@ private slots:
 	void applyFilter(QAction *action);
 	void on_actionGeneruj_histogramy_triggered();
 	void on_actionSave_triggered();
-        void changeHistogram(int color, int gMin, float alfa, QVector<int> histValues);
+	void changeHistogram(int color, int gMin, float alfa, QVector<int> histValues);
+	void qualityCheck();
 };
 
 #endif // PHOTOWINDOW_H

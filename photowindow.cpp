@@ -9,14 +9,15 @@
 #include "averagefilter.h"
 #include "contrastfilter.h"
 #include "rosenfeldfilter.h"
+#include "qualitychecker.h"
 
 #include <QDebug>
 #include <QFileDialog>
 #include <QImage>
 #include <QPixmap>
 #include <QMenu>
-#include <math.h>
-
+#include <cmath>
+#include <QAction>
 
 Q_DECLARE_METATYPE(QUuid)
 
@@ -38,6 +39,7 @@ PhotoWindow::PhotoWindow(QImage img, QString title, QWidget *parent) :
 
 void PhotoWindow::constructorInternals(const QString &title)
 {
+	qDebug() << "image format:" << mImage.format();
 	ui->setupUi(this);
 
 	dockWidget = new DockWidget(this);
@@ -52,6 +54,10 @@ void PhotoWindow::constructorInternals(const QString &title)
 	QSize size = QApplication::desktop()->screenGeometry().size();
 	size = mImage.size().boundedTo(size);
 	this->resize(mImage.size());
+
+	QAction *checkQuality = new QAction("check quality", this);
+	connect(checkQuality, SIGNAL(triggered()), this, SLOT(qualityCheck()));
+	menuBar()->addAction(checkQuality);
 
 	//addDockWidget(Qt::LeftDockWidgetArea, dockWidget);
 
@@ -225,4 +231,18 @@ int PhotoWindow::calculateRaleigh(int position, int gMin, float alfa, QVector<in
     if(res < 0)
         res = 0;
     return res;
+}
+
+void PhotoWindow::qualityCheck()
+{
+	QString fileUrl = QFileDialog::getOpenFileName(this, tr("Wybierz plik do otwarcia: "), "photo.jpg");
+	if (fileUrl.isEmpty()) {
+		return;
+	}
+
+	QImage ref(fileUrl);
+	QualityChecker q;
+	if (q(ref, mImage)) {
+		qDebug() << "mse:" << q.mse << ", snr:" << q.snr;
+	}
 }

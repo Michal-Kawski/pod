@@ -29,7 +29,8 @@ SOURCES += main.cpp\
     grayscalefilter.cpp \
     averagefilter.cpp \
     contrastfilter.cpp \
-    rosenfeldfilter.cpp
+    rosenfeldfilter.cpp \
+    qualitychecker.cpp
 
 HEADERS  += mainwindow.h \
     photowindow.h \
@@ -45,7 +46,8 @@ HEADERS  += mainwindow.h \
     grayscalefilter.h \
     averagefilter.h \
     contrastfilter.h \
-    rosenfeldfilter.h
+    rosenfeldfilter.h \
+    qualitychecker.h
 
 FORMS    += mainwindow.ui \
     photowindow.ui
