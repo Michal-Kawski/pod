@@ -20,6 +20,7 @@ SOURCES += main.cpp\
     dockwidget.cpp \
     negativefilter.cpp \
     filterinterface.cpp \
+    slider.cpp \
     convolutionfilter.cpp \
 	kernelvaluesdialog.cpp \
 	medianfilter.cpp \
@@ -29,14 +30,14 @@ SOURCES += main.cpp\
     grayscalefilter.cpp \
     averagefilter.cpp \
     contrastfilter.cpp \
-	slider.cpp \
-	rosenfeldfilter.cpp
+    rosenfeldfilter.cpp
 
 HEADERS  += mainwindow.h \
     photowindow.h \
     dockwidget.h \
     filterinterface.h \
-	negativefilter.h \
+    negativefilter.h \
+    slider.h \
     convolutionfilter.h \
 	kernelvaluesdialog.h \
 	medianfilter.h \
@@ -46,8 +47,7 @@ HEADERS  += mainwindow.h \
     grayscalefilter.h \
     averagefilter.h \
     contrastfilter.h \
-	slider.h \
-	rosenfeldfilter.h
+    rosenfeldfilter.h
 
 FORMS    += mainwindow.ui \
     photowindow.ui

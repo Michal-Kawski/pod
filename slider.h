@@ -11,6 +11,7 @@ public:
     void mouseReleaseEvent(QMouseEvent *ev);
 
 signals:
+    void sliderValueChanged(Slider *s);
 
 public slots:
 

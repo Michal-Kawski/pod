@@ -9,5 +9,5 @@ Slider::Slider(QWidget *parent) :
 }
 
 void Slider::mouseReleaseEvent(QMouseEvent *ev){
-    qDebug()<<"value changed: "<<QString::number(this->value());
+    emit sliderValueChanged(this);
 }

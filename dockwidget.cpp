@@ -20,6 +20,21 @@ DockWidget::DockWidget(QWidget *parent) :
         sliders.at(i)->setMaximum(256);
         sliders.at(i)->setMinimum(0);
         sliders.at(i)->setOrientation(Qt::Horizontal);
+        sliders.at(i)->setEnabled(false);
+        connect(sliders.at(i), SIGNAL(sliderValueChanged(Slider*)), this, SLOT(sliderValueChanged(Slider*)));
+
+        gLabels.append(new QLabel("g_min:", this));
+        gLabels.at(i)->setGeometry(300, i*160 + 90, 30, 20);
+
+        gLinesEdit.append(new QLineEdit("0", this));
+        gLinesEdit.at(i)->setGeometry(332, i*160 + 90, 40, 20);
+        gLinesEdit.at(i)->setReadOnly(true);
+
+        aLabels.append(new QLabel("alfa:", this));
+        aLabels.at(i)->setGeometry(385, i*160 + 90, 40, 20);
+
+        aLinesEdit.append(new QLineEdit("0", this));
+        aLinesEdit.at(i)->setGeometry(410, i*160 + 90, 40, 20);
     }
 
     setFloating(true);
@@ -29,23 +44,28 @@ DockWidget::DockWidget(QWidget *parent) :
 DockWidget::~DockWidget(){
     for(int i=0; i<sliders.size(); i++)
         delete sliders.at(i);
+    for(int i=0; i<gLabels.size(); i++)
+        delete gLabels.at(i);
+    for(int i=0; i<gLinesEdit.size(); i++)
+        delete gLinesEdit.at(i);
+    for(int i=0; i<aLabels.size(); i++)
+        delete aLabels.at(i);
+    for(int i=0; i<aLinesEdit.size(); i++)
+        delete aLinesEdit.at(i);
     delete krgb;
-}
-
-void DockWidget::dockWidgetRepaint(){
-    repaint();
 }
 
 void DockWidget::paintEvent(QPaintEvent *event){
     if(krgb->size() > 1){
+        for(int i=0; i<sliders.size(); i++){
+            sliders.at(i)->setEnabled(true);
+        }
+
         QVector<double> scales(4);
-        qDebug()<<maxValues;
         scales[0] = 153.00 / (double)maxValues[0];
         scales[1] = 153.00 / (double)maxValues[1];
         scales[2] = 153.00 / (double)maxValues[2];
         scales[3] = 153.00 / (double)maxValues[3];
-
-        qDebug()<<"scales: "<<scales;
 
         QPainter painter(this);
         double result;
@@ -76,4 +96,29 @@ void DockWidget::setKrgb(QVector< QVector<int> > *vector){
 
 void DockWidget::setMaxValues(QVector<int> max){
     maxValues = QVector<int> (max);
+}
+
+void DockWidget::sliderValueChanged(Slider *s){
+    for(int i=0; i<sliders.size(); i++){
+        if(sliders.at(i) == s){
+            switch(i){
+            case 0:
+                gLinesEdit.at(i)->setText(QString::number(sliders.at(i)->value()));
+                emit changeHistogram(0, sliders.at(i)->value(), aLinesEdit.at(i)->text().toFloat(), krgb->at(0));
+                break;
+            case 1:
+                gLinesEdit.at(i)->setText(QString::number(sliders.at(i)->value()));
+                emit changeHistogram(1, sliders.at(i)->value(), aLinesEdit.at(i)->text().toInt(), krgb->at(1));
+                break;
+            case 2:
+                gLinesEdit.at(i)->setText(QString::number(sliders.at(i)->value()));
+                emit changeHistogram(2, sliders.at(i)->value(), aLinesEdit.at(i)->text().toInt(), krgb->at(2));
+                break;
+            case 3:
+                gLinesEdit.at(i)->setText(QString::number(sliders.at(i)->value()));
+                emit changeHistogram(3, sliders.at(i)->value(), aLinesEdit.at(i)->text().toInt(), krgb->at(3));
+                break;
+            }
+        }
+    }
 }

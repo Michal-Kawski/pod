@@ -3,6 +3,9 @@
 
 #include <QDockWidget>
 #include <QVector>
+#include <QLabel>
+#include <QLineEdit>
+#include <QRgb>
 
 #include "slider.h"
 
@@ -13,20 +16,26 @@ class DockWidget : public QDockWidget
 public:
     explicit DockWidget(QWidget *parent = 0);
     ~DockWidget();
-    void dockWidgetRepaint();
     void setKrgb(QVector< QVector<int> > *vector);
     void setMaxValues(QVector<int> max);
 
 private:
     QVector< QVector<int> > *krgb;
     QVector<int> maxValues;
-    void paintEvent(QPaintEvent *event);
     QVector<Slider*> sliders;
+    QVector<QLabel*> gLabels;
+    QVector<QLineEdit*> gLinesEdit;
+    QVector<QLabel *> aLabels;
+    QVector<QLineEdit *> aLinesEdit;
+    void paintEvent(QPaintEvent *event);
+    void changeHistogramValues(int histogram);
+    int calculateColorValue(int color, int gMin, float alfa);
 
 signals:
+    void changeHistogram(int color, int  gMin, float alfa, QVector<int> histValues);
 
 public slots:
-
+    void sliderValueChanged(Slider *s);
 };
 
 #endif // DOCKWIDGET_H

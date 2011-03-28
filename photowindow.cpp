@@ -15,6 +15,8 @@
 #include <QImage>
 #include <QPixmap>
 #include <QMenu>
+#include <math.h>
+
 
 Q_DECLARE_METATYPE(QUuid)
 
@@ -39,6 +41,7 @@ void PhotoWindow::constructorInternals(const QString &title)
 	ui->setupUi(this);
 
 	dockWidget = new DockWidget(this);
+        connect(dockWidget, SIGNAL(changeHistogram(int,int,float,QVector<int>)), this, SLOT(changeHistogram(int,int,float,QVector<int>)));
 	menuBar()->addAction(dockWidget->toggleViewAction());
 
 	mFiltersMenu = menuBar()->addMenu("Filters");
@@ -59,9 +62,9 @@ void PhotoWindow::constructorInternals(const QString &title)
 	appendFilter(new GrayScaleFilter(this));
 	appendFilter(new AverageFilter(this));
 	appendFilter(new ContrastFilter(this));
-	appendFilter(new RosenfeldFilter(this));
+        appendFilter(new RosenfeldFilter(this));
 
-	connect(mFiltersMenu, SIGNAL(triggered(QAction*)), this, SLOT(applyFilter(QAction*)));
+        connect(mFiltersMenu, SIGNAL(triggered(QAction*)), this, SLOT(applyFilter(QAction*)));
 }
 
 PhotoWindow::~PhotoWindow()
@@ -160,4 +163,66 @@ void PhotoWindow::on_actionSave_triggered()
 {
 	QString url = QFileDialog::getSaveFileName(this, tr("Save Image"), "", tr("png image (*.png)"));
 	mImage.save(url);
+}
+
+void PhotoWindow::changeHistogram(int color, int gMin, float alfa, QVector<int> histValues){
+    qDebug()<<"zmieniam histogram";
+    QVector<int> tmpVector;
+    QImage img = mImage.copy(0,0,mImage.width(), mImage.height());
+
+    switch(color){
+    case 0:
+        for(int i=0; i<krgb.at(0).size(); i++){
+            int tmp = calculateRaleigh(i, gMin, alfa, histValues);
+            tmpVector.append(tmp);
+        }
+
+        for(int i=0; i<mImage.width(); i++){
+            for(int j=0; j<mImage.height(); j++){
+                img.setPixel(i, j, tmpVector[qGray(mImage.pixel(i,j))]);
+            }
+        }
+        krgb.replace(0, tmpVector);
+        dockWidget->setKrgb(&krgb);
+
+        mImage = img;
+        dockWidget->update();
+        break;
+    case 1:
+        break;
+    case 2:
+        break;
+    case 3:
+        break;
+    }
+}
+
+int PhotoWindow::calculateRaleigh(int position, int gMin, float alfa, QVector<int> histValues){
+    float sum = 0;
+    for(int i=0; i<position; i++){
+        sum += histValues.at(i);
+    }
+
+    /*Je¿eli we wzorze N okresla calkowita ilosc pikseli to logarytm we wzorze wychodzi bliski zeru.
+      Po obliczeniu reszty wzoru wynik koncowy jest praktycznie staly w kazdym przypadku (w kazdej iteracji)
+      - zmieniaja sie liczby tylko po przecinku wiec nie wiem za bardzo dlaczemu jest zle :/
+      Ktos mnie uprzedzal zebym uwazal wlasnie na wzory od tomczyka bo sie bledy trafiaja czesto. Jak szukalem
+      na necie to nie znalazlem zadnego wzoru o tej nazwie.
+     */
+    int n = mImage.width() * mImage.height();
+    double ln = log((double)sum/(double)n);
+
+    double res = pow(ln, -1);
+    res = res * 2 * alfa * alfa;
+    res = pow(res, 0.5);
+    res += gMin;
+
+    qDebug()<<"sum:"<<sum<<" N:"<<n<<" sum/N:"<<QString::number((double)sum/(double)n);
+
+    if(res > 255)
+        res = 255;
+
+    if(res < 0)
+        res = 0;
+    return res;
 }
