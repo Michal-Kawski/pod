@@ -3,8 +3,8 @@
 #include <QDebug>
 #include <QPainter>
 #include <QPen>
-#include <math.h>
-
+#include <cmath>
+#include <QSlider>
 
 DockWidget::DockWidget(QWidget *parent) :
     QDockWidget(parent)
@@ -15,13 +15,13 @@ DockWidget::DockWidget(QWidget *parent) :
     krgb = new QVector< QVector<int> >(1);
 
     for(int i=0; i<4; i++){
-        sliders.append(new Slider(this));
+		sliders.append(new QSlider(this));
         sliders.at(i)->setGeometry(300, i * 160 + 70, 256, 18);
         sliders.at(i)->setMaximum(256);
         sliders.at(i)->setMinimum(0);
         sliders.at(i)->setOrientation(Qt::Horizontal);
         sliders.at(i)->setEnabled(false);
-        connect(sliders.at(i), SIGNAL(sliderValueChanged(Slider*)), this, SLOT(sliderValueChanged(Slider*)));
+		connect(sliders.at(i), SIGNAL(sliderReleased()), this, SLOT(sliderValueChanged()));
 
         gLabels.append(new QLabel("g_min:", this));
         gLabels.at(i)->setGeometry(300, i*160 + 90, 30, 20);
@@ -98,7 +98,8 @@ void DockWidget::setMaxValues(QVector<int> max){
     maxValues = QVector<int> (max);
 }
 
-void DockWidget::sliderValueChanged(Slider *s){
+void DockWidget::sliderValueChanged(){
+	QSlider *s = qobject_cast<QSlider *>(QObject::sender());
     for(int i=0; i<sliders.size(); i++){
         if(sliders.at(i) == s){
             switch(i){

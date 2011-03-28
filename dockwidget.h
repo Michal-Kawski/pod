@@ -7,8 +7,7 @@
 #include <QLineEdit>
 #include <QRgb>
 
-#include "slider.h"
-
+class QSlider;
 
 class DockWidget : public QDockWidget
 {
@@ -22,7 +21,7 @@ public:
 private:
     QVector< QVector<int> > *krgb;
     QVector<int> maxValues;
-    QVector<Slider*> sliders;
+	QVector<QSlider*> sliders;
     QVector<QLabel*> gLabels;
     QVector<QLineEdit*> gLinesEdit;
     QVector<QLabel *> aLabels;
@@ -35,7 +34,7 @@ signals:
     void changeHistogram(int color, int  gMin, float alfa, QVector<int> histValues);
 
 public slots:
-    void sliderValueChanged(Slider *s);
+	void sliderValueChanged();
 };
 
 #endif // DOCKWIDGET_H

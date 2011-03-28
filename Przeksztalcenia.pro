@@ -20,7 +20,6 @@ SOURCES += main.cpp\
     dockwidget.cpp \
     negativefilter.cpp \
     filterinterface.cpp \
-    slider.cpp \
     convolutionfilter.cpp \
 	kernelvaluesdialog.cpp \
 	medianfilter.cpp \
@@ -37,7 +36,6 @@ HEADERS  += mainwindow.h \
     dockwidget.h \
     filterinterface.h \
     negativefilter.h \
-    slider.h \
     convolutionfilter.h \
 	kernelvaluesdialog.h \
 	medianfilter.h \
