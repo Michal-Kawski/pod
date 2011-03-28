@@ -41,7 +41,7 @@ void PhotoWindow::constructorInternals(const QString &title)
 	ui->setupUi(this);
 
 	dockWidget = new DockWidget(this);
-        connect(dockWidget, SIGNAL(changeHistogram(int,int,float,QVector<int>)), this, SLOT(changeHistogram(int,int,float,QVector<int>)));
+	connect(dockWidget, SIGNAL(changeHistogram(int,int,float,QVector<int>)), this, SLOT(changeHistogram(int,int,float,QVector<int>)));
 	menuBar()->addAction(dockWidget->toggleViewAction());
 
 	mFiltersMenu = menuBar()->addMenu("Filters");
@@ -62,9 +62,9 @@ void PhotoWindow::constructorInternals(const QString &title)
 	appendFilter(new GrayScaleFilter(this));
 	appendFilter(new AverageFilter(this));
 	appendFilter(new ContrastFilter(this));
-        appendFilter(new RosenfeldFilter(this));
+	appendFilter(new RosenfeldFilter(this));
 
-        connect(mFiltersMenu, SIGNAL(triggered(QAction*)), this, SLOT(applyFilter(QAction*)));
+	connect(mFiltersMenu, SIGNAL(triggered(QAction*)), this, SLOT(applyFilter(QAction*)));
 }
 
 PhotoWindow::~PhotoWindow()
@@ -203,7 +203,7 @@ int PhotoWindow::calculateRaleigh(int position, int gMin, float alfa, QVector<in
         sum += histValues.at(i);
     }
 
-    /*Je¿eli we wzorze N okresla calkowita ilosc pikseli to logarytm we wzorze wychodzi bliski zeru.
+    /*JeÅ¼eli we wzorze N okresla calkowita ilosc pikseli to logarytm we wzorze wychodzi bliski zeru.
       Po obliczeniu reszty wzoru wynik koncowy jest praktycznie staly w kazdym przypadku (w kazdej iteracji)
       - zmieniaja sie liczby tylko po przecinku wiec nie wiem za bardzo dlaczemu jest zle :/
       Ktos mnie uprzedzal zebym uwazal wlasnie na wzory od tomczyka bo sie bledy trafiaja czesto. Jak szukalem
