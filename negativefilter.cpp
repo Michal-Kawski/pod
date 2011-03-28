@@ -15,6 +15,7 @@ bool NegativeFilter::setup(const QImage &img)
 
 QImage NegativeFilter::apply()
 {
+	QImage result(mImg.size(), QImage::Format_ARGB32);
 	for (int x = 0; x < mImg.width(); x++) {
 		for (int y = 0; y < mImg.height(); y++) {
 			QColor c = mImg.pixel(x, y);
@@ -22,10 +23,10 @@ QImage NegativeFilter::apply()
 			int g = 255 - c.green();
 			int b = 255 - c.blue();
 			c = QColor(r, g, b);
-			mImg.setPixel(x, y, c.rgba());
+			result.setPixel(x, y, c.rgb());
 		}
 	}
-	return mImg;
+	return result;
 }
 
 QString NegativeFilter::name() const
