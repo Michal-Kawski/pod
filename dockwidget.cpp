@@ -5,6 +5,8 @@
 #include <QPen>
 #include <cmath>
 #include <QSlider>
+#include <QLineEdit>
+#include <QLabel>
 
 DockWidget::DockWidget(QWidget *parent) :
     QDockWidget(parent)

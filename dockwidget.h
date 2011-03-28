@@ -3,11 +3,10 @@
 
 #include <QDockWidget>
 #include <QVector>
-#include <QLabel>
-#include <QLineEdit>
-#include <QRgb>
 
 class QSlider;
+class QLineEdit;
+class QLabel;
 
 class DockWidget : public QDockWidget
 {
