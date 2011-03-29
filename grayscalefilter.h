@@ -17,7 +17,7 @@ public slots:
 	virtual QImage apply();
 
 protected:
-	enum GrayScaleType {Gray, Proportional};
+	enum GrayScaleType {Min, Proportional};
 	GrayScaleFilter::GrayScaleType mFilterType;
 };
 

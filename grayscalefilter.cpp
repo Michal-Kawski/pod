@@ -24,9 +24,9 @@ bool GrayScaleFilter::setup(const QImage &img)
 		QDialog typeDialog(qobject_cast<QWidget *>(this));
 		QVBoxLayout vbl(qobject_cast<QWidget *>(&typeDialog));
 		QButtonGroup bg(qobject_cast<QWidget *>(&typeDialog));
-		bg.addButton(new QRadioButton("qGray",
+		bg.addButton(new QRadioButton("min(r, g, b)",
 									  qobject_cast<QWidget *>(&typeDialog)),
-					 Gray);
+					 Min);
 		bg.addButton(new QRadioButton("r: .299, g: .587, b: .114",
 									  qobject_cast<QWidget *>(&typeDialog)),
 					 Proportional);
@@ -63,7 +63,7 @@ QImage GrayScaleFilter::apply()
 			QColor color;
 			QVector3D v;
 			switch (mFilterType) {
-				case Gray:
+				case Min:
 					{
 						v = cp.pixel(x, y, mImg);
 						int gray = qMin(qMin(v.x(), v.y()), v.z());
