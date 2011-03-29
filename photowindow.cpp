@@ -18,6 +18,7 @@
 #include <QMenu>
 #include <cmath>
 #include <QAction>
+#include <QRgb>
 
 Q_DECLARE_METATYPE(QUuid)
 
@@ -136,9 +137,9 @@ void PhotoWindow::on_actionGeneruj_histogramy_triggered()
 		for(int j=0; j < mImage.height(); j++){
 			color = mImage.pixel(i, j);
 
-            krgb[0][color.black()]++;
-            if(krgb[0][color.black()] > (int)maxK)
-                maxK = krgb[0][color.black()];
+            krgb[0][qGray(color.rgb())]++;
+            if(krgb[0][qGray(color.rgb())] > (int)maxK)
+                maxK = krgb[0][qGray(color.rgb())];
 
             krgb[1][color.red()]++;
             if(krgb[1][color.red()] > (int)maxR)
@@ -173,14 +174,14 @@ void PhotoWindow::on_actionSave_triggered()
 
 void PhotoWindow::changeHistogram(int color, int gMin, float alfa, QVector<int> histValues){
     qDebug()<<"zmieniam histogram";
-    QVector<int> tmpVector;
+    QVector<int> tmpVector(256);
     QImage img = mImage.copy(0,0,mImage.width(), mImage.height());
 
     switch(color){
     case 0:
         for(int i=0; i<krgb.at(0).size(); i++){
             int tmp = calculateRaleigh(i, gMin, alfa, histValues);
-            tmpVector.append(tmp);
+            tmpVector[i] = tmp;
         }
 
         for(int i=0; i<mImage.width(); i++){
@@ -189,22 +190,57 @@ void PhotoWindow::changeHistogram(int color, int gMin, float alfa, QVector<int> 
             }
         }
         krgb.replace(0, tmpVector);
-        dockWidget->setKrgb(&krgb);
-
-        mImage = img;
-        dockWidget->update();
         break;
     case 1:
+        for(int i=0; i<krgb.at(1).size(); i++){
+            int tmp = calculateRaleigh(i, gMin, alfa, histValues);
+            tmpVector[i] = tmp;
+        }
+
+        for(int i=0; i<mImage.width(); i++){
+            for(int j=0; j<mImage.height(); j++){
+                img.setPixel(i, j, tmpVector[QColor(mImage.pixel(i,j)).red()]);
+            }
+        }
+        krgb.replace(1, tmpVector);
         break;
     case 2:
+        for(int i=0; i<krgb.at(2).size(); i++){
+            int tmp = calculateRaleigh(i, gMin, alfa, histValues);
+            tmpVector[i] = tmp;
+        }
+
+        for(int i=0; i<mImage.width(); i++){
+            for(int j=0; j<mImage.height(); j++){
+                img.setPixel(i, j, tmpVector[QColor(mImage.pixel(i,j)).green()]);
+            }
+        }
+        krgb.replace(2, tmpVector);
         break;
     case 3:
+        for(int i=0; i<krgb.at(3).size(); i++){
+            int tmp = calculateRaleigh(i, gMin, alfa, histValues);
+            tmpVector[i] = tmp;
+        }
+
+        for(int i=0; i<mImage.width(); i++){
+            for(int j=0; j<mImage.height(); j++){
+                img.setPixel(i, j, tmpVector[QColor(mImage.pixel(i,j)).blue()]);
+            }
+        }
+        krgb.replace(3, tmpVector);
         break;
     }
+
+    dockWidget->setKrgb(&krgb);
+    dockWidget->setMaxValues(findMaxValues());
+
+    mImage = img;
+    dockWidget->update();
 }
 
 int PhotoWindow::calculateRaleigh(int position, int gMin, float alfa, QVector<int> histValues){
-    float sum = 0;
+    int sum = 0.00;
     for(int i=0; i<position; i++){
         sum += histValues.at(i);
     }
@@ -216,20 +252,24 @@ int PhotoWindow::calculateRaleigh(int position, int gMin, float alfa, QVector<in
       na necie to nie znalazlem zadnego wzoru o tej nazwie.
      */
     int n = mImage.width() * mImage.height();
-    double ln = log((double)sum/(double)n);
 
-    double res = pow(ln, -1);
+    if(sum == 0)
+        sum = 1;
+    //double ln = log((double)sum/(double)n);
+    double ln = log(pow((double)sum / (double)n, -1));
+
+    //double res = pow(ln, -1);
+    double res = ln;
     res = res * 2 * alfa * alfa;
     res = pow(res, 0.5);
     res += gMin;
 
-    qDebug()<<"sum:"<<sum<<" N:"<<n<<" sum/N:"<<QString::number((double)sum/(double)n);
-
     if(res > 255)
         res = 255;
-
     if(res < 0)
         res = 0;
+
+    qDebug()<<"res: "<<res;
     return res;
 }
 
@@ -245,4 +285,23 @@ void PhotoWindow::qualityCheck()
 	if (q(ref, mImage)) {
 		qDebug() << "mse:" << q.mse << ", snr:" << q.snr;
 	}
+}
+
+QVector<int> PhotoWindow::findMaxValues(){
+    QVector<int> max;
+    max.resize(4);
+    max.fill(0);
+
+    for(int i=0; i<krgb.at(0).size(); i++){
+        if(krgb.at(0).at(i) > max.at(0))
+            max[0] = krgb.at(0).at(i);
+        if(krgb.at(1).at(i) > max.at(1))
+            max[1] = krgb.at(1).at(i);
+        if(krgb.at(2).at(i) > max.at(2))
+            max[2] = krgb.at(2).at(i);
+        if(krgb.at(3).at(i) > max.at(3))
+            max[3] = krgb.at(3).at(i);
+    }
+
+    return max;
 }

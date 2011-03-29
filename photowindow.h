@@ -40,7 +40,8 @@ private:
     void drawHistograms(QImage* photo);
     int calculateRaleigh(int position, int gMin, float alfa, QVector<int> histValues);
 	void appendFilter(FilterInterface *filter);
-	void constructorInternals(const QString &title);
+        void constructorInternals(const QString &title);
+    QVector<int> findMaxValues();
 
 signals:
     void eraseThis(PhotoWindow* p);

@@ -70,6 +70,7 @@ void DockWidget::paintEvent(QPaintEvent *event){
         scales[3] = 153.00 / (double)maxValues[3];
 
         QPainter painter(this);
+
         double result;
         for(int i=0; i<256; i++){
             result = (double)krgb->at(0).at(i) * scales[0];
@@ -79,6 +80,7 @@ void DockWidget::paintEvent(QPaintEvent *event){
             result = (double)krgb->at(1).at(i) * scales[1];
             painter.setPen(QPen(QColor(255, 0, 0)));
             painter.drawLine(i, 320, i, 320 - round(result));
+            //qDebug()<<"result: "<<result;
 
             result = (double)krgb->at(2).at(i) * scales[2];
             painter.setPen(QPen(QColor(0, 255, 0)));
@@ -98,6 +100,7 @@ void DockWidget::setKrgb(QVector< QVector<int> > *vector){
 
 void DockWidget::setMaxValues(QVector<int> max){
     maxValues = QVector<int> (max);
+    qDebug()<<"maxValues: "<<max;
 }
 
 void DockWidget::sliderValueChanged(){
