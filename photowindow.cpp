@@ -182,52 +182,36 @@ void PhotoWindow::changeHistogram(int color, int gMin, float alfa, QVector<int> 
         for(int i=0; i<krgb.at(0).size(); i++){
             int tmp = calculateRaleigh(i, gMin, alfa, histValues);
             tmpVector[i] = tmp;
+            changeImageColor(0, i, tmp, &mImage);
         }
 
-        for(int i=0; i<mImage.width(); i++){
-            for(int j=0; j<mImage.height(); j++){
-                img.setPixel(i, j, tmpVector[qGray(mImage.pixel(i,j))]);
-            }
-        }
         krgb.replace(0, tmpVector);
         break;
     case 1:
         for(int i=0; i<krgb.at(1).size(); i++){
             int tmp = calculateRaleigh(i, gMin, alfa, histValues);
             tmpVector[i] = tmp;
+            changeImageColor(0, i, tmp, &mImage);
         }
 
-        for(int i=0; i<mImage.width(); i++){
-            for(int j=0; j<mImage.height(); j++){
-                img.setPixel(i, j, tmpVector[QColor(mImage.pixel(i,j)).red()]);
-            }
-        }
         krgb.replace(1, tmpVector);
         break;
     case 2:
         for(int i=0; i<krgb.at(2).size(); i++){
             int tmp = calculateRaleigh(i, gMin, alfa, histValues);
             tmpVector[i] = tmp;
+            changeImageColor(0, i, tmp, &mImage);
         }
 
-        for(int i=0; i<mImage.width(); i++){
-            for(int j=0; j<mImage.height(); j++){
-                img.setPixel(i, j, tmpVector[QColor(mImage.pixel(i,j)).green()]);
-            }
-        }
         krgb.replace(2, tmpVector);
         break;
     case 3:
         for(int i=0; i<krgb.at(3).size(); i++){
             int tmp = calculateRaleigh(i, gMin, alfa, histValues);
             tmpVector[i] = tmp;
+            changeImageColor(0, i, tmp, &mImage);
         }
 
-        for(int i=0; i<mImage.width(); i++){
-            for(int j=0; j<mImage.height(); j++){
-                img.setPixel(i, j, tmpVector[QColor(mImage.pixel(i,j)).blue()]);
-            }
-        }
         krgb.replace(3, tmpVector);
         break;
     }
@@ -304,4 +288,41 @@ QVector<int> PhotoWindow::findMaxValues(){
     }
 
     return max;
+}
+
+void PhotoWindow::changeImageColor(int color, int oldValue, int newValue, QImage *img){
+    switch(color){
+    case 0:
+        for(int i=0; i < img->width(); i++){
+            for(int j=0; j<img->height(); i++){
+                if(qGray(img->pixel(i,j)) == oldValue)
+                    img->setPixel(i,j, newValue);
+            }
+        }
+        break;
+    case 1:
+        for(int i=0; i < img->width(); i++){
+            for(int j=0; j<img->height(); i++){
+                if(QColor(img->pixel(i,j)).red() == oldValue)
+                    img->setPixel(i,j, newValue);
+            }
+        }
+        break;
+    case 2:
+        for(int i=0; i < img->width(); i++){
+            for(int j=0; j<img->height(); i++){
+                if(QColor(img->pixel(i,j)).green() == oldValue)
+                    img->setPixel(i,j, newValue);
+            }
+        }
+        break;
+    case 3:
+        for(int i=0; i < img->width(); i++){
+            for(int j=0; j<img->height(); i++){
+                if(QColor(img->pixel(i,j)).blue() == oldValue)
+                    img->setPixel(i,j, newValue);
+            }
+        }
+        break;
+    }
 }

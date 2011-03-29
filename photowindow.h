@@ -42,6 +42,7 @@ private:
 	void appendFilter(FilterInterface *filter);
         void constructorInternals(const QString &title);
     QVector<int> findMaxValues();
+    void changeImageColor(int color, int oldValue, int newValue, QImage *img);
 
 signals:
     void eraseThis(PhotoWindow* p);
