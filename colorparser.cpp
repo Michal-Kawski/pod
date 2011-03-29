@@ -115,13 +115,13 @@ void ColorParser::setPixel(const QPoint &pos, QImage &img, QVector3D color)
 			break;
 		case QImage::Format_Indexed8:
 			{
-				int i = qGray(qRgb(color.x(), color.y(), color.z()));
+				int i = qGray(qRgb(color.x(), color.x(), color.x()));
 				img.setPixel(pos, i);
 			}
 			break;
 		case QImage::Format_Mono:
 			{
-				int i = qGray(qRgb(color.x(), color.y(), color.z()));
+				int i = qGray(qRgb(color.x(), color.x(), color.x()));
 				if (i > 127) {
 					i = 1;
 				} else {

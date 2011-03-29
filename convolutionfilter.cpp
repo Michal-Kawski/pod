@@ -1,6 +1,7 @@
 #include "convolutionfilter.h"
 #include "kernelvaluesdialog.h"
 #include "sizedialog.h"
+#include "colorparser.h"
 
 #include <QDialog>
 #include <QLayout>
@@ -36,13 +37,16 @@ bool ConvolutionFilter::setup(const QImage &img)
 		}
 		mKernel = kernelValuesDialog.values();
 	}
-	mImg = img;
-	return true;
+	return FilterInterface::setup(img);
 }
 
 QImage ConvolutionFilter::apply()
 {
-	QImage result(mImg.size(), QImage::Format_ARGB32);
+	QImage result(mImg.size(), mFormat);
+	if (mFormat == QImage::Format_Indexed8 || mFormat == QImage::Format_Mono) {
+		result.setColorTable(mImg.colorTable());
+	}
+	ColorParser cp(mFormat);
 	QVector<QVector<QVector3D> > colors(mImg.height(), QVector<QVector3D>(mImg.width()));
 	QVector3D min, max;
 	for (int x = 0; x < result.size().width(); x++) {
@@ -55,10 +59,7 @@ QImage ConvolutionFilter::apply()
 					if (!mImg.rect().contains(pos)) {
 						continue;
 					}
-					QColor rgbColor = QColor(mImg.pixel(pos));
-					color += QVector3D(rgbColor.red(),
-									   rgbColor.green(),
-									   rgbColor.blue())
+					color += cp.pixel(pos, mImg)
 							* mKernel.at(j + mKernelHeight).at(i + mKernelWidth);
 				}
 			}
@@ -92,7 +93,8 @@ QImage ConvolutionFilter::apply()
 							", it is r:" << red << ", g:" << green << ", b:" <<
 							blue << "raw:" << colors.at(y).at(x);
 			} else {
-				result.setPixel(x, y, color.rgb());
+				QVector3D v(red, green, blue);
+				cp.setPixel(x, y, result, v);
 			}
 		}
 	}

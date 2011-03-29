@@ -1,5 +1,6 @@
 #include "contrastfilter.h"
 #include "slidingvaluedialog.h"
+#include "colorparser.h"
 
 #include <QVector3D>
 
@@ -25,24 +26,26 @@ bool ContrastFilter::setup(const QImage &img)
 		}
 		mValue = svd.value();
 	}
-	mImg = img;
-	return true;
+	return FilterInterface::setup(img);
 }
 
 QImage ContrastFilter::apply()
 {
-	QImage result(mImg.size(), QImage::Format_ARGB32);
+	QImage result(mImg.size(), mFormat);
+	if (mFormat == QImage::Format_Indexed8 || mFormat == QImage::Format_Mono) {
+		result.setColorTable(mImg.colorTable());
+	}
+	ColorParser cp(mFormat);
 	float c = mValue / 255.0f + 1.0f;
 	qDebug() << "contrast:" << c;
 	for (int x = 0; x < mImg.width(); x++) {
 		for (int y = 0; y < mImg.height(); y++) {
-			QColor color(mImg.pixel(x, y));
-			QVector3D colorVec(color.red(), color.green(), color.blue());
+			QVector3D colorVec = cp.pixel(x, y, mImg);
 			colorVec *= c;
-			color.setRed(qBound(0, (int)colorVec.x(), 255));
-			color.setGreen(qBound(0, (int)colorVec.y(), 255));
-			color.setBlue(qBound(0, (int)colorVec.z(), 255));
-			result.setPixel(x, y, color.rgb());
+			colorVec.setX(qBound(0, (int)colorVec.x(), 255));
+			colorVec.setY(qBound(0, (int)colorVec.y(), 255));
+			colorVec.setZ(qBound(0, (int)colorVec.z(), 255));
+			cp.setPixel(x, y, result, colorVec);
 		}
 	}
 	return result;

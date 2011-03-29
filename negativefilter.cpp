@@ -1,4 +1,5 @@
 #include "negativefilter.h"
+#include "colorparser.h"
 
 #include <QColor>
 
@@ -9,21 +10,24 @@ NegativeFilter::NegativeFilter(QObject *parent) :
 
 bool NegativeFilter::setup(const QImage &img)
 {
-	mImg = img;
-	return true;
+	return FilterInterface::setup(img);
 }
 
 QImage NegativeFilter::apply()
 {
-	QImage result(mImg.size(), QImage::Format_ARGB32);
+	QImage result(mImg.size(), mFormat);
+	if (mFormat == QImage::Format_Indexed8 || mFormat == QImage::Format_Mono) {
+		result.setColorTable(mImg.colorTable());
+	}
+	ColorParser cp(mFormat);
 	for (int x = 0; x < mImg.width(); x++) {
 		for (int y = 0; y < mImg.height(); y++) {
-			QColor c = mImg.pixel(x, y);
-			int r = 255 - c.red();
-			int g = 255 - c.green();
-			int b = 255 - c.blue();
-			c = QColor(r, g, b);
-			result.setPixel(x, y, c.rgb());
+			QVector3D v = cp.pixel(x, y, mImg);
+			int r = 255 - v.x();
+			int g = 255 - v.y();
+			int b = 255 - v.z();
+			v = QVector3D(r, g, b);
+			cp.setPixel(x, y, result, v);
 		}
 	}
 	return result;

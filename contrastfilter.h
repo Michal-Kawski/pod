@@ -17,7 +17,6 @@ public slots:
 	virtual QImage apply();
 
 protected:
-	QImage mImg;
 	int mValue;
 };
 

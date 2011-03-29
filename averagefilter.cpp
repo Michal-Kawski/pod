@@ -1,5 +1,6 @@
 #include "averagefilter.h"
 #include "sizedialog.h"
+#include "colorparser.h"
 
 #include <QVector3D>
 
@@ -26,13 +27,16 @@ bool AverageFilter::setup(const QImage &img)
 			mKernelHeight = kernelSize.height();
 		}
 	}
-	mImg = img;
-	return true;
+	return FilterInterface::setup(img);
 }
 
 QImage AverageFilter::apply()
 {
-	QImage result(mImg.size(), QImage::Format_ARGB32);
+	QImage result(mImg.size(), mFormat);
+	if (mFormat == QImage::Format_Indexed8 || mFormat == QImage::Format_Mono) {
+		result.setColorTable(mImg.colorTable());
+	}
+	ColorParser cp(mFormat);
 	for (int x = 0; x < mImg.size().width(); x++) {
 		for (int y = 0; y < mImg.size().height(); y++) {
 			int count = 0;
@@ -44,14 +48,12 @@ QImage AverageFilter::apply()
 					if (!mImg.rect().contains(pos)) {
 						continue;
 					}
-					QColor color(mImg.pixel(pos));
-					average += QVector3D(color.red(), color.green(), color.blue());
+					average += cp.pixel(pos, mImg);
 					count++;
 				}
 			}
 			average /= count;
-			QColor color(average.x(), average.y(), average.z());
-			result.setPixel(x, y, color.rgb());
+			cp.setPixel(x, y, result, average);
 		}
 	}
 	return result;

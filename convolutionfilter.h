@@ -17,7 +17,6 @@ public slots:
 	virtual QImage apply();
 
 protected:
-	QImage mImg;
 	QVector<QVector<int> > mKernel;
 	// this is really a radius
 	int mKernelWidth, mKernelHeight;

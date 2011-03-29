@@ -20,8 +20,12 @@ private:
 signals:
 
 public slots:
-	virtual bool setup(const QImage &img) = 0;
+	virtual bool setup(const QImage &img);
 	virtual QImage apply() = 0;
+
+protected:
+	QImage mImg;
+	QImage::Format mFormat;
 };
 
 #endif // FILTERINTERFACE_H

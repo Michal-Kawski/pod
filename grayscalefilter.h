@@ -18,7 +18,6 @@ public slots:
 
 protected:
 	enum GrayScaleType {Gray, Proportional};
-	QImage mImg;
 	GrayScaleFilter::GrayScaleType mFilterType;
 };
 

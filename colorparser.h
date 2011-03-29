@@ -2,8 +2,7 @@
 #define COLORPARSER_H
 
 #include <QImage>
-
-class QVector3D;
+#include <QVector3D>
 
 class ColorParser
 {

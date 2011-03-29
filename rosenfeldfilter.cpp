@@ -1,5 +1,6 @@
 #include "rosenfeldfilter.h"
 #include "slidingvaluedialog.h"
+#include "colorparser.h"
 
 #include <QVector3D>
 
@@ -23,13 +24,16 @@ bool RosenfeldFilter::setup(const QImage &img)
 		}
 		mValue = svd.value();
 	}
-	mImg = img;
-	return true;
+	return FilterInterface::setup(img);
 }
 
 QImage RosenfeldFilter::apply()
 {
-	QImage result(mImg.size(), QImage::Format_ARGB32);
+	QImage result(mImg.size(), mFormat);
+	if (mFormat == QImage::Format_Indexed8 || mFormat == QImage::Format_Mono) {
+		result.setColorTable(mImg.colorTable());
+	}
+	ColorParser cp(mFormat);
 	for (int x = 0; x < mImg.width(); x++) {
 		for (int y = 0; y < mImg.height(); y++) {
 			QVector3D sumLeft, sumRight;
@@ -39,8 +43,8 @@ QImage RosenfeldFilter::apply()
 				if (!mImg.rect().contains(pos)) {
 					continue;
 				}
-				QRgb rgb = mImg.pixel(pos);
-				sumRight += QVector3D(qRed(rgb), qGreen(rgb), qBlue(rgb));
+				QVector3D v = cp.pixel(pos, mImg);
+				sumRight += v;
 			}
 			for (int i = 1; i < mValue; i++) {
 				QPoint pos(x - i, y);
@@ -48,13 +52,12 @@ QImage RosenfeldFilter::apply()
 				if (!mImg.rect().contains(pos)) {
 					continue;
 				}
-				QRgb rgb = mImg.pixel(pos);
-				sumLeft += QVector3D(qRed(rgb), qGreen(rgb), qBlue(rgb));
+				QVector3D v = cp.pixel(pos, mImg);
+				sumLeft += v;
 			}
 			QVector3D diff = sumRight - sumLeft;
 			diff /= (qreal)mValue;
-			QRgb rgb = qRgb(diff.x(), diff.y(), diff.z());
-			result.setPixel(x, y, rgb);
+			cp.setPixel(x, y, result, diff);
 		}
 	}
 	return result;

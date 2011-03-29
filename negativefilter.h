@@ -17,9 +17,6 @@ signals:
 public slots:
 	bool setup(const QImage &img);
 	QImage apply();
-
-protected:
-	QImage mImg;
 };
 
 #endif // NEGATIVEFILTER_H

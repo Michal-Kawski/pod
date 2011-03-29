@@ -1,5 +1,6 @@
 #include "medianfilter.h"
 #include "sizedialog.h"
+#include "colorparser.h"
 
 MedianFilter::MedianFilter(QObject *parent) :
     FilterInterface(parent)
@@ -24,14 +25,17 @@ bool MedianFilter::setup(const QImage &img)
 			mKernelHeight = kernelSize.height();
 		}
 	}
-	mImg = img;
-	return true;
+	return FilterInterface::setup(img);
 }
 
 QImage MedianFilter::apply()
 {
 	QVector<int> red, green, blue;
-	QImage result(mImg.size(), QImage::Format_ARGB32);
+	QImage result(mImg.size(), mFormat);
+	if (mFormat == QImage::Format_Indexed8 || mFormat == QImage::Format_Mono) {
+		result.setColorTable(mImg.colorTable());
+	}
+	ColorParser cp(mFormat);
 	red.reserve(((mKernelWidth * 2) + 1) * ((mKernelHeight * 2) + 1));
 	green.reserve(((mKernelWidth * 2) + 1) * ((mKernelHeight * 2) + 1));
 	blue.reserve(((mKernelWidth * 2) + 1) * ((mKernelHeight * 2) + 1));
@@ -47,27 +51,27 @@ QImage MedianFilter::apply()
 					if (!mImg.rect().contains(pos)) {
 						continue;
 					}
-					QColor rgbColor = QColor(mImg.pixel(pos));
-					red << rgbColor.red();
-					green << rgbColor.green();
-					blue << rgbColor.blue();
+					QVector3D v = cp.pixel(pos, mImg);
+					red << v.x();
+					green << v.y();
+					blue << v.z();
 				}
 			}
 			qSort(red);
 			qSort(green);
 			qSort(blue);
-			QColor median;
+			QVector3D median;
 			int count = red.count();
 			if (count % 2 == 1) {
-				median.setRed(red.at(count / 2));
-				median.setGreen(green.at(count / 2));
-				median.setBlue(blue.at(count / 2));
+				median.setX(red.at(count / 2));
+				median.setY(green.at(count / 2));
+				median.setZ(blue.at(count / 2));
 			} else {
-				median.setRed((red.at(count / 2 - 1) + red.at(count / 2)) / 2);
-				median.setGreen((green.at(count / 2 - 1) + green.at(count / 2)) / 2);
-				median.setBlue((blue.at(count / 2 - 1) + blue.at(count / 2)) / 2);
+				median.setX((red.at(count / 2 - 1) + red.at(count / 2)) / 2);
+				median.setY((green.at(count / 2 - 1) + green.at(count / 2)) / 2);
+				median.setZ((blue.at(count / 2 - 1) + blue.at(count / 2)) / 2);
 			}
-			result.setPixel(x, y, median.rgb());
+			cp.setPixel(x, y, result, median);
 		}
 	}
 	return result;

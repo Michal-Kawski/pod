@@ -1,4 +1,5 @@
 #include "grayscalefilter.h"
+#include "colorparser.h"
 
 #include <QButtonGroup>
 #include <QVBoxLayout>
@@ -47,35 +48,40 @@ bool GrayScaleFilter::setup(const QImage &img)
 			mFilterType = GrayScaleType(bg.checkedId());
 		}
 	}
-	mImg = img;
-	return true;
+	return FilterInterface::setup(img);
 }
 
 QImage GrayScaleFilter::apply()
 {
-	QImage result(mImg.size(), QImage::Format_ARGB32);
+	QImage result(mImg.size(), mFormat);
+	if (mFormat == QImage::Format_Indexed8 || mFormat == QImage::Format_Mono) {
+		result.setColorTable(mImg.colorTable());
+	}
+	ColorParser cp(mFormat);
 	for (int x = 0; x < result.size().width(); x++) {
 		for (int y = 0; y < result.size().height(); y++) {
 			QColor color;
+			QVector3D v;
 			switch (mFilterType) {
 				case Gray:
 					{
-						int gray = qGray(mImg.pixel(x, y));
-						color = QColor(gray, gray, gray);
+						v = cp.pixel(x, y, mImg);
+						int gray = qMin(qMin(v.x(), v.y()), v.z());
+						v = QVector3D(gray, gray, gray);
 					}
 					break;
 				case Proportional:
 					{
-						QColor pixel(mImg.pixel(x, y));
-						int r = 0.299 * pixel.red();
-						int g = 0.587 * pixel.green();
-						int b = 0.114 * pixel.blue();
+						v = cp.pixel(x, y, mImg);
+						int r = 0.299 * v.x();
+						int g = 0.587 * v.y();
+						int b = 0.114 * v.z();
 						int gray = qBound(0, r + g + b, 255);
-						color = QColor(gray, gray, gray);
+						v = QVector3D(gray, gray, gray);
 					}
 					break;
 			}
-			result.setPixel(x, y, color.rgb());
+			cp.setPixel(x, y, result, v);
 		}
 	}
 	return result;
