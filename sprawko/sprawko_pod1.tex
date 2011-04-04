@@ -170,6 +170,9 @@ Dla każdego kanału piksela obrazu sumowane są wartości tego kanału z wszyst
 \end{equation}
 gdzie $w$ to promień poziomy, a $h$ promień pionowy maski.
 
+\subsubsection{Filtr medianowy}
+W przypadku filtru medianowego wartości kanału ze wszystkich pikseli wchodzących w skład maski ustawiane są w niemalejącym szeregu, a następnie zwracana jest mediana tych elementów, czyli element z pozycji $\frac{l}{2}$~w~przypadku szeregu o nieparzystej długości $l$ lub średnia arytmetyczna z~dwóch środkowych elementów $\frac{g(\frac{l}{2} - 1) + g(\frac{l}{2})}{2}$ w przypadku szeregu o parzystej ilości elementów.
+
 \begin{thebibliography}{99}
 %\bibitem{pleple}
 % opis
