@@ -53,8 +53,47 @@ Celem zadania było stworzenie szkieletu aplikacji do przetwarzania i analizy ob
  \item filtracja nieliniowa w dziedzinie czasu.
 \end{itemize}
 
+Wylosowane warianty zadań to:
+\begin{itemize}
+ \item Histogramy H3 \ppauza wyjściowa gęstość prawdopodobieństwa podana wzorem Raleigha:
+  \begin{equation*}
+   g(f) = g_{min} + \left(2 \alpha^2 \ln \left(\frac{1}{N} \displaystyle\sum\limits_{m=0}^f H\left(m\right)\right)^{-1}\right)^{\frac{1}{2}}
+  \end{equation*}
+ \item Splot S4 \ppauza wydobywanie szczegółów z tła: południe, południowy-zachód, zachód, północny-zachód:
+\begin{equation*}
+\left(\begin{array}{ccc} -1 & -1 & -1 \\ 
+1 & -2 & 1 \\
+1 & 1 & 1 \\
+\end{array}\right)\\
+\\
+\left(\begin{array}{ccc} 1 & -1 & -1 \\ 
+1 & -2 & -1 \\
+1 & 1 & 1 \\
+\end{array}\right)\\
+\\
+\left(\begin{array}{ccc} 1 & 1 & -1 \\ 
+1 & -2 & -1 \\
+1 & 1 & -1 \\
+\end{array}\right)\\
+\\
+\left(\begin{array}{ccc} 1 & 1 & 1 \\ 
+1 & -2 & -1 \\
+1 & -1 & -1 \\
+\end{array}\right)
+\end{equation*}
+  \item filtracja nieliniowa O5 \ppauza operator Rosenfelda:
+\begin{equation*}
+ g(x, y) = \frac{1}{R} \left( \displaystyle \sum \limits_{i=1}^R f\left(x + i - 1, y\right) - \displaystyle \sum \limits_{i=1}^R f \left(x - i, y\right) \right)
+\end{equation*}
+
+  
+\end{itemize}
+
 
 \section{Metoda rozwiązania}
+
+
+
 \begin{thebibliography}{99}
 %\bibitem{pleple}
 % opis
