@@ -195,6 +195,23 @@ Wariant zadania, który nam przypadł przewidywał implementację poziomego oper
 \end{equation}
 Normalizacja uzyskanych danych ma postać jak w równaniu \ref{eq:normalization}.
 
+\subsection{Obiektywna ocena jakości obrazu}
+Ponieważ do każdego z zaszumionych obrazów testowych dostępne są wersje oryginalne, o idealnej jakości, można dokonać obiektywnej oceny jakości filtrowania. Zaimplementowane metody porównują odstępstwa przetworzonego obrazu zaszumionego z obrazem oryginalnym.
+
+\subsubsection{MSE}
+MSE, czyli \textit{Mean Square Error}, błąd średniokwadratowy $E$, jest podstawowym kryterium pomiarowym. Zlicza on sumę kwadratów różnic pomiędzy wartościami otrzymanymi, a idealnymi:
+\begin{equation}
+ E = \frac{1}{N \cdot M} \displaystyle \sum \limits_{n=0}^{N-1} \sum \limits_{m=0}^{M-1} \left(g\left(n, m\right) - g'\left(n, m\right) \right)^2
+\end{equation}
+W tym przypadku $g'$ odnosi się do przefiltrowanego obrazu.
+
+\subsubsection{SNR}
+SNR, czyli \textit{Signal to Noise Ratio}, współczynnik sygnału do szumu $R$, stanowi często spotykaną metodę określania jakości sygnału. Wyznaczany jest wzorem:
+\begin{equation}
+ R = 10 \log_{10} \frac{\displaystyle \sum \limits_{n=0}^{N-1} \sum \limits_{m=0}^{M-1} \left(g\left(n, m\right)\right)^2}{E}
+\end{equation}
+$E$ to wyznaczony powyżej współczynnik MSE.
+
 \begin{thebibliography}{99}
 %\bibitem{pleple}
 % opis
