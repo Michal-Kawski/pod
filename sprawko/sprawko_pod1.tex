@@ -55,11 +55,11 @@ Celem zadania było stworzenie szkieletu aplikacji do przetwarzania i analizy ob
 
 Wylosowane warianty zadań to:
 \begin{itemize}
- \item Histogramy H3 \ppauza wyjściowa gęstość prawdopodobieństwa podana wzorem Raleigha:
+ \item histogramy H3 \ppauza wyjściowa gęstość prawdopodobieństwa podana wzorem Raleigha:
   \begin{equation*}
    g(f) = g_{min} + \left(2 \alpha^2 \ln \left(\frac{1}{N} \displaystyle\sum\limits_{m=0}^f H\left(m\right)\right)^{-1}\right)^{\frac{1}{2}}
   \end{equation*}
- \item Splot S4 \ppauza wydobywanie szczegółów z tła: południe, południowy-zachód, zachód, północny-zachód:
+ \item splot S4 \ppauza wydobywanie szczegółów z tła: południe, południowy-zachód, zachód, północny-zachód:
 \begin{equation*}
 \left(\begin{array}{ccc} -1 & -1 & -1 \\ 
 1 & -2 & 1 \\
@@ -85,14 +85,47 @@ Wylosowane warianty zadań to:
 \begin{equation*}
  g(x, y) = \frac{1}{R} \left( \displaystyle \sum \limits_{i=1}^R f\left(x + i - 1, y\right) - \displaystyle \sum \limits_{i=1}^R f \left(x - i, y\right) \right)
 \end{equation*}
-
-  
 \end{itemize}
 
+\section{Opis metod przetwarzania}
 
-\section{Metoda rozwiązania}
+Poniżej znajduje się opis algorytmów realizujących opisane powyżej zagadnienia. Obsługiwane są 3 typy obrazów:
+\begin{enumerate}
+ \item obrazy kolorowe (24-bitowe),
+ \item obrazy w 8-bitowej skali szarości,
+ \item obrazy binarne (1-bitowe).
+\end{enumerate}
+
+W przypadku obrazu kolorowego zakładamy, że każdy piksel ma trzy kanały: R (czerwony), G (zielony) i B (niebieski), a wartość każdego z tych pikseli znajduje się w zakresie $[0; 255]$ i przyjmuje tylko wartości całkowite.
+
+W przypadku obrazów w skali szarości przyjmujemy, że każdy piksel posiada tylko jedną, 8-bitową składową, jest to indeks koloru z palety barw zapisanej w obrazie. Chociaż możliwe jest zapisanie dowolnej palety kolorów, przyjmujemy, że mamy do czynienia tylko i wyłącznie z obrazami w skali szarości (lub innego koloru), a 256 dostępnych, unikatowych kolorów w palecie uporządkowanych jest od najjaśniejszego (białego) do najbardziej intensywnego (czarnego \ppauza w przypadku skali szarości).
+
+Piksele w obrazach binarnych przyjmują tylko dwa dostępne stany: biały i czarny.
+
+Ponadto, przyjmijmy następujące oznaczenia:
+\begin{description}
+ \item[$g(n, m)$] wartość kanału piksela o współrzędnych $n, m$,
+ \item[$N, M$] odpowiednio szerokość i wysokość obrazu w pikselach,
+ \item[$h(p)$] funkcja przetwarzająca piksel $p$.
+\end{description}
 
 
+\subsection{Operacje podstawowe}
+
+Opisane poniżej operacje podstawowe ograniczają swoje działanie tylko do jednego piksela, tzn. wartość funkcji przekształcenia nie zależy od otoczenia w jakim piksel się znajduje.
+
+Algorytmy abstrachują od szczegółów implementacji, dzięki czemu można opisać ich działanie dla wszystkich wymienionych wyżej typów obrazów.
+
+Ponieważ piksele w operacjach tych przetwarzane są niezależnie, przetwarzanie obrazu za ich pomocą sprowadza się do przetworzenia każdego piksela obrazu zadanym algorytmem.
+
+\subsubsection{Negatyw}
+Wyznaczanie negatywu obrazu sprowadza się do wyznacznia wartości przeciwnej dla każdego z kanałów piksela:
+
+\begin{equation}
+ \mathop{\forall}_{n \in [0; N)} \mathop{\forall}_{m \in [0; M)} g(n, m) = -g(n, m) \mod C_{max}
+\end{equation}
+
+gdzie $C_{max}$ to maksymalna możliwa wartość.
 
 \begin{thebibliography}{99}
 %\bibitem{pleple}
