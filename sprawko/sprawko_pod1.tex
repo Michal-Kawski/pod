@@ -173,6 +173,15 @@ gdzie $w$ to promień poziomy, a $h$ promień pionowy maski.
 \subsubsection{Filtr medianowy}
 W przypadku filtru medianowego wartości kanału ze wszystkich pikseli wchodzących w skład maski ustawiane są w niemalejącym szeregu, a następnie zwracana jest mediana tych elementów, czyli element z pozycji $\frac{l}{2}$~w~przypadku szeregu o nieparzystej długości $l$ lub średnia arytmetyczna z~dwóch środkowych elementów $\frac{g(\frac{l}{2} - 1) + g(\frac{l}{2})}{2}$ w przypadku szeregu o parzystej ilości elementów.
 
+\subsection{Modyfikacja w oparciu o histogram}
+
+\subsection{Filtracja liniowa w oparciu o splot}
+Aby dokonać filtracji liniowej opartej o splot, konieczna jest znajomość maski filtru, jaka opisuje odpowiedź impulsową splotu. Nazwijmy tę maskę macierzą $X[2 \cdot W + 1; 2 \cdot H + 1]$ i przyjmijmy, że funkcja $x(w, h)$ zwraca element macierzy $X$ z pozycji $(w, h)$, wtedy:
+\begin{equation}
+ g(n, m) = \displaystyle \sum \limits_{w=-W}^W \displaystyle \sum \limits_{h=-H}^H g(n + w, m + h) \cdot x(w, h)
+\end{equation}
+
+
 \begin{thebibliography}{99}
 %\bibitem{pleple}
 % opis
