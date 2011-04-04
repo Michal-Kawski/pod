@@ -11,8 +11,7 @@
 DockWidget::DockWidget(QWidget *parent) :
     QDockWidget(parent)
 {
-    setWindowTitle("Histogramy");
-    setParent(parent);
+	setWindowTitle("Histogramy");
 
     krgb = new QVector< QVector<int> >(1);
 
@@ -41,6 +40,7 @@ DockWidget::DockWidget(QWidget *parent) :
 
     setFloating(true);
     resize(600, 680);
+	hide();
 }
 
 DockWidget::~DockWidget(){
