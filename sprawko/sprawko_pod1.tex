@@ -105,8 +105,7 @@ Piksele w obrazach binarnych przyjmują tylko dwa dostępne stany: biały i czar
 Ponadto, przyjmijmy następujące oznaczenia:
 \begin{description}
  \item[$g(n, m)$] wartość kanału piksela o współrzędnych $n, m$,
- \item[$N, M$] odpowiednio szerokość i wysokość obrazu w pikselach,
- \item[$h(p)$] funkcja przetwarzająca piksel $p$.
+ \item[$N, M$] odpowiednio szerokość i wysokość obrazu w pikselach.
 \end{description}
 
 
@@ -122,10 +121,27 @@ Ponieważ piksele w operacjach tych przetwarzane są niezależnie, przetwarzanie
 Wyznaczanie negatywu obrazu sprowadza się do wyznacznia wartości przeciwnej dla każdego z kanałów piksela:
 
 \begin{equation}
- \mathop{\forall}_{n \in [0; N)} \mathop{\forall}_{m \in [0; M)} g(n, m) = -g(n, m) \mod C_{max}
+ g(n, m) = -g(n, m) \mod C_{max}
 \end{equation}
 
 gdzie $C_{max}$ to maksymalna możliwa wartość.
+
+\subsubsection{Zmiana kontrastu}
+Zmiana kontrastu to zmiana amplitudy charakteryzującej każdy z kanałów piksela. Dokonujemy tego poprzez mnożenie wartości każdego z kanałów przez pewien współczynnik $\alpha \in [0; 2]$, a następnie ograniczamy tak uzyskane wartości do zakresu możliwych:
+\begin{equation}
+ f(n, m) = g(n, m) \cdot \alpha
+\end{equation}
+\begin{equation}
+ g(n, m) = \left\{
+  \begin{array}{l l}
+    0 & \quad f(n, m) < 0 \\
+    f(n, m) & \quad 0 \leq f(n, m) \leq C_{max} \\
+    C_{max} & \quad f(n, m) > C_{max} \\
+  \end{array}
+\right.
+\end{equation}
+
+
 
 \begin{thebibliography}{99}
 %\bibitem{pleple}
