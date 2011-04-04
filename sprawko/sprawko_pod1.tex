@@ -104,7 +104,8 @@ Piksele w obrazach binarnych przyjmują tylko dwa dostępne stany: biały i czar
 
 Ponadto, przyjmijmy następujące oznaczenia:
 \begin{description}
- \item[$g(n, m)$] wartość kanału piksela o współrzędnych $n, m$,
+ \item[$g(n, m)$] wartość kanału piksela o współrzędnych $(n, m)$,
+ \item[$g'(n, m)$] piksel o współrzędnych $(n, m)$ w obrazie wyjściowym,
  \item[$N, M$] odpowiednio szerokość i wysokość obrazu w pikselach.
 \end{description}
 
@@ -121,7 +122,7 @@ Ponieważ piksele w operacjach tych przetwarzane są niezależnie, przetwarzanie
 Wyznaczanie negatywu obrazu sprowadza się do wyznacznia wartości przeciwnej dla każdego z kanałów piksela:
 
 \begin{equation}
- g(n, m) = -g(n, m) \mod C_{max}
+ g'(n, m) = -g(n, m) \mod C_{max}
 \end{equation}
 
 gdzie $C_{max}$ to maksymalna możliwa wartość.
@@ -132,7 +133,7 @@ Zmiana kontrastu to zmiana amplitudy charakteryzującej każdy z kanałów pikse
  f(n, m) = g(n, m) \cdot \alpha
 \end{equation}
 \begin{equation}
- g(n, m) = \left\{
+ g'(n, m) = \left\{
   \begin{array}{l l}
     0 & \quad f(n, m) < 0 \\
     f(n, m) & \quad 0 \leq f(n, m) \leq C_{max} \\
@@ -147,7 +148,7 @@ Zmiana jasności sprowadza się do dodania pewnej stałej $\delta$ do każdego k
  f(n, m) = g(n, m) + \delta
 \end{equation}
 \begin{equation}
- g(n, m) = \left\{
+ g'(n, m) = \left\{
   \begin{array}{l l}
     0 & \quad f(n, m) < 0 \\
     f(n, m) & \quad 0 \leq f(n, m) \leq C_{max} \\
@@ -166,7 +167,7 @@ W przypadku gdy maska określa pobranie wartości piksela spoza obrazka, element
 \subsubsection{Filtr ze średnią arytmetyczną}
 Dla każdego kanału piksela obrazu sumowane są wartości tego kanału z wszystkich pikseli odległych od aktualnie przetwarzanego nie więcej, niż określa to rozmiar maski. Suma ta jest następnie dzielona przez ilość uwzględnionych elementów \ppauza obliczana jest średnia arytmetyczna:
 \begin{equation}
- g(n, m) = \frac{1}{(2 \cdot w + 1) \cdot (2 \cdot h + 1)} \cdot \displaystyle \sum \limits_{n' = n - w}^{n + w} \displaystyle \sum \limits_{m' = m - h}^{m + h} g(n', m')
+ g'(n, m) = \frac{1}{(2 \cdot w + 1) \cdot (2 \cdot h + 1)} \cdot \displaystyle \sum \limits_{n' = n - w}^{n + w} \displaystyle \sum \limits_{m' = m - h}^{m + h} g(n', m')
 \end{equation}
 gdzie $w$ to promień poziomy, a $h$ promień pionowy maski.
 
@@ -178,7 +179,7 @@ W przypadku filtru medianowego wartości kanału ze wszystkich pikseli wchodząc
 \subsection{Filtracja liniowa w oparciu o splot}
 Aby dokonać filtracji liniowej opartej o splot, konieczna jest znajomość maski filtru, jaka opisuje odpowiedź impulsową splotu. Nazwijmy tę maskę macierzą $X[2 \cdot W + 1; 2 \cdot H + 1]$ i przyjmijmy, że funkcja $x(w, h)$ zwraca element macierzy $X$ z pozycji $(w, h)$, wtedy:
 \begin{equation}
- g(n, m) = \displaystyle \sum \limits_{w=-W}^W \displaystyle \sum \limits_{h=-H}^H g(n + w, m + h) \cdot x(w, h)
+ g'(n, m) = \displaystyle \sum \limits_{w=-W}^W \displaystyle \sum \limits_{h=-H}^H g(n + w, m + h) \cdot x(w, h)
 \end{equation}
 
 Uzyskane w taki sposób wartości należy znormalizować. W tym celu postanowiliśmy znaleźć minimalną i maksymalną wartość kanału $C'_{min}$ oraz $C'_{max}$ po przekształceniu, a następnie przeskalować wszystkie wartości z tego zakresu na zakres możliwy do osiągnięcia $C_{min} \div C_{max}$\footnote{Wartość $C_{min}$ wynosi 0, zatem można ją pominąć w obliczeniach}:
@@ -190,7 +191,7 @@ Uzyskane w taki sposób wartości należy znormalizować. W tym celu postanowili
 \subsection{Filtracja nieliniowa}
 Wariant zadania, który nam przypadł przewidywał implementację poziomego operatora Rosenfelda:
 \begin{equation}
- g(n, m) = \frac{1}{R} \cdot \left( \displaystyle \sum \limits_{i=1}^R g\left(n + i - 1, m\right) - \displaystyle \sum \limits_{i=1}^R g\left(n - i, m\right) \right)
+ g'(n, m) = \frac{1}{R} \cdot \left( \displaystyle \sum \limits_{i=1}^R g\left(n + i - 1, m\right) - \displaystyle \sum \limits_{i=1}^R g\left(n - i, m\right) \right)
 \end{equation}
 Normalizacja uzyskanych danych ma postać jak w równaniu \ref{eq:normalization}.
 
