@@ -156,6 +156,20 @@ Zmiana jasności sprowadza się do dodania pewnej stałej $\delta$ do każdego k
 \right.
 \end{equation}
 
+\subsection{Filtrowanie}
+Filtrowanie obrazu jest próbą poprawienia jego jakości \ppauza zarówno obiektywnej jak i subiektywnej. Zadaniem zaimplementowanych filtrów jest usuwanie szumów z obrazu.
+
+Każdy z tych filtrów, w odróżnieniu od operacji podstawowych, uwzględnia okolicę piksela, do której należy przetwarzany aktualnie piksel. Wielkość otoczenia nazywana jest wielkością maski i określa, ile pikseli zarówno w poziomie jak i pionie branych jest pod uwagę podczas wyliczania nowej wartości przetwarzanego piksela.
+
+W przypadku gdy maska określa pobranie wartości piksela spoza obrazka, element taki zostaje zignorowany i nie jest brany pod uwagę w obliczeniach.
+
+\subsubsection{Filtr ze średnią arytmetyczną}
+Dla każdego kanału piksela obrazu sumowane są wartości tego kanału z wszystkich pikseli odległych od aktualnie przetwarzanego nie więcej, niż określa to rozmiar maski. Suma ta jest następnie dzielona przez ilość uwzględnionych elementów \ppauza obliczana jest średnia arytmetyczna:
+\begin{equation}
+ g(n, m) = \frac{1}{(2 \cdot w + 1) \cdot (2 \cdot h + 1)} \cdot \displaystyle \sum \limits_{n' = n - w}^{n + w} \displaystyle \sum \limits_{m' = m - h}^{m + h} g(n', m')
+\end{equation}
+gdzie $w$ to promień poziomy, a $h$ promień pionowy maski.
+
 \begin{thebibliography}{99}
 %\bibitem{pleple}
 % opis
