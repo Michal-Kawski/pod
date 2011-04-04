@@ -183,9 +183,16 @@ Aby dokonać filtracji liniowej opartej o splot, konieczna jest znajomość mask
 
 Uzyskane w taki sposób wartości należy znormalizować. W tym celu postanowiliśmy znaleźć minimalną i maksymalną wartość kanału $C'_{min}$ oraz $C'_{max}$ po przekształceniu, a następnie przeskalować wszystkie wartości z tego zakresu na zakres możliwy do osiągnięcia $C_{min} \div C_{max}$\footnote{Wartość $C_{min}$ wynosi 0, zatem można ją pominąć w obliczeniach}:
 \begin{equation}
+ \label{eq:normalization}
  c = \frac{C_{max}}{C'_{max} - C'_{min}} \cdot (c' - C'_{min})
 \end{equation}
 
+\subsection{Filtracja nieliniowa}
+Wariant zadania, który nam przypadł przewidywał implementację poziomego operatora Rosenfelda:
+\begin{equation}
+ g(n, m) = \frac{1}{R} \cdot \left( \displaystyle \sum \limits_{i=1}^R g\left(n + i - 1, m\right) - \displaystyle \sum \limits_{i=1}^R g\left(n - i, m\right) \right)
+\end{equation}
+Normalizacja uzyskanych danych ma postać jak w równaniu \ref{eq:normalization}.
 
 \begin{thebibliography}{99}
 %\bibitem{pleple}
