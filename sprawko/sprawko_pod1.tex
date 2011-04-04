@@ -181,6 +181,11 @@ Aby dokonać filtracji liniowej opartej o splot, konieczna jest znajomość mask
  g(n, m) = \displaystyle \sum \limits_{w=-W}^W \displaystyle \sum \limits_{h=-H}^H g(n + w, m + h) \cdot x(w, h)
 \end{equation}
 
+Uzyskane w taki sposób wartości należy znormalizować. W tym celu postanowiliśmy znaleźć minimalną i maksymalną wartość kanału $C'_{min}$ oraz $C'_{max}$ po przekształceniu, a następnie przeskalować wszystkie wartości z tego zakresu na zakres możliwy do osiągnięcia $C_{min} \div C_{max}$\footnote{Wartość $C_{min}$ wynosi 0, zatem można ją pominąć w obliczeniach}:
+\begin{equation}
+ c = \frac{C_{max}}{C'_{max} - C'_{min}} \cdot (c' - C'_{min})
+\end{equation}
+
 
 \begin{thebibliography}{99}
 %\bibitem{pleple}
