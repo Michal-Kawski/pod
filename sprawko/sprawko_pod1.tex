@@ -141,7 +141,20 @@ Zmiana kontrastu to zmiana amplitudy charakteryzującej każdy z kanałów pikse
 \right.
 \end{equation}
 
-
+\subsubsection{Zmiana jasności}
+Zmiana jasności sprowadza się do dodania pewnej stałej $\delta$ do każdego kanału piksela. $\delta$ może przyjmować wartości zarówno dodatnie jak i ujemne, co określa odpowiednio rozjaśnianie oraz przyciemnianie obrazu. Tak przetworzone wartości należy ograniczyć jeszcze do wartości możliwych do zapisania w obrazie:
+\begin{equation}
+ f(n, m) = g(n, m) + \delta
+\end{equation}
+\begin{equation}
+ g(n, m) = \left\{
+  \begin{array}{l l}
+    0 & \quad f(n, m) < 0 \\
+    f(n, m) & \quad 0 \leq f(n, m) \leq C_{max} \\
+    C_{max} & \quad f(n, m) > C_{max} \\
+  \end{array}
+\right.
+\end{equation}
 
 \begin{thebibliography}{99}
 %\bibitem{pleple}
