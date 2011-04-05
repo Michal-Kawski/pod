@@ -119,6 +119,7 @@ Algorytmy abstrachują od szczegółów implementacji, dzięki czemu można opis
 Ponieważ piksele w operacjach tych przetwarzane są niezależnie, przetwarzanie obrazu za ich pomocą sprowadza się do przetworzenia każdego piksela obrazu zadanym algorytmem.
 
 \subsubsection{Negatyw}
+\label{filter.negative}
 Wyznaczanie negatywu obrazu sprowadza się do wyznacznia wartości przeciwnej dla każdego z kanałów piksela:
 
 \begin{equation}
@@ -128,6 +129,7 @@ Wyznaczanie negatywu obrazu sprowadza się do wyznacznia wartości przeciwnej dl
 gdzie $C_{max}$ to maksymalna możliwa wartość.
 
 \subsubsection{Zmiana kontrastu}
+\label{filter.contrast}
 Zmiana kontrastu to zmiana amplitudy charakteryzującej każdy z kanałów piksela. Dokonujemy tego poprzez mnożenie wartości każdego z kanałów przez pewien współczynnik $\alpha \in [0; 2]$, a następnie ograniczamy tak uzyskane wartości do zakresu możliwych:
 \begin{equation}
  f(n, m) = g(n, m) \cdot \alpha
@@ -143,6 +145,7 @@ Zmiana kontrastu to zmiana amplitudy charakteryzującej każdy z kanałów pikse
 \end{equation}
 
 \subsubsection{Zmiana jasności}
+\label{filter.brightness}
 Zmiana jasności sprowadza się do dodania pewnej stałej $\delta$ do każdego kanału piksela. $\delta$ może przyjmować wartości zarówno dodatnie jak i ujemne, co określa odpowiednio rozjaśnianie oraz przyciemnianie obrazu. Tak przetworzone wartości należy ograniczyć jeszcze do wartości możliwych do zapisania w obrazie:
 \begin{equation}
  f(n, m) = g(n, m) + \delta
@@ -165,6 +168,7 @@ Każdy z tych filtrów, w odróżnieniu od operacji podstawowych, uwzględnia ok
 W przypadku gdy maska określa pobranie wartości piksela spoza obrazka, element taki zostaje zignorowany i nie jest brany pod uwagę w obliczeniach.
 
 \subsubsection{Filtr ze średnią arytmetyczną}
+\label{filter.average}
 Dla każdego kanału piksela obrazu sumowane są wartości tego kanału z wszystkich pikseli odległych od aktualnie przetwarzanego nie więcej, niż określa to rozmiar maski. Suma ta jest następnie dzielona przez ilość uwzględnionych elementów \ppauza obliczana jest średnia arytmetyczna:
 \begin{equation}
  g'(n, m) = \frac{1}{(2 \cdot w + 1) \cdot (2 \cdot h + 1)} \cdot \displaystyle \sum \limits_{n' = n - w}^{n + w} \displaystyle \sum \limits_{m' = m - h}^{m + h} g(n', m')
@@ -172,11 +176,13 @@ Dla każdego kanału piksela obrazu sumowane są wartości tego kanału z wszyst
 gdzie $w$ to promień poziomy, a $h$ promień pionowy maski.
 
 \subsubsection{Filtr medianowy}
+\label{filter.median}
 W przypadku filtru medianowego wartości kanału ze wszystkich pikseli wchodzących w skład maski ustawiane są w niemalejącym szeregu, a następnie zwracana jest mediana tych elementów, czyli element z pozycji $\frac{l}{2}$~w~przypadku szeregu o nieparzystej długości $l$ lub średnia arytmetyczna z~dwóch środkowych elementów $\frac{g(\frac{l}{2} - 1) + g(\frac{l}{2})}{2}$ w przypadku szeregu o parzystej ilości elementów.
 
 \subsection{Modyfikacja w oparciu o histogram}
 
 \subsection{Filtracja liniowa w oparciu o splot}
+\label{filter.convolution}
 Aby dokonać filtracji liniowej opartej o splot, konieczna jest znajomość maski filtru, jaka opisuje odpowiedź impulsową splotu. Nazwijmy tę maskę macierzą $X[2 \cdot W + 1; 2 \cdot H + 1]$ i przyjmijmy, że funkcja $x(w, h)$ zwraca element macierzy $X$ z pozycji $(w, h)$, wtedy:
 \begin{equation}
  g'(n, m) = \displaystyle \sum \limits_{w=-W}^W \displaystyle \sum \limits_{h=-H}^H g(n + w, m + h) \cdot x(w, h)
@@ -189,6 +195,7 @@ Uzyskane w taki sposób wartości należy znormalizować. W tym celu postanowili
 \end{equation}
 
 \subsection{Filtracja nieliniowa}
+\label{filter.nonlinear}
 Wariant zadania, który nam przypadł przewidywał implementację poziomego operatora Rosenfelda:
 \begin{equation}
  g'(n, m) = \frac{1}{R} \cdot \left( \displaystyle \sum \limits_{i=1}^R g\left(n + i - 1, m\right) - \displaystyle \sum \limits_{i=1}^R g\left(n - i, m\right) \right)
@@ -232,6 +239,30 @@ Z menu użytkownik może wybrać także opcję zapisania obrazka \ppauza obrazek
 W tym ostatnim przypadku należy załadować do programu zaszumiony obrazek i poddać go litracji, po kliknięciu wspomnianej opcji pojawi się okienko, w którym użytkownik powinien wskazać położenie pliku oryginalnego, zaś parametry MSE i SNR zostaną wypisane na wyjście błędów.
 
 Uruchomienie filtru na obrazku skutkuje utworzeniem nowego okna klasy \texttt{PhotoWindow} wyświetlającym przetworzony obrazek. Tak wyświetlone okno w swoim tytule pokazuje, jakie operacje były wykonane na obrazku.
+
+\subsection{Filtry}
+Wszystkie filtry, w tym splot oraz filtracja nieliniowa opierają się o klasę \texttt{FilterInterface}. Instancje klas dziedziczących po niej tworzone są w konstruktorze \texttt{PhotoWindow} i wypełniane jest nimi submenu Filters. Wywołanie jednej z dostępnych opcji skutkuje wywołaniem metody \texttt{setup()}, a jeśli zwróci ona wartość true, wykonywana jest także metoda \texttt{apply}, która zwraca przetworzony obrazek.
+
+\subsubsection{Negatyw - Negative}
+Filtr ten nie posiada opcji, wykonuje metodę opisaną w sekcji \ref{filter.negative}.
+
+\subsubsection{Jasność - Brightness}
+Po wybraniu tego filtru prezentowane jest użytkownikowi okienko, w którym określany jest parametr $\delta$ opisany w sekcji \ref{filter.brightness}, a następnie metoda z tej sekcji wykonywana jest dla całego obrazu.
+
+\subsubsection{Kontrast - Contrast}
+Wybranie tego filtru skutkuje prezentacją użytkownikowi okienka z suwakiem służącym do wyboru pożądanej wielkości parametru $\alpha$ z sekcji \ref{filter.contrast}. Możliwe jest wybranie wartości z zakresu $-255 \div 255$, wybrana wartość jest następnie dzielona przez 255 i dodawana do 1, aby przeskalować ją na zakres $[0; 2]$.
+
+\subsubsection{Uśrednianie - Average}
+Uruchomienie tego filtru powoduje pokazanie okienka z wyborem wielkości maski \ppauza użytkownik powinien wprowadzić promień poziommy i pionowy maski, po czym następuje wykonanie metody opisanej w \ref{filter.average}.
+
+\subsubsection{Mediana - Median}
+Włączenie tego filtru spowoduje działanie podobne jak w powyższym przypadku \ppauza ukazanie się okienka z wyborem maski, a następnie zostanie wykonana metoda z sekcji \ref{filter.median}.
+
+\subsubsection{Filtr liniowy - Convolution}
+Wybranie tej opcji spowoduje najpierw pokazanie okienka z wyborem wielkości maski, następnie zaś użytkownik zostanie poproszony o wprowadzenie wartości maski. Metoda ta jest opisana w sekcji \ref{filter.convolution}.
+
+\subsubsection{Filtr nieliniowy - Rosenfeld}
+Opcja ta spowoduje pokazanie okienka z suwakiem, w którym użytkownik powinien podać parametr $R$.
 
 \begin{thebibliography}{99}
 %\bibitem{pleple}
