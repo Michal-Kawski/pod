@@ -10,6 +10,7 @@
 \usepackage{array}
 \usepackage{multirow}
 \usepackage{url}
+\usepackage{subfigure}
 
 \studycycle{Informatyka, studia dzienne, II st.}
 \coursesemester{I}
@@ -29,6 +30,8 @@
 \title{Zadanie 1: Przetwarzanie obrazów}
 
 \floatname{algorithm}{Algorytm}
+
+\usepackage{wasysym}
 
 \begin{document}
 
@@ -132,6 +135,7 @@ gdzie $C_{max}$ to maksymalna możliwa wartość.
 \label{filter.contrast}
 Zmiana kontrastu to zmiana amplitudy charakteryzującej każdy z kanałów piksela. Dokonujemy tego poprzez mnożenie wartości każdego z kanałów przez pewien współczynnik $\alpha \in [0; 2]$, a następnie ograniczamy tak uzyskane wartości do zakresu możliwych:
 \begin{equation}
+\label{eq.contrast}
  f(n, m) = g(n, m) \cdot \alpha
 \end{equation}
 \begin{equation}
@@ -148,6 +152,7 @@ Zmiana kontrastu to zmiana amplitudy charakteryzującej każdy z kanałów pikse
 \label{filter.brightness}
 Zmiana jasności sprowadza się do dodania pewnej stałej $\delta$ do każdego kanału piksela. $\delta$ może przyjmować wartości zarówno dodatnie jak i ujemne, co określa odpowiednio rozjaśnianie oraz przyciemnianie obrazu. Tak przetworzone wartości należy ograniczyć jeszcze do wartości możliwych do zapisania w obrazie:
 \begin{equation}
+\label{eq.brightness}
  f(n, m) = g(n, m) + \delta
 \end{equation}
 \begin{equation}
@@ -263,6 +268,120 @@ Wybranie tej opcji spowoduje najpierw pokazanie okienka z wyborem wielkości mas
 
 \subsubsection{Filtr nieliniowy - Rosenfeld}
 Opcja ta spowoduje pokazanie okienka z suwakiem, w którym użytkownik powinien podać parametr $R$.
+
+\section{Materiały i metody}
+Do testów wykorzystaliśmy popularny obrazek ,,Lena'' w wariantach kolorowym i odcieni szarości. Obrazki te prezentują rysunki \ref{fig.lena} i \ref{fig.lenac}.
+
+\begin{figure}
+  \begin{minipage}{0.5\linewidth}
+    \centering
+    \includegraphics[scale=0.4]{img/lenac.png}
+    \caption{Obraz kolorowy \textbf{lenac.bmp} wykorzystany do testów.}
+    \label{fig.lena}
+  \end{minipage}
+  \hspace{0.5cm}
+  \begin{minipage}{0.5\linewidth}
+    \centering
+    \includegraphics[scale=0.4]{img/lena.png}
+    \caption{Obraz czarno-biały \textbf{lena.bmp} wykorzystany do testów.}
+    \label{fig.lenac}
+  \end{minipage}
+\end{figure}
+
+\begin{figure}
+\noindent\makebox[\textwidth]{%
+ \subfigure[Obraz kolorowy z szumem o rozkładzie normalnym \textbf{lenac\_normal3.bmp} wykorzystany do testów.]{
+  \includegraphics[scale=0.3]{img/lenac_normal3.png}
+  \label{fig.lenac_normal3}
+ }
+ \subfigure[Obraz kolorowy z szumem o rozkładzie jednostajnym \textbf{lenac\_uniform3.bmp} wykorzystany do testów.]{
+  \includegraphics[scale=0.3]{img/lenac_uniform3.png}
+  \label{fig.lenac_uniform3}
+ }
+ \subfigure[Obraz kolorowy z szumem o rozkładzie impulsowym \textbf{lenac\_impulse3.bmp} wykorzystany do testów.]{
+  \includegraphics[scale=0.3]{img/lenac_impulse3.png}
+  \label{fig.lenac_impulse3}
+ }
+}
+\caption{Zaszumione kolorowe obrazy}
+\end{figure}
+
+\begin{figure}
+\noindent\makebox[\textwidth]{%
+ \subfigure[Obraz w skali szarości z szumem o rozkładzie normalnym \textbf{lena\_normal3.bmp} wykorzystany do testów.]{
+  \includegraphics[scale=0.3]{img/lena_normal3.png}
+  \label{fig.lena_normal3}
+ }
+ \subfigure[Obraz w skali szarości z szumem o rozkładzie jednostajnym \textbf{lena\_uniform3.bmp} wykorzystany do testów.]{
+  \includegraphics[scale=0.3]{img/lena_uniform3.png}
+  \label{fig.lena_uniform3}
+ }
+ \subfigure[Obraz w skali szarości z szumem o rozkładzie impulsowym \textbf{lena\_impulse3.bmp} wykorzystany do testów.]{
+  \includegraphics[scale=0.3]{img/lena_impulse3.png}
+  \label{fig.lena_impulse3}
+ }
+}
+\caption{Zaszumione obrazy w skali szarości}
+\end{figure}
+
+Ponadto dla każdego wariantu wybraliśmy trzy rodzaje szumów:
+\begin{itemize}
+ \item szum o rozkładzie normalnym (rysunki \ref{fig.lenac_normal3} i \ref{fig.lena_normal3}),
+ \item szum o rozkładzie jednostajnym (rysunki \ref{fig.lenac_uniform3} i \ref{fig.lena_uniform3}),
+ \item szum o rozkładzie impulsowym (rysunki \ref{fig.lenac_impulse3} i \ref{fig.lena_impulse3}).
+\end{itemize}
+
+Podstawowe wersje rysunków zostały poddane działaniu wszystkich filtrów, zaś obrazy zaszumione tylko filtrowaniu z wykorzystaniem średniej i mediany.
+
+Poniżej znajdują się opisane szczegółowo działania.
+
+\subsection{Negatyw}
+Wyznaczony został negatyw obrazków za pomocą filtru Negative.
+
+\subsection{Zmiana jasności}
+Dokonano zmiany jasności obrazków za pomocą filtru Brightness. Obrazki przyciemniono oraz rozjaśniono stosując wartość parametru wynoszącą odpowiednio -85 oraz +85, co odpowiada wartościom $-\frac{1}{3}$ oraz $\frac{1}{3}$ parametru $\delta$ ze wzoru \ref{eq.brightness}.
+
+\subsection{Zmiana kontrastu}
+Dokonano zmiany kontrastu obrazków za pomocą filtru Contrast. Obrazkom zwiększono i zmniejszono kontrast stosując do tego następujące parametry: -85 oraz +85, co odpowiada wartościom $-\frac{1}{3}$ oraz $\frac{1}{3}$ parametru $\alpha$ ze wzoru \ref{eq.contrast}.
+
+\subsection{Filtrowanie}
+\subsubsection{Za pomocą średniej arytmetycznej}
+Dokonano trzech filtrowań, z maskami o wielkościach $3 \times 3$, $5 \times 5$, $7 \times 7$ za pomocą filtru Average. Filtrowaniu poddane zostały obrazki oryginalne oraz zaszumione.
+
+\subsubsection{Za pomocą mediany}
+Dokonano trzech filtrowań, z maskami o wielkościach $3 \times 3$, $5 \times 5$, $7 \times 7$ za pomocą filtru Median. Filtrowaniu poddane zostały obrazki oryginalne oraz zaszumione.
+
+\subsection{Modyfikacja w oparciu o histogram}
+
+\subsection{Filtracja liniowa w oparciu o splot}
+Dokonano filtracji liniowej opartej o splot. Przydzielony wariant zadania określał wykorzystanie następujących masek: wydobywanie szczegółów z tła: południe, południowy-zachód, zachód, północny-zachód:
+\begin{equation*}
+\left(\begin{array}{ccc} -1 & -1 & -1 \\ 
+1 & -2 & 1 \\
+1 & 1 & 1 \\
+\end{array}\right)\\
+\\
+\left(\begin{array}{ccc} 1 & -1 & -1 \\ 
+1 & -2 & -1 \\
+1 & 1 & 1 \\
+\end{array}\right)\\
+\\
+\left(\begin{array}{ccc} 1 & 1 & -1 \\ 
+1 & -2 & -1 \\
+1 & 1 & -1 \\
+\end{array}\right)\\
+\\
+\left(\begin{array}{ccc} 1 & 1 & 1 \\ 
+1 & -2 & -1 \\
+1 & -1 & -1 \\
+\end{array}\right)
+\end{equation*}
+
+\subsection{Filtracja nieliniowa}
+Dokonano filtracji nieliniowej obrazu wykorzystując w tym celu operator Rosenfelda z następującymi parametrami R: 2, 3, 4, 5, 6.
+
+\subsection{Obiektywna i subiektywna ocena jakości obrazu}
+Przefiltrowane zaszumione wersje obrazów poddano ocenie. W celu obiektywnej oceny jakości wykorzystano wskaźniki MSE i SNR, natomiast do oceny subiektywnej wykorzystano własne oczy \smiley.
 
 \begin{thebibliography}{99}
 %\bibitem{pleple}
