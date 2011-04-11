@@ -3,6 +3,10 @@
 #include "colorparser.h"
 
 #include <QVector3D>
+#include <QElapsedTimer>
+#include <omp.h>
+
+#include <QDebug>
 
 AverageFilter::AverageFilter(QObject *parent) :
 	FilterInterface(parent)
@@ -37,6 +41,11 @@ QImage AverageFilter::apply()
 		result.setColorTable(mImg.colorTable());
 	}
 	ColorParser cp(mFormat);
+	QElapsedTimer t;
+	t.start();
+#pragma omp parallel
+	{
+#pragma omp for
 	for (int x = 0; x < mImg.size().width(); x++) {
 		for (int y = 0; y < mImg.size().height(); y++) {
 			int count = 0;
@@ -56,5 +65,8 @@ QImage AverageFilter::apply()
 			cp.setPixel(x, y, result, average);
 		}
 	}
+	}
+	int time = t.elapsed();
+	qDebug() << time;
 	return result;
 }
