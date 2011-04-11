@@ -413,7 +413,7 @@ Obrazki \ref{fig.lenac_negative} i \ref{fig.lena_negative} przedstawiają negaty
 \end{figure}
 
 \subsection{Zmiana jasności}
-Obrazki \ref{fig.lenac_brightness_+85}, \ref{fig.lenac_brightness_-85}, \ref{fig.lena_brightness_+85} i \ref{fig.lena_brightness_-85} prezentują obrazki ze zmodyfikowaną jasnością.
+Obrazki \ref{fig.lenac_brightness_+85}, \ref{fig.lenac_brightness_-85}, \ref{fig.lena_brightness_+85} i \ref{fig.lena_brightness_-85} prezentują obrazki ze zmodyfikowaną jasnością zgodnie z opisem z \ref{sec.tests.brightness}.
 
 \begin{figure}
  \subfigure[Obraz \textbf{lenac.bmp} (\ref{fig.lenac}) rozjaśniony o wartość +85]{
@@ -436,7 +436,7 @@ Obrazki \ref{fig.lenac_brightness_+85}, \ref{fig.lenac_brightness_-85}, \ref{fig
 \end{figure}
 
 \subsection{Zmiana kontrastu}
-Obrazki \ref{fig.lenac_contrast_+85}, \ref{fig.lenac_contrast_-85}, \ref{fig.lena_contrast_+85} i \ref{fig.lena_contrast_-85} prezentują obrazki ze zmodyfikowaną jasnością.
+Obrazki \ref{fig.lenac_contrast_+85}, \ref{fig.lenac_contrast_-85}, \ref{fig.lena_contrast_+85} i \ref{fig.lena_contrast_-85} prezentują obrazki ze zmodyfikowaną jasnością zgodnie z opisem z \ref{sec.tests.contrast}.
 
 \begin{figure}
  \subfigure[Obraz \textbf{lenac.bmp} (\ref{fig.lenac}) z kontrastem zmodyfikowanym wartością +85]{
@@ -456,6 +456,331 @@ Obrazki \ref{fig.lenac_contrast_+85}, \ref{fig.lenac_contrast_-85}, \ref{fig.len
   \label{fig.lena_contrast_-85}
  }
 \caption{Obrazki ze zmodyfikowanym kontrastem}
+\end{figure}
+
+\subsection{Filtrowanie}
+Do tego filtru wykorzystano zarówno obrazki oryginalne jak i zaszumione. Modyfikacja polegała na przefiltrowaniu obrazka wybraną metodą z następującymi wielkościami masek: $3 \times 3$, $5 \times 5$ oraz $7 \times 7$.
+
+\subsubsection{Za pomocą średniej arytmetycznej}
+Wyniki wykonanych operacji prezentują obrazki \ref{fig.lenac_average}, \ref{fig.lena_average}, \ref{fig.lenac_normal3_average}, \ref{fig.lenac_uniform3_average}, \ref{fig.lenac_impulse3_average}, \ref{fig.lena_normal3_average}, \ref{fig.lena_uniform3_average} i \ref{fig.lenac_impulse3_average}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%% average - original
+
+\begin{figure}
+\noindent\makebox[\textwidth]{%
+ \subfigure[Maska $3 \times 3$]{
+  \includegraphics[scale=0.3]{img/lenac_average_3x3.png}
+  \label{fig.lenac_average_3x3}
+ }
+ \subfigure[Maska $5 \times 5$]{
+  \includegraphics[scale=0.3]{img/lenac_average_5x5.png}
+  \label{fig.lenac_average_5x5}
+ }
+ \subfigure[Maska $7 \times 7$]{
+  \includegraphics[scale=0.3]{img/lenac_average_7x7.png}
+  \label{fig.lenac_average_7x7}
+ }
+}
+\caption{Obrazek \textbf{lenac.bmp} (\ref{fig.lenac}) poddany filtrowaniu z wykorzystaniem średniej arytmetycznej}
+\label{fig.lenac_average}
+\end{figure}
+
+\begin{figure}
+\noindent\makebox[\textwidth]{%
+ \subfigure[Maska $3 \times 3$]{
+  \includegraphics[scale=0.3]{img/lena_average_3x3.png}
+  \label{fig.lena_average_3x3}
+ }
+ \subfigure[Maska $5 \times 5$]{
+  \includegraphics[scale=0.3]{img/lena_average_5x5.png}
+  \label{fig.lena_average_5x5}
+ }
+ \subfigure[Maska $7 \times 7$]{
+  \includegraphics[scale=0.3]{img/lena_average_7x7.png}
+  \label{fig.lena_average_7x7}
+ }
+}
+\caption{Obrazek \textbf{lena.bmp} (\ref{fig.lena}) poddany filtrowaniu z wykorzystaniem średniej arytmetycznej}
+\label{fig.lena_average}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%% average - noisy
+
+\begin{figure}
+\noindent\makebox[\textwidth]{%
+ \subfigure[Maska $3 \times 3$]{
+  \includegraphics[scale=0.3]{img/lenac_normal3_average_3x3.png}
+  \label{fig.lenac_normal3_average_3x3}
+ }
+ \subfigure[Maska $5 \times 5$]{
+  \includegraphics[scale=0.3]{img/lenac_normal3_average_5x5.png}
+  \label{fig.lenac_normal3_average_5x5}
+ }
+ \subfigure[Maska $7 \times 7$]{
+  \includegraphics[scale=0.3]{img/lenac_normal3_average_7x7.png}
+  \label{fig.lenac_normal3_average_7x7}
+ }
+}
+\caption{Obrazek \textbf{lenac\_normal3.bmp} (\ref{fig.lenac_normal3}) poddany filtrowaniu z wykorzystaniem średniej arytmetycznej}
+\label{fig.lenac_normal3_average}
+\end{figure}
+
+\begin{figure}
+\noindent\makebox[\textwidth]{%
+ \subfigure[Maska $3 \times 3$]{
+  \includegraphics[scale=0.3]{img/lenac_uniform3_average_3x3.png}
+  \label{fig.lenac_uniform3_average_3x3}
+ }
+ \subfigure[Maska $5 \times 5$]{
+  \includegraphics[scale=0.3]{img/lenac_uniform3_average_5x5.png}
+  \label{fig.lenac_uniform3_average_5x5}
+ }
+ \subfigure[Maska $7 \times 7$]{
+  \includegraphics[scale=0.3]{img/lenac_uniform3_average_7x7.png}
+  \label{fig.lenac_uniform3_average_7x7}
+ }
+}
+\caption{Obrazek \textbf{lenac\_uniform3.bmp} (\ref{fig.lenac_uniform3}) poddany filtrowaniu z wykorzystaniem średniej arytmetycznej}
+\label{fig.lenac_uniform3_average}
+\end{figure}
+
+\begin{figure}
+\noindent\makebox[\textwidth]{%
+ \subfigure[Maska $3 \times 3$]{
+  \includegraphics[scale=0.3]{img/lenac_impulse3_average_3x3.png}
+  \label{fig.lenac_impulse3_average_3x3}
+ }
+ \subfigure[Maska $5 \times 5$]{
+  \includegraphics[scale=0.3]{img/lenac_impulse3_average_5x5.png}
+  \label{fig.lenac_impulse3_average_5x5}
+ }
+ \subfigure[Maska $7 \times 7$]{
+  \includegraphics[scale=0.3]{img/lenac_impulse3_average_7x7.png}
+  \label{fig.lenac_impulse3_average_7x7}
+ }
+}
+\caption{Obrazek \textbf{lenac\_impulse3.bmp} (\ref{fig.lenac_impulse3}) poddany filtrowaniu z wykorzystaniem średniej arytmetycznej}
+\label{fig.lenac_impulse3_average}
+\end{figure}
+
+\begin{figure}
+\noindent\makebox[\textwidth]{%
+ \subfigure[Maska $3 \times 3$]{
+  \includegraphics[scale=0.3]{img/lena_normal3_average_3x3.png}
+  \label{fig.lena_normal3_average_3x3}
+ }
+ \subfigure[Maska $5 \times 5$]{
+  \includegraphics[scale=0.3]{img/lena_normal3_average_5x5.png}
+  \label{fig.lena_normal3_average_5x5}
+ }
+ \subfigure[Maska $7 \times 7$]{
+  \includegraphics[scale=0.3]{img/lena_normal3_average_7x7.png}
+  \label{fig.lena_normal3_average_7x7}
+ }
+}
+\caption{Obrazek \textbf{lena\_normal3.bmp} (\ref{fig.lena_normal3}) poddany filtrowaniu z wykorzystaniem średniej arytmetycznej}
+\label{fig.lena_normal3_average}
+\end{figure}
+
+\begin{figure}
+\noindent\makebox[\textwidth]{%
+ \subfigure[Maska $3 \times 3$]{
+  \includegraphics[scale=0.3]{img/lena_uniform3_average_3x3.png}
+  \label{fig.lena_uniform3_average_3x3}
+ }
+ \subfigure[Maska $5 \times 5$]{
+  \includegraphics[scale=0.3]{img/lena_uniform3_average_5x5.png}
+  \label{fig.lena_uniform3_average_5x5}
+ }
+ \subfigure[Maska $7 \times 7$]{
+  \includegraphics[scale=0.3]{img/lena_uniform3_average_7x7.png}
+  \label{fig.lena_uniform3_average_7x7}
+ }
+}
+\caption{Obrazek \textbf{lena\_uniform3.bmp} (\ref{fig.lena_uniform3}) poddany filtrowaniu z wykorzystaniem średniej arytmetycznej}
+\label{fig.lena_uniform3_average}
+\end{figure}
+
+\begin{figure}
+\noindent\makebox[\textwidth]{%
+ \subfigure[Maska $3 \times 3$]{
+  \includegraphics[scale=0.3]{img/lena_impulse3_average_3x3.png}
+  \label{fig.lena_impulse3_average_3x3}
+ }
+ \subfigure[Maska $5 \times 5$]{
+  \includegraphics[scale=0.3]{img/lena_impulse3_average_5x5.png}
+  \label{fig.lena_impulse3_average_5x5}
+ }
+ \subfigure[Maska $7 \times 7$]{
+  \includegraphics[scale=0.3]{img/lena_impulse3_average_7x7.png}
+  \label{fig.lena_impulse3_average_7x7}
+ }
+}
+\caption{Obrazek \textbf{lena\_impulse3.bmp} (\ref{fig.lena_impulse3}) poddany filtrowaniu z wykorzystaniem średniej arytmetycznej}
+\label{fig.lena_impulse3_average}
+\end{figure}
+
+\subsubsection{Za pomocą mediany}
+Wyniki wykonanych operacji prezentują obrazki \ref{fig.lenac_median}, \ref{fig.lena_median}, \ref{fig.lenac_normal3_median}, \ref{fig.lenac_uniform3_median}, \ref{fig.lenac_impulse3_median}, \ref{fig.lena_normal3_median}, \ref{fig.lena_uniform3_median} i \ref{fig.lenac_impulse3_median}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%% median - original
+
+\begin{figure}
+\noindent\makebox[\textwidth]{%
+ \subfigure[Maska $3 \times 3$]{
+  \includegraphics[scale=0.3]{img/lenac_median_3x3.png}
+  \label{fig.lenac_median_3x3}
+ }
+ \subfigure[Maska $5 \times 5$]{
+  \includegraphics[scale=0.3]{img/lenac_median_5x5.png}
+  \label{fig.lenac_median_5x5}
+ }
+ \subfigure[Maska $7 \times 7$]{
+  \includegraphics[scale=0.3]{img/lenac_median_7x7.png}
+  \label{fig.lenac_median_7x7}
+ }
+}
+\caption{Obrazek \textbf{lenac.bmp} (\ref{fig.lenac}) poddany filtrowaniu z wykorzystaniem mediany}
+\label{fig.lenac_median}
+\end{figure}
+
+\begin{figure}
+\noindent\makebox[\textwidth]{%
+ \subfigure[Maska $3 \times 3$]{
+  \includegraphics[scale=0.3]{img/lena_median_3x3.png}
+  \label{fig.lena_median_3x3}
+ }
+ \subfigure[Maska $5 \times 5$]{
+  \includegraphics[scale=0.3]{img/lena_median_5x5.png}
+  \label{fig.lena_median_5x5}
+ }
+ \subfigure[Maska $7 \times 7$]{
+  \includegraphics[scale=0.3]{img/lena_median_7x7.png}
+  \label{fig.lena_median_7x7}
+ }
+}
+\caption{Obrazek \textbf{lena.bmp} (\ref{fig.lena}) poddany filtrowaniu z wykorzystaniem mediany}
+\label{fig.lena_median}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%% median - noisy
+
+\begin{figure}
+\noindent\makebox[\textwidth]{%
+ \subfigure[Maska $3 \times 3$]{
+  \includegraphics[scale=0.3]{img/lenac_normal3_median_3x3.png}
+  \label{fig.lenac_normal3_median_3x3}
+ }
+ \subfigure[Maska $5 \times 5$]{
+  \includegraphics[scale=0.3]{img/lenac_normal3_median_5x5.png}
+  \label{fig.lenac_normal3_median_5x5}
+ }
+ \subfigure[Maska $7 \times 7$]{
+  \includegraphics[scale=0.3]{img/lenac_normal3_median_7x7.png}
+  \label{fig.lenac_normal3_median_7x7}
+ }
+}
+\caption{Obrazek \textbf{lenac\_normal3.bmp} (\ref{fig.lenac_normal3}) poddany filtrowaniu z wykorzystaniem mediany}
+\label{fig.lenac_normal3_median}
+\end{figure}
+
+\begin{figure}
+\noindent\makebox[\textwidth]{%
+ \subfigure[Maska $3 \times 3$]{
+  \includegraphics[scale=0.3]{img/lenac_uniform3_median_3x3.png}
+  \label{fig.lenac_uniform3_median_3x3}
+ }
+ \subfigure[Maska $5 \times 5$]{
+  \includegraphics[scale=0.3]{img/lenac_uniform3_median_5x5.png}
+  \label{fig.lenac_uniform3_median_5x5}
+ }
+ \subfigure[Maska $7 \times 7$]{
+  \includegraphics[scale=0.3]{img/lenac_uniform3_median_7x7.png}
+  \label{fig.lenac_uniform3_median_7x7}
+ }
+}
+\caption{Obrazek \textbf{lenac\_uniform3.bmp} (\ref{fig.lenac_uniform3}) poddany filtrowaniu z wykorzystaniem mediany}
+\label{fig.lenac_uniform3_median}
+\end{figure}
+
+\begin{figure}
+\noindent\makebox[\textwidth]{%
+ \subfigure[Maska $3 \times 3$]{
+  \includegraphics[scale=0.3]{img/lenac_impulse3_median_3x3.png}
+  \label{fig.lenac_impulse3_median_3x3}
+ }
+ \subfigure[Maska $5 \times 5$]{
+  \includegraphics[scale=0.3]{img/lenac_impulse3_median_5x5.png}
+  \label{fig.lenac_impulse3_median_5x5}
+ }
+ \subfigure[Maska $7 \times 7$]{
+  \includegraphics[scale=0.3]{img/lenac_impulse3_median_7x7.png}
+  \label{fig.lenac_impulse3_median_7x7}
+ }
+}
+\caption{Obrazek \textbf{lenac\_impulse3.bmp} (\ref{fig.lenac_impulse3}) poddany filtrowaniu z wykorzystaniem mediany}
+\label{fig.lenac_impulse3_median}
+\end{figure}
+
+\begin{figure}
+\noindent\makebox[\textwidth]{%
+ \subfigure[Maska $3 \times 3$]{
+  \includegraphics[scale=0.3]{img/lena_normal3_median_3x3.png}
+  \label{fig.lena_normal3_median_3x3}
+ }
+ \subfigure[Maska $5 \times 5$]{
+  \includegraphics[scale=0.3]{img/lena_normal3_median_5x5.png}
+  \label{fig.lena_normal3_median_5x5}
+ }
+ \subfigure[Maska $7 \times 7$]{
+  \includegraphics[scale=0.3]{img/lena_normal3_median_7x7.png}
+  \label{fig.lena_normal3_median_7x7}
+ }
+}
+\caption{Obrazek \textbf{lena\_normal3.bmp} (\ref{fig.lena_normal3}) poddany filtrowaniu z wykorzystaniem mediany}
+\label{fig.lena_normal3_median}
+\end{figure}
+
+\begin{figure}
+\noindent\makebox[\textwidth]{%
+ \subfigure[Maska $3 \times 3$]{
+  \includegraphics[scale=0.3]{img/lena_uniform3_median_3x3.png}
+  \label{fig.lena_uniform3_median_3x3}
+ }
+ \subfigure[Maska $5 \times 5$]{
+  \includegraphics[scale=0.3]{img/lena_uniform3_median_5x5.png}
+  \label{fig.lena_uniform3_median_5x5}
+ }
+ \subfigure[Maska $7 \times 7$]{
+  \includegraphics[scale=0.3]{img/lena_uniform3_median_7x7.png}
+  \label{fig.lena_uniform3_median_7x7}
+ }
+}
+\caption{Obrazek \textbf{lena\_uniform3.bmp} (\ref{fig.lena_uniform3}) poddany filtrowaniu z wykorzystaniem mediany}
+\label{fig.lena_uniform3_median}
+\end{figure}
+
+\begin{figure}
+\noindent\makebox[\textwidth]{%
+ \subfigure[Maska $3 \times 3$]{
+  \includegraphics[scale=0.3]{img/lena_impulse3_median_3x3.png}
+  \label{fig.lena_impulse3_median_3x3}
+ }
+ \subfigure[Maska $5 \times 5$]{
+  \includegraphics[scale=0.3]{img/lena_impulse3_median_5x5.png}
+  \label{fig.lena_impulse3_median_5x5}
+ }
+ \subfigure[Maska $7 \times 7$]{
+  \includegraphics[scale=0.3]{img/lena_impulse3_median_7x7.png}
+  \label{fig.lena_impulse3_median_7x7}
+ }
+}
+\caption{Obrazek \textbf{lena\_impulse3.bmp} (\ref{fig.lena_impulse3}) poddany filtrowaniu z wykorzystaniem mediany}
+\label{fig.lena_impulse3_median}
 \end{figure}
 
 \begin{thebibliography}{99}
