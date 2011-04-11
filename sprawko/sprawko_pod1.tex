@@ -336,24 +336,32 @@ Podstawowe wersje rysunków zostały poddane działaniu wszystkich filtrów, za�
 Poniżej znajdują się opisane szczegółowo działania.
 
 \subsection{Negatyw}
+\label{sec.tests.negative}
 Wyznaczony został negatyw obrazków za pomocą filtru Negative.
 
 \subsection{Zmiana jasności}
+\label{sec.tests.brightness}
 Dokonano zmiany jasności obrazków za pomocą filtru Brightness. Obrazki przyciemniono oraz rozjaśniono stosując wartość parametru wynoszącą odpowiednio -85 oraz +85, co odpowiada wartościom $-\frac{1}{3}$ oraz $\frac{1}{3}$ parametru $\delta$ ze wzoru \ref{eq.brightness}.
 
 \subsection{Zmiana kontrastu}
+\label{sec.tests.contrast}
 Dokonano zmiany kontrastu obrazków za pomocą filtru Contrast. Obrazkom zwiększono i zmniejszono kontrast stosując do tego następujące parametry: -85 oraz +85, co odpowiada wartościom $-\frac{1}{3}$ oraz $\frac{1}{3}$ parametru $\alpha$ ze wzoru \ref{eq.contrast}.
 
 \subsection{Filtrowanie}
+\label{sec.tests.filtering}
 \subsubsection{Za pomocą średniej arytmetycznej}
+\label{sec.tests.filtering.average}
 Dokonano trzech filtrowań, z maskami o wielkościach $3 \times 3$, $5 \times 5$, $7 \times 7$ za pomocą filtru Average. Filtrowaniu poddane zostały obrazki oryginalne oraz zaszumione.
 
 \subsubsection{Za pomocą mediany}
+\label{sec.tests.filtering.median}
 Dokonano trzech filtrowań, z maskami o wielkościach $3 \times 3$, $5 \times 5$, $7 \times 7$ za pomocą filtru Median. Filtrowaniu poddane zostały obrazki oryginalne oraz zaszumione.
 
 \subsection{Modyfikacja w oparciu o histogram}
+\label{sec.tests.histogram}
 
 \subsection{Filtracja liniowa w oparciu o splot}
+\label{sec.tests.convolution}
 Dokonano filtracji liniowej opartej o splot. Przydzielony wariant zadania określał wykorzystanie następujących masek: wydobywanie szczegółów z tła: południe, południowy-zachód, zachód, północny-zachód:
 \begin{equation*}
 \left(\begin{array}{ccc} -1 & -1 & -1 \\ 
@@ -378,10 +386,76 @@ Dokonano filtracji liniowej opartej o splot. Przydzielony wariant zadania okreś
 \end{equation*}
 
 \subsection{Filtracja nieliniowa}
+\label{sec.tests.filtering.nonlinear}
 Dokonano filtracji nieliniowej obrazu wykorzystując w tym celu operator Rosenfelda z następującymi parametrami R: 2, 3, 4, 5, 6.
 
 \subsection{Obiektywna i subiektywna ocena jakości obrazu}
+\label{sec.tests.quality}
 Przefiltrowane zaszumione wersje obrazów poddano ocenie. W celu obiektywnej oceny jakości wykorzystano wskaźniki MSE i SNR, natomiast do oceny subiektywnej wykorzystano własne oczy \smiley.
+
+\section{Wyniki}
+Poniżej przedstawione są wyniki operacji przeprowadzonych na obrazkach.
+
+\subsection{Negatyw}
+Obrazki \ref{fig.lenac_negative} i \ref{fig.lena_negative} przedstawiają negatywy obrazków, jak opisano w sekcji \ref{sec.tests.negative}.
+
+\begin{figure}
+ \subfigure[Negatyw obrazu kolorowego \textbf{lenac.bmp} (\ref{fig.lenac})]{
+  \includegraphics[scale=0.5]{img/lenac_negative.png}
+  \label{fig.lenac_negative}
+ }
+ \subfigure[Negatyw obrazu czarno-białego \textbf{lena.bmp} (\ref{fig.lena})]{
+  \includegraphics[scale=0.5]{img/lena_negative.png}
+  \label{fig.lena_negative}
+ }
+\caption{Negatywy}
+\end{figure}
+
+\subsection{Zmiana jasności}
+Obrazki \ref{fig.lenac_brightness_+85}, \ref{fig.lenac_brightness_-85}, \ref{fig.lena_brightness_+85} i \ref{fig.lena_brightness_-85} prezentują obrazki ze zmodyfikowaną jasnością.
+
+\begin{figure}
+ \subfigure[Obraz \textbf{lenac.bmp} (\ref{fig.lenac}) rozjaśniony o wartość +85]{
+  \includegraphics[scale=0.5]{img/lenac_brightness_+85.png}
+  \label{fig.lenac_brightness_+85}
+ }
+ \subfigure[Obraz \textbf{lenac.bmp} (\ref{fig.lenac}) przyciemniony o wartość -85]{
+  \includegraphics[scale=0.5]{img/lenac_brightness_-85.png}
+  \label{fig.lenac_brightness_-85}
+ }
+ \subfigure[Obraz \textbf{lena.bmp} (\ref{fig.lena}) rozjaśniony o wartość +85]{
+  \includegraphics[scale=0.5]{img/lena_brightness_+85.png}
+  \label{fig.lena_brightness_+85}
+ }
+ \subfigure[Obraz \textbf{lena.bmp} (\ref{fig.lena}) przyciemniony o wartość -85]{
+  \includegraphics[scale=0.5]{img/lena_brightness_-85.png}
+  \label{fig.lena_brightness_-85}
+ }
+\caption{Obrazki ze zmodyfikowaną jasnością}
+\end{figure}
+
+\subsection{Zmiana kontrastu}
+Obrazki \ref{fig.lenac_contrast_+85}, \ref{fig.lenac_contrast_-85}, \ref{fig.lena_contrast_+85} i \ref{fig.lena_contrast_-85} prezentują obrazki ze zmodyfikowaną jasnością.
+
+\begin{figure}
+ \subfigure[Obraz \textbf{lenac.bmp} (\ref{fig.lenac}) z kontrastem zmodyfikowanym wartością +85]{
+  \includegraphics[scale=0.5]{img/lenac_contrast_+85.png}
+  \label{fig.lenac_contrast_+85}
+ }
+ \subfigure[Obraz \textbf{lenac.bmp} (\ref{fig.lenac}) z kontrastem zmodyfikowanym wartością -85]{
+  \includegraphics[scale=0.5]{img/lenac_contrast_-85.png}
+  \label{fig.lenac_contrast_-85}
+ }
+ \subfigure[Obraz \textbf{lena.bmp} (\ref{fig.lena}) z kontrastem zmodyfikowanym wartością +85]{
+  \includegraphics[scale=0.5]{img/lena_contrast_+85.png}
+  \label{fig.lena_contrast_+85}
+ }
+ \subfigure[Obraz \textbf{lena.bmp} (\ref{fig.lena}) z kontrastem zmodyfikowanym wartością -85]{
+  \includegraphics[scale=0.5]{img/lena_contrast_-85.png}
+  \label{fig.lena_contrast_-85}
+ }
+\caption{Obrazki ze zmodyfikowanym kontrastem}
+\end{figure}
 
 \begin{thebibliography}{99}
 %\bibitem{pleple}
