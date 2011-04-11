@@ -26,11 +26,11 @@ private:
     QVector<QLabel *> aLabels;
     QVector<QLineEdit *> aLinesEdit;
     void paintEvent(QPaintEvent *event);
-    void changeHistogramValues(int histogram);
+    //void changeHistogramValues(int histogram);
     int calculateColorValue(int color, int gMin, float alfa);
 
 signals:
-    void changeHistogram(int color, int  gMin, float alfa, QVector<int> histValues);
+    void changeHistogram(int color, int  gMin, float alfa);
 
 public slots:
 	void sliderValueChanged();
