@@ -23,10 +23,11 @@ void MainWindow::on_actionOtw_rz_triggered()
     if(fileUrl.isEmpty())
         return;
 
-	QFileInfo fi(fileUrl);
-	PhotoWindow *p = new PhotoWindow(fileUrl, fi.fileName(), this);
+    QFileInfo fi(fileUrl);
+    PhotoWindow *p = new PhotoWindow(fileUrl, fi.fileName(), this);
     connect(p, SIGNAL(eraseThis(PhotoWindow*)), this, SLOT(eraseFromList(PhotoWindow*)));
-	connect(p, SIGNAL(markThisAsCurrent(PhotoWindow*)), this, SLOT(setCurrentPhoto(PhotoWindow*)));
+    connect(p, SIGNAL(markThisAsCurrent(PhotoWindow*)), this, SLOT(setCurrentPhoto(PhotoWindow*)));
+    connect(p, SIGNAL(addToPhotoList(PhotoWindow*)), this, SLOT(addToPhotoList(PhotoWindow*)));
     p->show();
     photosList.append(p);
 }
@@ -53,4 +54,12 @@ void MainWindow::eraseFromList(PhotoWindow *p){
             break;
         }
     }
+}
+
+void MainWindow::addToPhotoList(PhotoWindow *p){
+    qDebug()<<"dodaje do listy: "<<p;
+    connect(p, SIGNAL(eraseThis(PhotoWindow*)), this, SLOT(eraseFromList(PhotoWindow*)));
+    connect(p, SIGNAL(markThisAsCurrent(PhotoWindow*)), this, SLOT(setCurrentPhoto(PhotoWindow*)));
+    connect(p, SIGNAL(addToPhotoList(PhotoWindow*)), this, SLOT(addToPhotoList(PhotoWindow*)));
+    photosList.append(p);
 }

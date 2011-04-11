@@ -44,7 +44,7 @@ void PhotoWindow::constructorInternals(const QString &title)
 	ui->setupUi(this);
 
 	dockWidget = new DockWidget(this);
-	connect(dockWidget, SIGNAL(changeHistogram(int,int,float,QVector<int>)), this, SLOT(changeHistogram(int,int,float,QVector<int>)));
+        connect(dockWidget, SIGNAL(changeHistogram(int,int,float)), this, SLOT(changeHistogram(int,int,float)));
 	menuBar()->addAction(dockWidget->toggleViewAction());
 
 	mFiltersMenu = menuBar()->addMenu("Filters");
@@ -172,54 +172,57 @@ void PhotoWindow::on_actionSave_triggered()
 	mImage.save(url);
 }
 
-void PhotoWindow::changeHistogram(int color, int gMin, float alfa, QVector<int> histValues){
-    qDebug()<<"zmieniam histogram";
+void PhotoWindow::changeHistogram(int color, int gMin, float alfa){
     QVector<int> tmpVector(256);
     QImage img = mImage.copy(0,0,mImage.width(), mImage.height());
 
     switch(color){
     case 0:
         for(int i=0; i<krgb.at(0).size(); i++){
-            int tmp = calculateRaleigh(i, gMin, alfa, histValues);
+            int tmp = calculateRaleigh(i, gMin, alfa, krgb.at(0));
             tmpVector[i] = tmp;
-            changeImageColor(0, i, tmp, &mImage);
+            changeImageColor(0, i, tmp, &img);
         }
 
-        krgb.replace(0, tmpVector);
+        //krgb.replace(0, tmpVector);
         break;
     case 1:
         for(int i=0; i<krgb.at(1).size(); i++){
-            int tmp = calculateRaleigh(i, gMin, alfa, histValues);
+            int tmp = calculateRaleigh(i, gMin, alfa, krgb.at(1));
             tmpVector[i] = tmp;
-            changeImageColor(0, i, tmp, &mImage);
+            changeImageColor(1, i, tmp, &img);
         }
 
-        krgb.replace(1, tmpVector);
+        //krgb.replace(1, tmpVector);
         break;
     case 2:
         for(int i=0; i<krgb.at(2).size(); i++){
-            int tmp = calculateRaleigh(i, gMin, alfa, histValues);
+            int tmp = calculateRaleigh(i, gMin, alfa, krgb.at(2));
             tmpVector[i] = tmp;
-            changeImageColor(0, i, tmp, &mImage);
+            changeImageColor(2, i, tmp, &img);
         }
 
-        krgb.replace(2, tmpVector);
+        //krgb.replace(2, tmpVector);
         break;
     case 3:
         for(int i=0; i<krgb.at(3).size(); i++){
-            int tmp = calculateRaleigh(i, gMin, alfa, histValues);
+            int tmp = calculateRaleigh(i, gMin, alfa, krgb.at(3));
             tmpVector[i] = tmp;
-            changeImageColor(0, i, tmp, &mImage);
+            changeImageColor(3, i, tmp, &img);
         }
 
-        krgb.replace(3, tmpVector);
+        //krgb.replace(3, tmpVector);
         break;
     }
 
-    dockWidget->setKrgb(&krgb);
-    dockWidget->setMaxValues(findMaxValues());
+    //dockWidget->setKrgb(&krgb);
+    //dockWidget->setMaxValues(findMaxValues());
 
-    mImage = img;
+    PhotoWindow *newPW = new PhotoWindow(img, "New Photo", (QWidget*)parent());
+    newPW->show();
+    emit addToPhotoList(newPW);
+
+    //mImage = img;
     dockWidget->update();
 }
 
@@ -238,22 +241,24 @@ int PhotoWindow::calculateRaleigh(int position, int gMin, float alfa, QVector<in
     int n = mImage.width() * mImage.height();
 
     if(sum == 0)
-        sum = 1;
+        return 0;
     //double ln = log((double)sum/(double)n);
     double ln = log(pow((double)sum / (double)n, -1));
 
     //double res = pow(ln, -1);
     double res = ln;
     res = res * 2 * alfa * alfa;
-    res = pow(res, 0.5);
+    if(res > 0.00){
+        res = pow(res, 0.5);
+    }else{
+        res = 0.00;
+    }
     res += gMin;
 
-    if(res > 255)
-        res = 255;
-    if(res < 0)
-        res = 0;
+    if(res > 255.00)
+        res = 255.00;
+    //qDebug()<<"res: "<<res;
 
-    qDebug()<<"res: "<<res;
     return res;
 }
 
@@ -291,36 +296,73 @@ QVector<int> PhotoWindow::findMaxValues(){
 }
 
 void PhotoWindow::changeImageColor(int color, int oldValue, int newValue, QImage *img){
+    QColor rgb;
+
     switch(color){
     case 0:
         for(int i=0; i < img->width(); i++){
-            for(int j=0; j<img->height(); i++){
-                if(qGray(img->pixel(i,j)) == oldValue)
-                    img->setPixel(i,j, newValue);
+            for(int j=0; j<img->height(); j++){
+                if(qGray(img->pixel(i,j)) == oldValue){
+                    rgb = QColor(img->pixel(i, j));
+                    int red = rgb.red();
+                    if(red > 11){
+                        red -= 11;
+                        red = round(red/32);
+                    }else{
+                        red = 0;
+                    }
+
+                    int green = rgb.green();
+                    if(green > 16){
+                        green -= 16;
+                        green = round(green/32);
+                    }else{
+                        green = 0;
+                    }
+
+                    int blue = rgb.blue();
+                    if(blue > 5){
+                        blue -= 5;
+                        blue = round(blue/32);
+                    }else{
+                        blue = 0;
+                    }
+
+                    img->setPixel(i,j, QColor(red, green, blue).rgb());
+                }
             }
         }
         break;
     case 1:
         for(int i=0; i < img->width(); i++){
-            for(int j=0; j<img->height(); i++){
-                if(QColor(img->pixel(i,j)).red() == oldValue)
-                    img->setPixel(i,j, newValue);
+            for(int j=0; j<img->height(); j++){
+                if(QColor(img->pixel(i,j)).red() == oldValue){
+                    rgb = img->pixel(i, j);
+                    rgb.setRed(newValue);
+                    img->setPixel(i,j, rgb.rgb());
+                }
             }
         }
         break;
     case 2:
         for(int i=0; i < img->width(); i++){
-            for(int j=0; j<img->height(); i++){
-                if(QColor(img->pixel(i,j)).green() == oldValue)
-                    img->setPixel(i,j, newValue);
+            for(int j=0; j<img->height(); j++){
+                if(QColor(img->pixel(i,j)).green() == oldValue){
+                    rgb = img->pixel(i, j);
+                    rgb.setGreen(newValue);
+                    img->setPixel(i,j, rgb.rgb());
+                }
             }
         }
         break;
     case 3:
         for(int i=0; i < img->width(); i++){
-            for(int j=0; j<img->height(); i++){
-                if(QColor(img->pixel(i,j)).blue() == oldValue)
-                    img->setPixel(i,j, newValue);
+            for(int j=0; j<img->height(); j++){
+                if(QColor(img->pixel(i,j)).blue() == oldValue){
+                    rgb = img->pixel(i, j);
+                    rgb.setBlue(newValue);
+                    img->setPixel(i,j, rgb.rgb());
+                }
             }
         }
         break;

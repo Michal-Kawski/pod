@@ -11,18 +11,18 @@
 DockWidget::DockWidget(QWidget *parent) :
     QDockWidget(parent)
 {
-	setWindowTitle("Histogramy");
+        setWindowTitle("Histogramy");
 
     krgb = new QVector< QVector<int> >(1);
 
     for(int i=0; i<4; i++){
-		sliders.append(new QSlider(this));
+                sliders.append(new QSlider(this));
         sliders.at(i)->setGeometry(300, i * 160 + 70, 256, 18);
         sliders.at(i)->setMaximum(256);
         sliders.at(i)->setMinimum(0);
         sliders.at(i)->setOrientation(Qt::Horizontal);
         sliders.at(i)->setEnabled(false);
-		connect(sliders.at(i), SIGNAL(sliderReleased()), this, SLOT(sliderValueChanged()));
+                connect(sliders.at(i), SIGNAL(sliderReleased()), this, SLOT(sliderValueChanged()));
 
         gLabels.append(new QLabel("g_min:", this));
         gLabels.at(i)->setGeometry(300, i*160 + 90, 30, 20);
@@ -40,7 +40,7 @@ DockWidget::DockWidget(QWidget *parent) :
 
     setFloating(true);
     resize(600, 680);
-	hide();
+        hide();
 }
 
 DockWidget::~DockWidget(){
@@ -104,25 +104,25 @@ void DockWidget::setMaxValues(QVector<int> max){
 }
 
 void DockWidget::sliderValueChanged(){
-	QSlider *s = qobject_cast<QSlider *>(QObject::sender());
+        QSlider *s = qobject_cast<QSlider *>(QObject::sender());
     for(int i=0; i<sliders.size(); i++){
         if(sliders.at(i) == s){
             switch(i){
             case 0:
                 gLinesEdit.at(i)->setText(QString::number(sliders.at(i)->value()));
-                emit changeHistogram(0, sliders.at(i)->value(), aLinesEdit.at(i)->text().toFloat(), krgb->at(0));
+                emit changeHistogram(0, sliders.at(i)->value(), aLinesEdit.at(i)->text().toFloat());
                 break;
             case 1:
                 gLinesEdit.at(i)->setText(QString::number(sliders.at(i)->value()));
-                emit changeHistogram(1, sliders.at(i)->value(), aLinesEdit.at(i)->text().toInt(), krgb->at(1));
+                emit changeHistogram(1, sliders.at(i)->value(), aLinesEdit.at(i)->text().toInt());
                 break;
             case 2:
                 gLinesEdit.at(i)->setText(QString::number(sliders.at(i)->value()));
-                emit changeHistogram(2, sliders.at(i)->value(), aLinesEdit.at(i)->text().toInt(), krgb->at(2));
+                emit changeHistogram(2, sliders.at(i)->value(), aLinesEdit.at(i)->text().toInt());
                 break;
             case 3:
                 gLinesEdit.at(i)->setText(QString::number(sliders.at(i)->value()));
-                emit changeHistogram(3, sliders.at(i)->value(), aLinesEdit.at(i)->text().toInt(), krgb->at(3));
+                emit changeHistogram(3, sliders.at(i)->value(), aLinesEdit.at(i)->text().toInt());
                 break;
             }
         }
