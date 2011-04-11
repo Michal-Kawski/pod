@@ -1068,6 +1068,13 @@ Filtrowanie liniowe z opisanymi wyżej maskami powoduje uwypuklenie krawędzi w 
 
 Filtr nieliniowy z operatorem Rosenfelda również uwidacznia \ppauza w pewnym stopniu \ppauza kontury, jednak wyniki dawane przez ten filtr powodują u autorów zawroty głowy i ciężko jest odnaleźć zastosowanie dla tej metody.
 
+\subsection{Efektywna implementacja splotu}
+W ogólnym przadku splot dla maski o wymiarach $[N, M]$ wymaga $N \cdot M$ opracji mnożenia, $N \cdot M - 1$ opracji dodawania oraz jednego dzielenia. W przypadku gdy rozmiary i wartości maski znane są zawczasu, można zaoszczędzić część operacji.
+
+W naszym przypadku każda z masek posiada pięć wartości równych 1, trzy -1 oraz jedną -2. Łatwo zauważyć, że elementów o współczynnikach wynoszących 1 nie potrzeba mnożyć, gdyż wynik pozostanie bez zmian. Ponadto, zamiast mnożyć wartości pikseli przez -1, można zastosować unarny operator minusa \ppauza można przypuszczać, że zostanie ona potraktowana przez kompilator jako chęć pobrania wartości przeciwnej, co prawdopodobnie zostanie rozwinięte do rozkazu procesora \verb|neg| zamiast \verb|mul| \ppauza istnieje duża szansa, że ten pierwszy wykona się szybciej.
+
+Dzięki opisanemu powyżej sposobowi, zredukowaliśmy ilość koniecznych kosztownych mnożeń z 9 do zaledwie jednego. Ilość operacji dodawania i~dzielenia pozostaje bez zmian.
+
 \begin{thebibliography}{99}
 %\bibitem{pleple}
 % opis
