@@ -53,7 +53,7 @@ Celem zadania było stworzenie szkieletu aplikacji do przetwarzania i analizy ob
    \item filtr medianowy,
   \end{itemize}
  \item wyznaczanie i pokazywanie histogramu obrazu dla poszczególnych jego kanałów, a także umożliwienie edycji obrazu na podstawie tego histogramu,
- \item filtracja liniowa oparta o splot z możliwością zdefiniowania rozmiaru i wartości maski,
+ \item filtracja liniowa oparta o splot z możliwością zdefiniowania rozmiaru i~wartości maski,
  \item filtracja nieliniowa w dziedzinie czasu.
 \end{itemize}
 
@@ -102,7 +102,7 @@ Poniżej znajduje się opis algorytmów realizujących opisane powyżej zagadnie
 
 W przypadku obrazu kolorowego zakładamy, że każdy piksel ma trzy kanały: R (czerwony), G (zielony) i B (niebieski), a wartość każdego z tych pikseli znajduje się w zakresie $[0; 255]$ i przyjmuje tylko wartości całkowite.
 
-W przypadku obrazów w skali szarości przyjmujemy, że każdy piksel posiada tylko jedną, 8-bitową składową, jest to indeks koloru z palety barw zapisanej w obrazie. Chociaż możliwe jest zapisanie dowolnej palety kolorów, przyjmujemy, że mamy do czynienia tylko i wyłącznie z obrazami w skali szarości (lub innego koloru), a 256 dostępnych, unikatowych kolorów w palecie uporządkowanych jest od najjaśniejszego (białego) do najbardziej intensywnego (czarnego \ppauza w przypadku skali szarości).
+W przypadku obrazów w skali szarości przyjmujemy, że każdy piksel posiada tylko jedną, 8-bitową składową, jest to indeks koloru z palety barw zapisanej w obrazie. Chociaż możliwe jest zapisanie dowolnej palety kolorów, przyjmujemy, że mamy do czynienia tylko i wyłącznie z obrazami w~skali szarości (lub innego koloru), a 256 dostępnych, unikatowych kolorów w palecie uporządkowanych jest od najjaśniejszego (białego) do najbardziej intensywnego (czarnego \ppauza w przypadku skali szarości).
 
 Piksele w obrazach binarnych przyjmują tylko dwa dostępne stany: biały i czarny.
 
@@ -232,7 +232,7 @@ Po uruchomieniu programu prezentowane jest użytkownikowi okienko klasy \texttt{
 
 Po wybraniu pliku obrazu do otwarcia, tworzona jest nowa instancja klasy \texttt{PhotoWindow}. W konstruktorze ładuje on podany jako argument plik, ustawia go jako prezentowany za pomocą kontrolki klasy \texttt{QLabel} obrazek oraz inicjalizuje filtry.
 
-Każdy z filtrów dziedziczy po interfejsie \texttt{FilterInterface} skonstruowanym za pomocą klasy wirtualnej. Część metod tej klasy jest zaimplementowana \ppauza dostarczają one środków do identyfikacji filtrów. Do implementacji w klasie pochodnej pozostawione zostały metody:
+Każdy z filtrów dziedziczy po interfejsie \texttt{FilterInterface} skonstruowanym za pomocą klasy wirtualnej. Część metod tej klasy jest zaimplementowana \ppauza dostarczają one środków do identyfikacji filtrów. Do implementacji w~klasie pochodnej pozostawione zostały metody:
 \begin{itemize}
  \item \texttt{virtual QString name() const} \ppauza zwracająca nazwę filtru,
  \item \texttt{virtual QImage apply()} \ppauza uruchamiająca działanie filtru.
@@ -253,7 +253,7 @@ Wszystkie filtry, w tym splot oraz filtracja nieliniowa opierają się o klasę 
 Filtr ten nie posiada opcji, wykonuje metodę opisaną w sekcji \ref{filter.negative}.
 
 \subsubsection{Jasność - Brightness}
-Po wybraniu tego filtru prezentowane jest użytkownikowi okienko, w którym określany jest parametr $\delta$ opisany w sekcji \ref{filter.brightness}, a następnie metoda z tej sekcji wykonywana jest dla całego obrazu.
+Po wybraniu tego filtru prezentowane jest użytkownikowi okienko, w którym określany jest parametr $\delta$ opisany w sekcji \ref{filter.brightness}, a następnie metoda z~tej sekcji wykonywana jest dla całego obrazu.
 
 \subsubsection{Kontrast - Contrast}
 Wybranie tego filtru skutkuje prezentacją użytkownikowi okienka z suwakiem służącym do wyboru pożądanej wielkości parametru $\alpha$ z sekcji \ref{filter.contrast}. Możliwe jest wybranie wartości z zakresu $-255 \div 255$, wybrana wartość jest następnie dzielona przez 255 i dodawana do 1, aby przeskalować ją na zakres $[0; 2]$.
@@ -309,15 +309,15 @@ Do testów wykorzystaliśmy popularny obrazek ,,Lena'' w wariantach kolorowym i 
 
 \begin{figure}
 \noindent\makebox[\textwidth]{%
- \subfigure[Obraz w skali szarości z szumem o rozkładzie normalnym \textbf{lena\_normal3.bmp} wykorzystany do testów.]{
+ \subfigure[Obraz w skali szarości z~szumem o rozkładzie normalnym \textbf{lena\_normal3.bmp} wykorzystany do testów.]{
   \includegraphics[scale=0.3]{img/lena_normal3.png}
   \label{fig.lena_normal3}
  }
- \subfigure[Obraz w skali szarości z szumem o rozkładzie jednostajnym \textbf{lena\_uniform3.bmp} wykorzystany do testów.]{
+ \subfigure[Obraz w skali szarości z~szumem o rozkładzie jednostajnym \textbf{lena\_uniform3.bmp} wykorzystany do testów.]{
   \includegraphics[scale=0.3]{img/lena_uniform3.png}
   \label{fig.lena_uniform3}
  }
- \subfigure[Obraz w skali szarości z szumem o rozkładzie impulsowym \textbf{lena\_impulse3.bmp} wykorzystany do testów.]{
+ \subfigure[Obraz w skali szarości z~szumem o rozkładzie impulsowym \textbf{lena\_impulse3.bmp} wykorzystany do testów.]{
   \includegraphics[scale=0.3]{img/lena_impulse3.png}
   \label{fig.lena_impulse3}
  }
@@ -332,7 +332,7 @@ Ponadto dla każdego wariantu wybraliśmy trzy rodzaje szumów:
  \item szum o rozkładzie impulsowym (rysunki \ref{fig.lenac_impulse3} i \ref{fig.lena_impulse3}).
 \end{itemize}
 
-Podstawowe wersje rysunków zostały poddane działaniu wszystkich filtrów, zaś obrazy zaszumione tylko filtrowaniu z wykorzystaniem średniej i mediany.
+Podstawowe wersje rysunków zostały poddane działaniu wszystkich filtrów, zaś obrazy zaszumione tylko filtrowaniu z~wykorzystaniem średniej i~mediany.
 
 Poniżej znajdują się opisane szczegółowo działania.
 
@@ -398,7 +398,7 @@ Przefiltrowane zaszumione wersje obrazów poddano ocenie. W celu obiektywnej oce
 Poniżej przedstawione są wyniki operacji przeprowadzonych na obrazkach.
 
 \subsection{Negatyw}
-Obrazki \ref{fig.lenac_negative} i \ref{fig.lena_negative} przedstawiają negatywy obrazków, jak opisano w sekcji \ref{sec.tests.negative}.
+Obrazki \ref{fig.lenac_negative} i \ref{fig.lena_negative} przedstawiają negatywy obrazków, jak opisano w~sekcji \ref{sec.tests.negative}.
 
 \begin{figure}
  \subfigure[Negatyw obrazu kolorowego \textbf{lenac.bmp} (\ref{fig.lenac})]{
@@ -416,19 +416,19 @@ Obrazki \ref{fig.lenac_negative} i \ref{fig.lena_negative} przedstawiają negaty
 Obrazki \ref{fig.lenac_brightness_+85}, \ref{fig.lenac_brightness_-85}, \ref{fig.lena_brightness_+85} i \ref{fig.lena_brightness_-85} prezentują obrazki ze zmodyfikowaną jasnością zgodnie z opisem z \ref{sec.tests.brightness}.
 
 \begin{figure}
- \subfigure[Obraz \textbf{lenac.bmp} (\ref{fig.lenac}) rozjaśniony o wartość +85]{
+ \subfigure[Obraz \textbf{lenac.bmp} (\ref{fig.lenac}) rozjaśniony o~wartość +85]{
   \includegraphics[scale=0.5]{img/lenac_brightness_+85.png}
   \label{fig.lenac_brightness_+85}
  }
- \subfigure[Obraz \textbf{lenac.bmp} (\ref{fig.lenac}) przyciemniony o wartość -85]{
+ \subfigure[Obraz \textbf{lenac.bmp} (\ref{fig.lenac}) przyciemniony o~wartość -85]{
   \includegraphics[scale=0.5]{img/lenac_brightness_-85.png}
   \label{fig.lenac_brightness_-85}
  }
- \subfigure[Obraz \textbf{lena.bmp} (\ref{fig.lena}) rozjaśniony o wartość +85]{
+ \subfigure[Obraz \textbf{lena.bmp} (\ref{fig.lena}) rozjaśniony o~wartość +85]{
   \includegraphics[scale=0.5]{img/lena_brightness_+85.png}
   \label{fig.lena_brightness_+85}
  }
- \subfigure[Obraz \textbf{lena.bmp} (\ref{fig.lena}) przyciemniony o wartość -85]{
+ \subfigure[Obraz \textbf{lena.bmp} (\ref{fig.lena}) przyciemniony o~wartość -85]{
   \includegraphics[scale=0.5]{img/lena_brightness_-85.png}
   \label{fig.lena_brightness_-85}
  }
@@ -482,7 +482,7 @@ Wyniki wykonanych operacji prezentują obrazki \ref{fig.lenac_average}, \ref{fig
   \label{fig.lenac_average_7x7}
  }
 }
-\caption{Obrazek \textbf{lenac.bmp} (\ref{fig.lenac}) poddany filtrowaniu z wykorzystaniem średniej arytmetycznej}
+\caption{Obrazek \textbf{lenac.bmp} (\ref{fig.lenac}) poddany filtrowaniu z~wykorzystaniem średniej arytmetycznej}
 \label{fig.lenac_average}
 \end{figure}
 
@@ -501,7 +501,7 @@ Wyniki wykonanych operacji prezentują obrazki \ref{fig.lenac_average}, \ref{fig
   \label{fig.lena_average_7x7}
  }
 }
-\caption{Obrazek \textbf{lena.bmp} (\ref{fig.lena}) poddany filtrowaniu z wykorzystaniem średniej arytmetycznej}
+\caption{Obrazek \textbf{lena.bmp} (\ref{fig.lena}) poddany filtrowaniu z~wykorzystaniem średniej arytmetycznej}
 \label{fig.lena_average}
 \end{figure}
 
@@ -523,7 +523,7 @@ Wyniki wykonanych operacji prezentują obrazki \ref{fig.lenac_average}, \ref{fig
   \label{fig.lenac_normal3_average_7x7}
  }
 }
-\caption{Obrazek \textbf{lenac\_normal3.bmp} (\ref{fig.lenac_normal3}) poddany filtrowaniu z wykorzystaniem średniej arytmetycznej}
+\caption{Obrazek \textbf{lenac\_normal3.bmp} (\ref{fig.lenac_normal3}) poddany filtrowaniu z~wykorzystaniem średniej arytmetycznej}
 \label{fig.lenac_normal3_average}
 \end{figure}
 
@@ -542,7 +542,7 @@ Wyniki wykonanych operacji prezentują obrazki \ref{fig.lenac_average}, \ref{fig
   \label{fig.lenac_uniform3_average_7x7}
  }
 }
-\caption{Obrazek \textbf{lenac\_uniform3.bmp} (\ref{fig.lenac_uniform3}) poddany filtrowaniu z wykorzystaniem średniej arytmetycznej}
+\caption{Obrazek \textbf{lenac\_uniform3.bmp} (\ref{fig.lenac_uniform3}) poddany filtrowaniu z~wykorzystaniem średniej arytmetycznej}
 \label{fig.lenac_uniform3_average}
 \end{figure}
 
@@ -561,7 +561,7 @@ Wyniki wykonanych operacji prezentują obrazki \ref{fig.lenac_average}, \ref{fig
   \label{fig.lenac_impulse3_average_7x7}
  }
 }
-\caption{Obrazek \textbf{lenac\_impulse3.bmp} (\ref{fig.lenac_impulse3}) poddany filtrowaniu z wykorzystaniem średniej arytmetycznej}
+\caption{Obrazek \textbf{lenac\_impulse3.bmp} (\ref{fig.lenac_impulse3}) poddany filtrowaniu z~wykorzystaniem średniej arytmetycznej}
 \label{fig.lenac_impulse3_average}
 \end{figure}
 
@@ -580,7 +580,7 @@ Wyniki wykonanych operacji prezentują obrazki \ref{fig.lenac_average}, \ref{fig
   \label{fig.lena_normal3_average_7x7}
  }
 }
-\caption{Obrazek \textbf{lena\_normal3.bmp} (\ref{fig.lena_normal3}) poddany filtrowaniu z wykorzystaniem średniej arytmetycznej}
+\caption{Obrazek \textbf{lena\_normal3.bmp} (\ref{fig.lena_normal3}) poddany filtrowaniu z~wykorzystaniem średniej arytmetycznej}
 \label{fig.lena_normal3_average}
 \end{figure}
 
@@ -599,7 +599,7 @@ Wyniki wykonanych operacji prezentują obrazki \ref{fig.lenac_average}, \ref{fig
   \label{fig.lena_uniform3_average_7x7}
  }
 }
-\caption{Obrazek \textbf{lena\_uniform3.bmp} (\ref{fig.lena_uniform3}) poddany filtrowaniu z wykorzystaniem średniej arytmetycznej}
+\caption{Obrazek \textbf{lena\_uniform3.bmp} (\ref{fig.lena_uniform3}) poddany filtrowaniu z~wykorzystaniem średniej arytmetycznej}
 \label{fig.lena_uniform3_average}
 \end{figure}
 
@@ -618,7 +618,7 @@ Wyniki wykonanych operacji prezentują obrazki \ref{fig.lenac_average}, \ref{fig
   \label{fig.lena_impulse3_average_7x7}
  }
 }
-\caption{Obrazek \textbf{lena\_impulse3.bmp} (\ref{fig.lena_impulse3}) poddany filtrowaniu z wykorzystaniem średniej arytmetycznej}
+\caption{Obrazek \textbf{lena\_impulse3.bmp} (\ref{fig.lena_impulse3}) poddany filtrowaniu z~wykorzystaniem średniej arytmetycznej}
 \label{fig.lena_impulse3_average}
 \end{figure}
 
@@ -643,7 +643,7 @@ Wyniki wykonanych operacji prezentują obrazki \ref{fig.lenac_median}, \ref{fig.
   \label{fig.lenac_median_7x7}
  }
 }
-\caption{Obrazek \textbf{lenac.bmp} (\ref{fig.lenac}) poddany filtrowaniu z wykorzystaniem mediany}
+\caption{Obrazek \textbf{lenac.bmp} (\ref{fig.lenac}) poddany filtrowaniu z~wykorzystaniem mediany}
 \label{fig.lenac_median}
 \end{figure}
 
@@ -662,7 +662,7 @@ Wyniki wykonanych operacji prezentują obrazki \ref{fig.lenac_median}, \ref{fig.
   \label{fig.lena_median_7x7}
  }
 }
-\caption{Obrazek \textbf{lena.bmp} (\ref{fig.lena}) poddany filtrowaniu z wykorzystaniem mediany}
+\caption{Obrazek \textbf{lena.bmp} (\ref{fig.lena}) poddany filtrowaniu z~wykorzystaniem mediany}
 \label{fig.lena_median}
 \end{figure}
 
@@ -684,7 +684,7 @@ Wyniki wykonanych operacji prezentują obrazki \ref{fig.lenac_median}, \ref{fig.
   \label{fig.lenac_normal3_median_7x7}
  }
 }
-\caption{Obrazek \textbf{lenac\_normal3.bmp} (\ref{fig.lenac_normal3}) poddany filtrowaniu z wykorzystaniem mediany}
+\caption{Obrazek \textbf{lenac\_normal3.bmp} (\ref{fig.lenac_normal3}) poddany filtrowaniu z~wykorzystaniem mediany}
 \label{fig.lenac_normal3_median}
 \end{figure}
 
@@ -703,7 +703,7 @@ Wyniki wykonanych operacji prezentują obrazki \ref{fig.lenac_median}, \ref{fig.
   \label{fig.lenac_uniform3_median_7x7}
  }
 }
-\caption{Obrazek \textbf{lenac\_uniform3.bmp} (\ref{fig.lenac_uniform3}) poddany filtrowaniu z wykorzystaniem mediany}
+\caption{Obrazek \textbf{lenac\_uniform3.bmp} (\ref{fig.lenac_uniform3}) poddany filtrowaniu z~wykorzystaniem mediany}
 \label{fig.lenac_uniform3_median}
 \end{figure}
 
@@ -722,7 +722,7 @@ Wyniki wykonanych operacji prezentują obrazki \ref{fig.lenac_median}, \ref{fig.
   \label{fig.lenac_impulse3_median_7x7}
  }
 }
-\caption{Obrazek \textbf{lenac\_impulse3.bmp} (\ref{fig.lenac_impulse3}) poddany filtrowaniu z wykorzystaniem mediany}
+\caption{Obrazek \textbf{lenac\_impulse3.bmp} (\ref{fig.lenac_impulse3}) poddany filtrowaniu z~wykorzystaniem mediany}
 \label{fig.lenac_impulse3_median}
 \end{figure}
 
@@ -741,7 +741,7 @@ Wyniki wykonanych operacji prezentują obrazki \ref{fig.lenac_median}, \ref{fig.
   \label{fig.lena_normal3_median_7x7}
  }
 }
-\caption{Obrazek \textbf{lena\_normal3.bmp} (\ref{fig.lena_normal3}) poddany filtrowaniu z wykorzystaniem mediany}
+\caption{Obrazek \textbf{lena\_normal3.bmp} (\ref{fig.lena_normal3}) poddany filtrowaniu z~wykorzystaniem mediany}
 \label{fig.lena_normal3_median}
 \end{figure}
 
@@ -760,7 +760,7 @@ Wyniki wykonanych operacji prezentują obrazki \ref{fig.lenac_median}, \ref{fig.
   \label{fig.lena_uniform3_median_7x7}
  }
 }
-\caption{Obrazek \textbf{lena\_uniform3.bmp} (\ref{fig.lena_uniform3}) poddany filtrowaniu z wykorzystaniem mediany}
+\caption{Obrazek \textbf{lena\_uniform3.bmp} (\ref{fig.lena_uniform3}) poddany filtrowaniu z~wykorzystaniem mediany}
 \label{fig.lena_uniform3_median}
 \end{figure}
 
@@ -779,7 +779,7 @@ Wyniki wykonanych operacji prezentują obrazki \ref{fig.lenac_median}, \ref{fig.
   \label{fig.lena_impulse3_median_7x7}
  }
 }
-\caption{Obrazek \textbf{lena\_impulse3.bmp} (\ref{fig.lena_impulse3}) poddany filtrowaniu z wykorzystaniem mediany}
+\caption{Obrazek \textbf{lena\_impulse3.bmp} (\ref{fig.lena_impulse3}) poddany filtrowaniu z~wykorzystaniem mediany}
 \label{fig.lena_impulse3_median}
 \end{figure}
 
@@ -1060,7 +1060,7 @@ Chociaż zarówno w przypadku zmiany jasności jak i zmiany kontrastu wartości 
 
 Przedstawione zaszumione obrazy charakteryzują się dużymi wartościami MSE oraz relatywnie małym współczynnikiem SNR. Widoczny jest na nich dość dobrze pierwszy plan, choć wprowadzony szum znacznie utrudnia odróżnienie szczegółów. Poddanie obrazów procesowi filtracji polepsza odbiór obrazków, zależny jest on jednak w dużej mierze od rodzaju szumu i wybranej metody filtracji.
 
-Filtrowanie za pomocą średniej arytmetycznej znacznie zmniejsza średni błąd kwadratowy, jednak wyniki działania tego filtru akceptowalne są tylko w przypadku maski o rozmiarze $3 \times 3$ \ppauza przy większych wielkościach obraz staje się bardzo rozmazany. Ten rodzaj filtru sprawdza się najlepiej w przypadku szumu o rozkładzie normalnym \ppauza w pozostałych przypadkach pozostawia zbyt wiele śladów szumu. Ponadto, wadą tego filtru jest wprowadzanie do obrazu nowych wartości pikseli, co powoduje zanik ostrości elementów.
+Filtrowanie za pomocą średniej arytmetycznej znacznie zmniejsza średni błąd kwadratowy, jednak wyniki działania tego filtru akceptowalne są tylko w~przypadku maski o rozmiarze $3 \times 3$ \ppauza przy większych wielkościach obraz staje się bardzo rozmazany. Ten rodzaj filtru sprawdza się najlepiej w przypadku szumu o rozkładzie normalnym \ppauza w pozostałych przypadkach pozostawia zbyt wiele śladów szumu. Ponadto, wadą tego filtru jest wprowadzanie do obrazu nowych wartości pikseli, co powoduje zanik ostrości elementów.
 
 Filtr medianowy daje znacznie lepsze efekty od filtru opartego o średnią arytmetyczną. Dla maski $3 \times 3$, w szczególności dla szumu o rozkładzie impulsowym, osiąga zadowalające rezultaty pozwalając jednocześnie na zachowanie względnie dużej ilości szczegółów. Zwiększenie wielkości maski powoduje usunięcie większości pozostałych artefaktów kosztem drobnego pogorszenia widzialności szczegółów.
 
