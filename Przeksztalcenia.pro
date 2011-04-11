@@ -53,3 +53,6 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui \
     photowindow.ui
+
+QMAKE_CXXFLAGS += -fopenmp
+LIBS += -lgomp

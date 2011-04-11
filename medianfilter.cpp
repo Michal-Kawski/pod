@@ -2,6 +2,11 @@
 #include "sizedialog.h"
 #include "colorparser.h"
 
+#include <QElapsedTimer>
+#include <omp.h>
+
+#include <QDebug>
+
 MedianFilter::MedianFilter(QObject *parent) :
     FilterInterface(parent)
 {
@@ -30,15 +35,20 @@ bool MedianFilter::setup(const QImage &img)
 
 QImage MedianFilter::apply()
 {
-	QVector<int> red, green, blue;
 	QImage result(mImg.size(), mFormat);
 	if (mFormat == QImage::Format_Indexed8 || mFormat == QImage::Format_Mono) {
 		result.setColorTable(mImg.colorTable());
 	}
 	ColorParser cp(mFormat);
+	QElapsedTimer t;
+	t.start();
+#pragma omp parallel
+	{
+	QVector<int> red, green, blue;
 	red.reserve(((mKernelWidth * 2) + 1) * ((mKernelHeight * 2) + 1));
 	green.reserve(((mKernelWidth * 2) + 1) * ((mKernelHeight * 2) + 1));
 	blue.reserve(((mKernelWidth * 2) + 1) * ((mKernelHeight * 2) + 1));
+#pragma omp for
 	for (int x = 0; x < mImg.size().width(); x++) {
 		for (int y = 0; y < mImg.size().height(); y++) {
 			red.resize(0);
@@ -74,5 +84,8 @@ QImage MedianFilter::apply()
 			cp.setPixel(x, y, result, median);
 		}
 	}
+	}
+	int time = t.elapsed();
+	qDebug() << time;
 	return result;
 }
