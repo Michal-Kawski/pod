@@ -24,6 +24,7 @@ private slots:
     void on_actionOtw_rz_triggered();
     void eraseFromList(PhotoWindow* p);
     void setCurrentPhoto(PhotoWindow* p);
+	void open(QString fileName);
 
 private:
     Ui::MainWindow *ui;

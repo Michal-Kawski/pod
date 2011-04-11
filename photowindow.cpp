@@ -40,7 +40,7 @@ PhotoWindow::PhotoWindow(QImage img, QString title, QWidget *parent) :
 
 void PhotoWindow::constructorInternals(const QString &title)
 {
-	qDebug() << "image format:" << mImage.format();
+	//qDebug() << "image format:" << mImage.format();
 	ui->setupUi(this);
 
 	dockWidget = new DockWidget(this);
@@ -72,6 +72,7 @@ void PhotoWindow::constructorInternals(const QString &title)
 	appendFilter(new RosenfeldFilter(this));
 
 	connect(mFiltersMenu, SIGNAL(triggered(QAction*)), this, SLOT(applyFilter(QAction*)));
+	qualityCheck();
 }
 
 PhotoWindow::~PhotoWindow()
@@ -102,7 +103,7 @@ void PhotoWindow::appendFilter(FilterInterface *filter)
 	QAction *menuAction = new QAction(filter->name(), this);
 	QVariant v;
 	v.setValue(filter->uuid());
-	qDebug() << filter->uuid();
+	//qDebug() << filter->uuid();
 	menuAction->setData(v);
 	mFiltersMenu->addAction(menuAction);
 }
@@ -259,15 +260,31 @@ int PhotoWindow::calculateRaleigh(int position, int gMin, float alfa, QVector<in
 
 void PhotoWindow::qualityCheck()
 {
-	QString fileUrl = QFileDialog::getOpenFileName(this, tr("Wybierz plik do otwarcia: "), "photo.jpg");
-	if (fileUrl.isEmpty()) {
-		return;
+	QString fileUrl;
+	if (windowTitle().startsWith("lenac")) {
+		fileUrl = QString("/home/janisozaur/Dropbox/workspace/pod/pierwsze/sprawko/img/lenac.png");
+	} else if (windowTitle().startsWith("lena")) {
+		fileUrl = QString("/home/janisozaur/Dropbox/workspace/pod/pierwsze/sprawko/img/lena.png");
+	} else {
+		fileUrl = QFileDialog::getOpenFileName(this, tr("Wybierz plik do otwarcia: "), "photo.jpg");
+		if (fileUrl.isEmpty()) {
+			return;
+		}
 	}
 
 	QImage ref(fileUrl);
 	QualityChecker q;
 	if (q(ref, mImage)) {
-		qDebug() << "mse:" << q.mse << ", snr:" << q.snr;
+		QStringList result;
+		QFileInfo fi(windowTitle());
+		QString fileName(windowTitle());
+		fileName.replace("_", "\\_");
+		result << fileName + " (\\ref{fig." + fi.baseName() + "})";
+		result << QString::number(q.mse);
+		result << QString::number(q.snr);
+		QString r = "    " + result.join(" & ") + " \\\\";
+		qDebug() << r.toStdString().c_str();
+		qDebug() << "    \\hline";
 	}
 }
 
