@@ -883,6 +883,170 @@ Obrazki \ref{fig.lenac_rosenfeld} i \ref{fig.lena_rosenfeld} pokazują wyniki do
 \label{fig.lena_rosenfeld}
 \end{figure}
 
+\subsection{Obiektywna ocena jakości obrazu}
+Tabela \ref{tab.lena_noised} pokazuje wartości MSE i SNR dla zaszumionych, niefiltrowanych obrazów.
+
+\begin{table}
+  \centering
+  \begin{tabular}{|l|c|c|}
+    \hline
+    \textbf{Obrazek} & \textbf{MSE} & \textbf{SNR} \\
+    \hline\hline
+    lenac\_normal3.png (\ref{fig.lenac_normal3}) & 3272.54 & 66.7987 \\ 
+    \hline 
+    lenac\_uniform3.png (\ref{fig.lenac_uniform3}) & 5215.6 & 64.7745 \\ 
+    \hline 
+    lenac\_impulse3.png (\ref{fig.lenac_impulse3}) & 2600.51 & 67.797 \\ 
+    \hline 
+    lena\_normal3.png (\ref{fig.lena_normal3}) & 3573.38 & 65.8764 \\ 
+    \hline 
+    lena\_uniform3.png (\ref{fig.lena_uniform3}) & 3731.03 & 65.6889 \\ 
+    \hline 
+    lena\_impulse3.png (\ref{fig.lena_impulse3}) & 4820.2 & 64.5765 \\ 
+    \hline 
+  \end{tabular}
+  \caption{Wartości MSE i SNR dla oryginalnych, zaszumionych obrazów}
+  \label{tab.lena_noised}
+\end{table}
+
+%%%%%
+% filtered originals:
+
+% lenac_average_3x3.png & 73.7015 & 83.2728 \\
+% lenac_average_5x5.png & 204.175 & 78.8475 \\
+% lenac_average_7x7.png & 333.349 & 76.7186 \\
+% lenac_median_3x3.png & 47.5571 & 85.1754 \\
+% lenac_median_5x5.png & 137.835 & 80.554 \\
+% lenac_median_7x7.png & 234.332 & 78.2492 \\
+% lena_average_3x3.png & 73.3598 & 82.7526 \\
+% lena_average_5x5.png & 204.384 & 78.3027 \\
+% lena_average_7x7.png & 336.728 & 76.1344 \\
+% lena_median_3x3.png & 46.4018 & 84.7418 \\
+% lena_median_5x5.png & 134.196 & 80.1298 \\
+% lena_median_7x7.png & 227.615 & 77.8351 \\
+
+\subsubsection{Filtrowanie wykorzystujące średnią arytmetyczną}
+Tabelki \ref{tab.lenac_average} i \ref{tab.lena_average} pokazują wartości MSE i SNR dla obrazków przefiltrowanych za pomocą filtru uśredniającego.
+
+\begin{table}
+  \centering
+  \begin{tabular}{|l|c|c|}
+    \hline
+    \textbf{Obrazek} & \textbf{MSE} & \textbf{SNR} \\
+    \hline\hline
+    lenac\_normal3\_average\_3x3.png (\ref{fig.lenac_normal3_average_3x3}) & 460.261 & 75.3175 \\
+    \hline
+    lenac\_normal3\_average\_5x5.png (\ref{fig.lenac_normal3_average_5x5}) & 362.608 & 76.3532 \\
+    \hline
+    lenac\_normal3\_average\_7x7.png (\ref{fig.lenac_normal3_average_7x7}) & 430.668 & 75.6061 \\
+    \hline
+    lenac\_uniform3\_average\_3x3.png (\ref{fig.lenac_uniform3_average_3x3}) & 711.122 & 73.4281 \\
+    \hline
+    lenac\_uniform3\_average\_5x5.png (\ref{fig.lenac_uniform3_average_5x5}) & 479.162 & 75.1427 \\
+    \hline
+    lenac\_uniform3\_average\_7x7.png (\ref{fig.lenac_uniform3_average_7x7}) & 511.669 & 74.8577 \\
+    \hline
+    lenac\_impulse3\_average\_3x3.png (\ref{fig.lenac_impulse3_average_3x3}) & 385.965 & 76.0821 \\
+    \hline
+    lenac\_impulse3\_average\_5x5.png (\ref{fig.lenac_impulse3_average_5x5}) & 335.781 & 76.687 \\
+    \hline
+    lenac\_impulse3\_average\_7x7.png (\ref{fig.lenac_impulse3_average_7x7}) & 416.618 & 75.7502 \\
+    \hline
+  \end{tabular}
+  \caption{Wyniki filtru uśredniającego dla obrazków kolorowych}
+  \label{tab.lenac_average}
+\end{table}
+
+\begin{table}
+  \centering
+  \begin{tabular}{|l|c|c|}
+    \hline
+    \textbf{Obrazek} & \textbf{MSE} & \textbf{SNR} \\
+    \hline\hline
+    lena\_normal3\_average\_3x3.png (\ref{fig.lena_normal3_average_3x3}) & 488.09 & 74.5222 \\ 
+    \hline 
+    lena\_normal3\_average\_5x5.png (\ref{fig.lena_normal3_average_5x5}) & 368.478 & 75.743 \\ 
+    \hline 
+    lena\_normal3\_average\_7x7.png (\ref{fig.lena_normal3_average_7x7}) & 431.016 & 75.0622 \\ 
+    \hline 
+    lena\_uniform3\_average\_3x3.png (\ref{fig.lena_uniform3_average_3x3}) & 500.129 & 74.4163 \\ 
+    \hline 
+    lena\_uniform3\_average\_5x5.png (\ref{fig.lena_uniform3_average_5x5}) & 369.692 & 75.7288 \\ 
+    \hline 
+    lena\_uniform3\_average\_7x7.png (\ref{fig.lena_uniform3_average_7x7}) & 431.345 & 75.0589 \\ 
+    \hline 
+    lena\_impulse3\_average\_3x3.png (\ref{fig.lena_impulse3_average_3x3}) & 674.032 & 73.1204 \\ 
+    \hline 
+    lena\_impulse3\_average\_5x5.png (\ref{fig.lena_impulse3_average_5x5}) & 475.249 & 74.6379 \\ 
+    \hline 
+    lena\_impulse3\_average\_7x7.png (\ref{fig.lena_impulse3_average_7x7}) & 519.425 & 74.2519 \\ 
+    \hline 
+  \end{tabular}
+  \caption{Wyniki filtru uśredniającego dla obrazków w skali szarości}
+  \label{tab.lena_average}
+\end{table}
+
+\subsubsection{Filtrowanie wykorzystujące medianę}
+Tabelki \ref{tab.lenac_median} i \ref{tab.lena_median} pokazują wartości MSE i SNR dla obrazków przefiltrowanych za pomocą filtru medianowego.
+
+\begin{table}
+  \centering
+  \begin{tabular}{|l|c|c|}
+    \hline
+    \textbf{Obrazek} & \textbf{MSE} & \textbf{SNR} \\
+    \hline\hline
+    lenac\_normal3\_median\_3x3.png (\ref{fig.lenac_normal3_median_3x3}) & 185.699 & 79.2594 \\ 
+    \hline 
+    lenac\_normal3\_median\_5x5.png (\ref{fig.lenac_normal3_median_5x5}) & 186.602 & 79.2384 \\ 
+    \hline 
+    lenac\_normal3\_median\_7x7.png (\ref{fig.lenac_normal3_median_7x7}) & 272.073 & 77.6007 \\ 
+    \hline 
+    lenac\_uniform3\_median\_3x3.png (\ref{fig.lenac_uniform3_median_3x3}) & 149.399 & 80.2041 \\ 
+    \hline 
+    lenac\_uniform3\_median\_5x5.png (\ref{fig.lenac_uniform3_median_5x5}) & 180.319 & 79.3871 \\ 
+    \hline 
+    lenac\_uniform3\_median\_7x7.png (\ref{fig.lenac_uniform3_median_7x7}) & 264.651 & 77.7208 \\ 
+    \hline 
+    lenac\_impulse3\_median\_3x3.png (\ref{fig.lenac_impulse3_median_3x3}) & 61.0756 & 84.0889 \\ 
+    \hline 
+    lenac\_impulse3\_median\_5x5.png (\ref{fig.lenac_impulse3_median_5x5}) & 147.514 & 80.2592 \\ 
+    \hline 
+    lenac\_impulse3\_median\_7x7.png (\ref{fig.lenac_impulse3_median_7x7}) & 241.002 & 78.1273 \\ 
+    \hline 
+  \end{tabular}
+  \caption{Wyniki filtru medianowego dla obrazków kolorowych}
+  \label{tab.lenac_median}
+\end{table}
+
+\begin{table}
+  \centering
+  \begin{tabular}{|l|c|c|}
+    \hline
+    \textbf{Obrazek} & \textbf{MSE} & \textbf{SNR} \\
+    \hline\hline
+    lena\_normal3\_median\_3x3.png (\ref{fig.lena_normal3_median_3x3}) & 112.754 & 80.8859 \\ 
+    \hline 
+    lena\_normal3\_median\_5x5.png (\ref{fig.lena_normal3_median_5x5}) & 169.632 & 79.1121 \\ 
+    \hline 
+    lena\_normal3\_median\_7x7.png (\ref{fig.lena_normal3_median_7x7}) & 254.932 & 77.3429 \\ 
+    \hline 
+    lena\_uniform3\_median\_3x3.png (\ref{fig.lena_uniform3_median_3x3}) & 182.968 & 78.7834 \\ 
+    \hline 
+    lena\_uniform3\_median\_5x5.png (\ref{fig.lena_uniform3_median_5x5}) & 187.981 & 78.666 \\ 
+    \hline 
+    lena\_uniform3\_median\_7x7.png (\ref{fig.lena_uniform3_median_7x7}) & 267.995 & 77.1259 \\ 
+    \hline 
+    lena\_impulse3\_median\_3x3.png (\ref{fig.lena_impulse3_median_3x3}) & 68.9829 & 83.0197 \\ 
+    \hline 
+    lena\_impulse3\_median\_5x5.png (\ref{fig.lena_impulse3_median_5x5}) & 149.28 & 79.6671 \\ 
+    \hline 
+    lena\_impulse3\_median\_7x7.png (\ref{fig.lena_impulse3_median_7x7}) & 239.461 & 77.6148 \\ 
+    \hline 
+  \end{tabular}
+  \caption{Wyniki filtru medianowego dla obrazków w skali szarości}
+  \label{tab.lena_median}
+\end{table}
+
 \begin{thebibliography}{99}
 %\bibitem{pleple}
 % opis
