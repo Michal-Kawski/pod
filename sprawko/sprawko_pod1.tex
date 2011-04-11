@@ -1047,6 +1047,27 @@ Tabelki \ref{tab.lenac_median} i \ref{tab.lena_median} pokazują wartości MSE i
   \label{tab.lena_median}
 \end{table}
 
+\section{Dyskusja}
+Spośród zastosowanych operacji najmniejsze znaczenie ma negatyw. Nie poprawia on postrzegania obrazu przez ludzkie oko, nie uwydatnia także szczegółów.
+
+Zarówno w przypadku rozjaśniania jak i zwiększania kontrastu wydobywane są pewne szczegóły z tła \ppauza jak na przykład włosy lub frędzle z kapelusza. W przypadku rozjaśniania jednak cały obraz staje się zamglony. Zwiększenie kontrastu powoduje zwiększenie czytelności obrazka poprzez uwydatnienie różnic w pomiędzy znajdującymi się obok różnymi barwami.
+
+Przyciemnianie obrazka powoduje pogorszenie jego odbioru \ppauza zacierane są różnice nie tylko pomiędzy szczegółami, ale także obiektami na pierwszym planie. 
+
+Zmniejszenie kontrastu powoduje częściowe ,,wyszarzenie'' obrazka, pozostawia jednak pierwszy plan dobrze widocznym.
+
+Chociaż zarówno w przypadku zmiany jasności jak i zmiany kontrastu wartości były tak samo oddalone od zera, to odbiór tak zmienionych obrazów jest różny \ppauza znacznie lepiej i wyraźniej postrzegane są obrazy zmodyfikowane dodatnimi wartościami. Wynikać to może z budowy ludzkiego oka, które słąbiej reaguje na ciemne barwy.
+
+Przedstawione zaszumione obrazy charakteryzują się dużymi wartościami MSE oraz relatywnie małym współczynnikiem SNR. Widoczny jest na nich dość dobrze pierwszy plan, choć wprowadzony szum znacznie utrudnia odróżnienie szczegółów. Poddanie obrazów procesowi filtracji polepsza odbiór obrazków, zależny jest on jednak w dużej mierze od rodzaju szumu i wybranej metody filtracji.
+
+Filtrowanie za pomocą średniej arytmetycznej znacznie zmniejsza średni błąd kwadratowy, jednak wyniki działania tego filtru akceptowalne są tylko w przypadku maski o rozmiarze $3 \times 3$ \ppauza przy większych wielkościach obraz staje się bardzo rozmazany. Ten rodzaj filtru sprawdza się najlepiej w przypadku szumu o rozkładzie normalnym \ppauza w pozostałych przypadkach pozostawia zbyt wiele śladów szumu. Ponadto, wadą tego filtru jest wprowadzanie do obrazu nowych wartości pikseli, co powoduje zanik ostrości elementów.
+
+Filtr medianowy daje znacznie lepsze efekty od filtru opartego o średnią arytmetyczną. Dla maski $3 \times 3$, w szczególności dla szumu o rozkładzie impulsowym, osiąga zadowalające rezultaty pozwalając jednocześnie na zachowanie względnie dużej ilości szczegółów. Zwiększenie wielkości maski powoduje usunięcie większości pozostałych artefaktów kosztem drobnego pogorszenia widzialności szczegółów.
+
+Filtrowanie liniowe z opisanymi wyżej maskami powoduje uwypuklenie krawędzi w zadanych kierunkach. Filtr taki może nadać się do łatwiejszego rozpoznania obiektów, gdyż usuwana jest znaczna część informacji dotycząca koloru, pozostawiane są natomiast zmiany w danym kierunku.
+
+Filtr nieliniowy z operatorem Rosenfelda również uwidacznia \ppauza w pewnym stopniu \ppauza kontury, jednak wyniki dawane przez ten filtr powodują u autorów zawroty głowy i ciężko jest odnaleźć zastosowanie dla tej metody.
+
 \begin{thebibliography}{99}
 %\bibitem{pleple}
 % opis
