@@ -19,13 +19,13 @@
 \coursename{Przetwarzanie obrazów i dźwięków}
 \courseyear{2010/2011}
 
-\courseteacher{xxxxxx}
-\coursegroup{xxxxxx}
-\svnurl{xxxxxx}
+\courseteacher{dr inż. Bartłomiej Stasiak}
+\coursegroup{micmic}
+\svnurl{https://serce.ics.p.lodz.pl/svn/labs/poid/bsat_wt1415/micmic}
 
 \author{%
   \studentinfo{Michał Janiszewski}{169485} \and
-  \studentinfo{Michał Kawski}{xxxxxx}
+  \studentinfo{Michał Kawski}{169487}
 }
 
 \title{Zadanie 1: Przetwarzanie obrazów}
@@ -186,6 +186,13 @@ gdzie $w$ to promień poziomy, a $h$ promień pionowy maski.
 W przypadku filtru medianowego wartości kanału ze wszystkich pikseli wchodzących w skład maski ustawiane są w niemalejącym szeregu, a następnie zwracana jest mediana tych elementów, czyli element z pozycji $\frac{l}{2}$~w~przypadku szeregu o nieparzystej długości $l$ lub średnia arytmetyczna z~dwóch środkowych elementów $\frac{g(\frac{l}{2} - 1) + g(\frac{l}{2})}{2}$ w przypadku szeregu o parzystej ilości elementów.
 
 \subsection{Modyfikacja w oparciu o histogram}
+Przetwarzanie obrazu w oparciu o histogram, wykorzystująca wzór Raleigha wymaga podania minimalnej wartości koloru piksela oraz parmetru $\alpha$. 
+Edycja obrazu dyktowana jest poniższym wzorem:
+\begin{equation}
+g(f) = g_{min} + (2\alpha^{2}ln(\frac{1}{N} \displaystyle \sum \limits_{m=0}^{f} H(m))^{-1})^{\frac{1}{2}}
+\end{equation}
+
+Uzyskane wartości ulegają normalizacji tak, aby mieściły się w przedziale dostępnych wartości danego koloru – od 0 do 255.
 
 \subsection{Filtracja liniowa w oparciu o splot}
 \label{filter.convolution}
@@ -269,6 +276,9 @@ Wybranie tej opcji spowoduje najpierw pokazanie okienka z wyborem wielkości mas
 
 \subsubsection{Filtr nieliniowy - Rosenfeld}
 Opcja ta spowoduje pokazanie okienka z suwakiem, w którym użytkownik powinien podać parametr $R$.
+
+\subsubsection{Edycja za pomocą histogramu}
+Edycja histogramu powoduje utworzenie kopii obrazu a następnie zmianę wartości barwy poszczególnych pikseli według wzoru umieszczonego w punkcie „Modyfikacja w oparciu o histogram”. Po wykonaniu tej operacji zostaje utworzony nowy obiekt klasy PhotoWindow, który prezentuje przetworzony obraz. Obraz  ten może być dalej przetwarzany na takiej samej zasadzie, co obraz otwarty z pliku.
 
 \section{Materiały i metody}
 Do testów wykorzystaliśmy popularny obrazek ,,Lena'' w wariantach kolorowym i odcieni szarości. Obrazki te prezentują rysunki \ref{fig.lenac} i \ref{fig.lena}.
@@ -360,6 +370,7 @@ Dokonano trzech filtrowań, z maskami o wielkościach $3 \times 3$, $5 \times 5$
 
 \subsection{Modyfikacja w oparciu o histogram}
 \label{sec.tests.histogram}
+Modyfikacja odbywa się w odniesieniu do trzech kolorów składowych - czerwonego, zielonego, niebieskiego oraz koloru szarości. W przykładzie edytowana została częśc histogramu dotycząca barwy czerwonej.
 
 \subsection{Filtracja liniowa w oparciu o splot}
 \label{sec.tests.convolution}
@@ -784,6 +795,15 @@ Wyniki wykonanych operacji prezentują obrazki \ref{fig.lenac_median}, \ref{fig.
 \end{figure}
 
 \subsection{Modyfikacja w oparciu o histogram}
+Poniżej przedstawiony został przykład przetwarzania obrazu w oparciu o edycję histogramu – koloru czerwieni:
+
+  \includegraphics[scale=0.25]{img/lenna_hist.jpg}
+
+Do uzyskania przedstawionego obrazu jako minimalna wartość koloru została podana wartość 108, natomiast jako parametr α przyjęta została wartość 54.
+
+Na załączonych histogramach widać, że poszczególne piksele przyjmują wartości koloru czerwonego nie mniejsze niż wartość minimalna. Zmianie również ulega histogram obrazujący odcienie szarości.
+
+Można zauważyć, że jakakolwiek zmiana wartości zarówno parametru minimalnej wartości koloru piksela jak i parametru α powoduje wzrost odcieni czerwieni na obrazie.
 
 \subsection{Filtracja liniowa w oparciu o splot}
 Obrazki \ref{fig.lenac_convolution} i \ref{fig.lena_convolution} pokazują wyniki dokonanych splotów.
