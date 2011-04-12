@@ -230,6 +230,8 @@ SNR, czyli \textit{Signal to Noise Ratio}, współczynnik sygnału do szumu $R$,
 \end{equation}
 $E$ to wyznaczony powyżej współczynnik MSE.
 
+\clearpage
+
 \section{Implementacja}
 Program powstał przy wykorzystaniu frameworku Qt wykorzystującego język C++.
 
@@ -277,6 +279,8 @@ Opcja ta spowoduje pokazanie okienka z suwakiem, w którym użytkownik powinien 
 
 \subsubsection{Edycja za pomocą histogramu}
 Edycja histogramu powoduje utworzenie kopii obrazu a następnie zmianę wartości barwy poszczególnych pikseli według wzoru umieszczonego w punkcie „Modyfikacja w oparciu o histogram”. Po wykonaniu tej operacji zostaje utworzony nowy obiekt klasy PhotoWindow, który prezentuje przetworzony obraz. Obraz  ten może być dalej przetwarzany na takiej samej zasadzie, co obraz otwarty z pliku.
+
+\clearpage
 
 \section{Materiały i metody}
 Do testów wykorzystaliśmy popularny obrazek ,,Lena'' w wariantach kolorowym i odcieni szarości. Obrazki te prezentują rysunki \ref{fig.lenac} i \ref{fig.lena}.
@@ -402,6 +406,8 @@ Dokonano filtracji nieliniowej obrazu wykorzystując w tym celu operator Rosenfe
 \subsection{Obiektywna i subiektywna ocena jakości obrazu}
 \label{sec.tests.quality}
 Przefiltrowane zaszumione wersje obrazów poddano ocenie. W celu obiektywnej oceny jakości wykorzystano wskaźniki MSE i SNR, natomiast do oceny subiektywnej wykorzystano własne oczy \smiley.
+
+\clearpage
 
 \section{Wyniki}
 Poniżej przedstawione są wyniki operacji przeprowadzonych na obrazkach.
@@ -797,11 +803,11 @@ Poniżej przedstawiony został przykład przetwarzania obrazu w oparciu o edycj�
 
   \includegraphics[scale=0.25]{img/lenna_hist.jpg}
 
-Do uzyskania przedstawionego obrazu jako minimalna wartość koloru została podana wartość 108, natomiast jako parametr α przyjęta została wartość 54.
+Do uzyskania przedstawionego obrazu jako minimalna wartość koloru została podana wartość 108, natomiast jako parametr $\alpha$ przyjęta została wartość 54.
 
 Na załączonych histogramach widać, że poszczególne piksele przyjmują wartości koloru czerwonego nie mniejsze niż wartość minimalna. Zmianie również ulega histogram obrazujący odcienie szarości.
 
-Można zauważyć, że jakakolwiek zmiana wartości zarówno parametru minimalnej wartości koloru piksela jak i parametru α powoduje wzrost odcieni czerwieni na obrazie.
+Można zauważyć, że jakakolwiek zmiana wartości zarówno parametru minimalnej wartości koloru piksela jak i parametru $\alpha$ powoduje wzrost odcieni czerwieni na obrazie.
 
 \subsection{Filtracja liniowa w oparciu o splot}
 Obrazki \ref{fig.lenac_convolution} i \ref{fig.lena_convolution} pokazują wyniki dokonanych splotów.
