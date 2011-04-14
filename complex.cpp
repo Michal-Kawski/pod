@@ -76,27 +76,27 @@ Complex &Complex::operator*=(const Complex &rhs)
 	return *this;
 }
 
-const Complex Complex::operator +(const Complex &rhs)
+const Complex Complex::operator +(const Complex &rhs) const
 {
 	return Complex(*this) += rhs;
 }
 
-const Complex Complex::operator -(const Complex &rhs)
+const Complex Complex::operator -(const Complex &rhs) const
 {
 	return Complex(*this) -= rhs;
 }
 
-const Complex Complex::operator *(const Complex &rhs)
+const Complex Complex::operator *(const Complex &rhs) const
 {
 	return Complex(*this) *= rhs;
 }
 
-bool Complex::operator ==(const Complex &rhs)
+bool Complex::operator ==(const Complex &rhs) const
 {
 	return this->mNumber == rhs.mNumber;
 }
 
-bool Complex::operator !=(const Complex &rhs)
+bool Complex::operator !=(const Complex &rhs) const
 {
 	return this->mNumber != rhs.mNumber;
 }
