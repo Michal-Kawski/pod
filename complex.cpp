@@ -72,7 +72,11 @@ Complex &Complex::operator-=(const Complex &rhs)
 
 Complex &Complex::operator*=(const Complex &rhs)
 {
-	this->mNumber *= rhs.mNumber;
+	// http://en.wikipedia.org/wiki/Complex_number#Multiplication_and_division
+	QVector2D result;
+	result.setX(real() * rhs.real() - imaginary() * rhs.imaginary());
+	result.setY(imaginary() * rhs.real() + real() * rhs.imaginary());
+	this->mNumber = result;
 	return *this;
 }
 
