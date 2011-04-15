@@ -17,6 +17,7 @@ public:
 	qreal abs() const;
 	qreal real() const;
 	qreal imaginary() const;
+	qreal phase() const;
 	void setReal(const qreal &real);
 	void setImaginary(const qreal &imaginary);
 

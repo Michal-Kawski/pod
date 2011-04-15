@@ -31,6 +31,21 @@ qreal Complex::abs() const
 	return mNumber.length();
 }
 
+qreal Complex::phase() const
+{
+	qreal result = NAN;
+	if (real() != 0)  {
+		result = std::atan(imaginary() / real());
+		if (real() < 0) {
+			result += (imaginary() >= 0) ? M_PI : -M_PI;
+		}
+	} else if (imaginary() != 0) {
+		result = (imaginary() > 0) ? M_PI : -M_PI;
+		result /= 2.0;
+	}
+	return result;
+}
+
 qreal Complex::real() const
 {
 	return mNumber.x();
