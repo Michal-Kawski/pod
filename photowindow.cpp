@@ -10,6 +10,7 @@
 #include "contrastfilter.h"
 #include "rosenfeldfilter.h"
 #include "qualitychecker.h"
+#include "fft.h"
 
 #include <QDebug>
 #include <QFileDialog>
@@ -70,6 +71,7 @@ void PhotoWindow::constructorInternals(const QString &title)
 	appendFilter(new AverageFilter(this));
 	appendFilter(new ContrastFilter(this));
 	appendFilter(new RosenfeldFilter(this));
+	appendFilter(new FFT(this));
 
 	connect(mFiltersMenu, SIGNAL(triggered(QAction*)), this, SLOT(applyFilter(QAction*)));
 }
