@@ -112,10 +112,6 @@ void PhotoWindow::appendFilter(FilterInterface *filter)
 	mFiltersMenu->addAction(menuAction);
 }
 
-void PhotoWindow::closeEvent(QCloseEvent *){
-    delete this;
-}
-
 void PhotoWindow::on_actionGeneruj_histogramy_triggered()
 {
     krgb.resize(4);

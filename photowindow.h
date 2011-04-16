@@ -31,7 +31,6 @@ private:
 	QHash<QUuid, FilterInterface *> mFiltersHash;
 	QMenu *mFiltersMenu;
 	QImage mImage;
-	void closeEvent(QCloseEvent *);
     void drawHistograms(QImage* photo);
     int calculateRaleigh(int position, int gMin, float alfa, QVector<int> histValues);
 	void appendFilter(FilterInterface *filter);
