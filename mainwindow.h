@@ -21,15 +21,10 @@ public:
 private slots:
 	void on_actionOtw_rz_2_triggered();
 	void on_actionZapisz_triggered();
-    void on_actionOtw_rz_triggered();
-    void eraseFromList(PhotoWindow* p);
-    void setCurrentPhoto(PhotoWindow* p);
-    void addToPhotoList(PhotoWindow* p);
+	void on_actionOtw_rz_triggered();
 
 private:
-    Ui::MainWindow *ui;
-    QList<PhotoWindow*> photosList;
-    PhotoWindow* currentPhoto;
+	Ui::MainWindow *ui;
 };
 
 #endif // MAINWINDOW_H
