@@ -82,7 +82,6 @@ void PhotoWindow::constructorInternals(const QString &title)
 
 PhotoWindow::~PhotoWindow()
 {
-    emit eraseThis(this);
 	delete dockWidget;
     delete ui;
 }
@@ -115,10 +114,6 @@ void PhotoWindow::appendFilter(FilterInterface *filter)
 
 void PhotoWindow::closeEvent(QCloseEvent *){
     delete this;
-}
-
-void PhotoWindow::focusInEvent(QFocusEvent *){
-    emit markThisAsCurrent(this);
 }
 
 void PhotoWindow::on_actionGeneruj_histogramy_triggered()
@@ -225,8 +220,7 @@ void PhotoWindow::changeHistogram(int color, int gMin, float alfa){
     //dockWidget->setMaxValues(findMaxValues());
 
     PhotoWindow *newPW = new PhotoWindow(img, "New Photo", (QWidget*)parent());
-    newPW->show();
-    emit addToPhotoList(newPW);
+	newPW->show();
 
     //mImage = img;
     dockWidget->update();

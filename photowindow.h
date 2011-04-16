@@ -31,19 +31,13 @@ private:
 	QHash<QUuid, FilterInterface *> mFiltersHash;
 	QMenu *mFiltersMenu;
 	QImage mImage;
-    void closeEvent(QCloseEvent *);
-    void focusInEvent(QFocusEvent *);
+	void closeEvent(QCloseEvent *);
     void drawHistograms(QImage* photo);
     int calculateRaleigh(int position, int gMin, float alfa, QVector<int> histValues);
 	void appendFilter(FilterInterface *filter);
         void constructorInternals(const QString &title);
     QVector<int> findMaxValues();
     void changeImageColor(int color, int oldValue, int newValue, QImage *img);
-
-signals:
-    void eraseThis(PhotoWindow* p);
-    void markThisAsCurrent(PhotoWindow* p);
-    void addToPhotoList(PhotoWindow* p);
 
 private slots:
 	void applyFilter(QAction *action);
