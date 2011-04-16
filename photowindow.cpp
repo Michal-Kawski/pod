@@ -12,7 +12,6 @@
 #include "qualitychecker.h"
 #include "fft.h"
 
-#include <QDebug>
 #include <QFileDialog>
 #include <QImage>
 #include <QPixmap>
@@ -20,6 +19,9 @@
 #include <cmath>
 #include <QAction>
 #include <QRgb>
+#include <QDesktopWidget>
+
+#include <QDebug>
 
 Q_DECLARE_METATYPE(QUuid)
 
@@ -47,7 +49,7 @@ void PhotoWindow::constructorInternals(const QString &title)
 	setAttribute(Qt::WA_DeleteOnClose);
 
 	dockWidget = new DockWidget(this);
-        connect(dockWidget, SIGNAL(changeHistogram(int,int,float)), this, SLOT(changeHistogram(int,int,float)));
+	connect(dockWidget, SIGNAL(changeHistogram(int,int,float)), this, SLOT(changeHistogram(int,int,float)));
 	menuBar()->addAction(dockWidget->toggleViewAction());
 
 	mFiltersMenu = menuBar()->addMenu("Filters");

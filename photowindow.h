@@ -5,11 +5,7 @@
 #include "filterinterface.h"
 
 #include <QMainWindow>
-#include <QPainter>
-#include <QApplication>
-#include <QDesktopWidget>
-#include <QPaintEvent>
-//#include <QDockWidget>
+#include <QHash>
 #include <QVector>
 
 namespace Ui {
