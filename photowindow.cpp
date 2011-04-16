@@ -44,6 +44,8 @@ void PhotoWindow::constructorInternals(const QString &title)
 	qDebug() << "image format:" << mImage.format();
 	ui->setupUi(this);
 
+	setAttribute(Qt::WA_DeleteOnClose);
+
 	dockWidget = new DockWidget(this);
         connect(dockWidget, SIGNAL(changeHistogram(int,int,float)), this, SLOT(changeHistogram(int,int,float)));
 	menuBar()->addAction(dockWidget->toggleViewAction());
