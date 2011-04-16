@@ -1,4 +1,5 @@
 #include "fft.h"
+#include "photowindow.h"
 
 // http://www.librow.com/articles/article-10
 
@@ -61,7 +62,7 @@ QString FFT::name() const
 	return "FFT";
 }
 
-QImage FFT::apply()
+DisplayWindow *FFT::apply(QString windowBaseName)
 {
 	perform();
 	QImage result(mSize, mFormat);
@@ -91,7 +92,8 @@ QImage FFT::apply()
 	if (mFormat == QImage::Format_Indexed8 || mFormat == QImage::Format_Mono) {
 		result.setColorTable(mImg.colorTable());
 	}
-	return result;
+	// parent's parent should be MainWindow
+	return new PhotoWindow(result, windowBaseName + ", " + name(), q_check_ptr(qobject_cast<QWidget *>(parent()->parent())));
 }
 
 void FFT::rearrange(QVector<Complex> &elements)

@@ -15,7 +15,7 @@ public:
 signals:
 
 public slots:
-	virtual QImage apply();
+	virtual DisplayWindow *apply(QString windowBaseName);
 	virtual bool setup(const QImage &img);
 
 private:

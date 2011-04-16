@@ -3,8 +3,8 @@
 
 #include "dockwidget.h"
 #include "filterinterface.h"
+#include "displaywindow.h"
 
-#include <QMainWindow>
 #include <QHash>
 #include <QVector>
 
@@ -15,7 +15,7 @@ namespace Ui {
 class QImage;
 class QAction;
 
-class PhotoWindow : public QMainWindow
+class PhotoWindow : public DisplayWindow
 {
     Q_OBJECT
 

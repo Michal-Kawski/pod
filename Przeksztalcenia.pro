@@ -34,7 +34,8 @@ SOURCES += main.cpp\
     colorparser.cpp \
     transformfilter.cpp \
     fft.cpp \
-    complex.cpp
+    complex.cpp \
+    displaywindow.cpp
 
 HEADERS  += mainwindow.h \
     photowindow.h \
@@ -56,7 +57,8 @@ HEADERS  += mainwindow.h \
     transformfilter.h \
     fft.h \
     complex.h \
-    complexarray.h
+    complexarray.h \
+    displaywindow.h
 
 FORMS    += mainwindow.ui \
     photowindow.ui

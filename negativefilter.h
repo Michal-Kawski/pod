@@ -16,7 +16,7 @@ signals:
 
 public slots:
 	bool setup(const QImage &img);
-	QImage apply();
+	virtual DisplayWindow *apply(QString windowBaseName);
 };
 
 #endif // NEGATIVEFILTER_H

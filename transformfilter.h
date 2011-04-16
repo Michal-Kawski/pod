@@ -14,7 +14,7 @@ signals:
 
 public slots:
 	virtual bool setup(const QImage &img);
-	virtual QImage apply() = 0;
+	virtual DisplayWindow *apply(QString windowBaseName) = 0;
 
 protected:
 	qreal extractColor(const QRgb &color, int which) const;

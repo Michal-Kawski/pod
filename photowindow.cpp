@@ -26,7 +26,7 @@
 Q_DECLARE_METATYPE(QUuid)
 
 PhotoWindow::PhotoWindow(QString newUrl, QString title, QWidget *parent) :
-    QMainWindow(parent),
+	DisplayWindow(parent),
 	ui(new Ui::PhotoWindow),
 	mImage(newUrl)
 {
@@ -34,7 +34,7 @@ PhotoWindow::PhotoWindow(QString newUrl, QString title, QWidget *parent) :
 }
 
 PhotoWindow::PhotoWindow(QImage img, QString title, QWidget *parent) :
-	QMainWindow(parent),
+	DisplayWindow(parent),
 	ui(new Ui::PhotoWindow),
 	mImage(img)
 {
@@ -92,12 +92,8 @@ void PhotoWindow::applyFilter(QAction *action)
 	FilterInterface *filter = mFiltersHash[action->data().value<QUuid>()];
 	qDebug() << "filter name:" << filter->name();
 	if (filter->setup(mImage)) {
-		QImage img = filter->apply();
-		// new PhotoWindow should always be a child of MainWindow
-		PhotoWindow *pw = new PhotoWindow(img,
-										  windowTitle() + ", " + filter->name(),
-										  this->parentWidget());
-		pw->show();
+		DisplayWindow *dw = filter->apply(windowTitle());
+		q_check_ptr(dw)->show();
 	}
 }
 
