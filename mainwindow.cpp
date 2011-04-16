@@ -19,7 +19,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionOtw_rz_triggered()
 {
-    QString fileUrl = QFileDialog::getOpenFileName(this, tr("Wybierz plik do otwarcia: "), "photo.jpg");
+	QString fileUrl = QFileDialog::getOpenFileName(this, tr("Wybierz plik do otwarcia: "), QString(), "Images (*.png *.xpm *.jpg *.bmp);;Any (*)");
     if(fileUrl.isEmpty())
         return;
 
