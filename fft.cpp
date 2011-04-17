@@ -1,5 +1,5 @@
 #include "fft.h"
-#include "photowindow.h"
+#include "transformwindow.h"
 
 // http://www.librow.com/articles/article-10
 
@@ -93,7 +93,7 @@ DisplayWindow *FFT::apply(QString windowBaseName)
 		result.setColorTable(mImg.colorTable());
 	}
 	// parent's parent should be MainWindow
-	return new PhotoWindow(result, windowBaseName + ", " + name(), q_check_ptr(qobject_cast<QWidget *>(parent()->parent())));
+	return new TransformWindow(result, result, windowBaseName + ", " + name(), q_check_ptr(qobject_cast<QWidget *>(parent()->parent())));
 }
 
 void FFT::rearrange(QVector<Complex> &elements)
