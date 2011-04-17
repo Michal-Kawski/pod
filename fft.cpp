@@ -65,35 +65,49 @@ QString FFT::name() const
 DisplayWindow *FFT::apply(QString windowBaseName)
 {
 	perform();
-	QImage result(mSize, mFormat);
-	result.fill(Qt::black);
+	QImage resultPhase(mSize, mFormat);
+	QImage resultMagnitude(mSize, mFormat);
+	resultPhase.fill(Qt::black);
+	resultMagnitude.fill(Qt::black);
 	for (unsigned int i = 0; i < mCA->shape()[0]; i++) {
-		qreal min = 0;
-		qreal max = 0;
+		qreal minp = 0;
+		qreal maxp = 0;
+		qreal minm = 0;
+		qreal maxm = 0;
 		for (unsigned int j = 0; j < mCA->shape()[1]; j++) {
 			for (unsigned int k = 0; k < mCA->shape()[2]; k++) {
 				qreal phase = (*mCA)[i][j][k].phase();
-				if (phase > max) {
-					max = phase;
-				} else if (phase < min) {
-					min = phase;
+				qreal magnitude = (*mCA)[i][j][k].abs();
+				if (phase > maxp) {
+					maxp = phase;
+				} else if (phase < minp) {
+					minp = phase;
+				}
+				if (magnitude > maxm) {
+					maxm = magnitude;
+				} else if (magnitude < minm) {
+					minm = magnitude;
 				}
 			}
 		}
 
 		for (unsigned int j = 0; j < mCA->shape()[1]; j++) {
 			for (unsigned int k = 0; k < mCA->shape()[2]; k++) {
-				unsigned int p = ((*mCA)[i][j][k].phase() - min) / (max - min) * 255.0;
+				unsigned int p = ((*mCA)[i][j][k].phase() - minp) / (maxp - minp) * 255.0;
 				p <<= (8 * i);
-				result.setPixel(j, k, result.pixel(j, k) | p);
+				resultPhase.setPixel(j, k, resultPhase.pixel(j, k) | p);
+
+				p = ((*mCA)[i][j][k].abs() - minm) / (maxp - minm) * 255.0;
+				p <<= (8 * i);
+				resultMagnitude.setPixel(j, k, resultMagnitude.pixel(j, k) | p);
 			}
 		}
 	}
 	if (mFormat == QImage::Format_Indexed8 || mFormat == QImage::Format_Mono) {
-		result.setColorTable(mImg.colorTable());
+		resultPhase.setColorTable(mImg.colorTable());
 	}
 	// parent's parent should be MainWindow
-	return new TransformWindow(result, result, windowBaseName + ", " + name(), q_check_ptr(qobject_cast<QWidget *>(parent()->parent())));
+	return new TransformWindow(resultMagnitude, resultPhase, windowBaseName + ", " + name(), q_check_ptr(qobject_cast<QWidget *>(parent()->parent())));
 }
 
 void FFT::rearrange(QVector<Complex> &elements)
