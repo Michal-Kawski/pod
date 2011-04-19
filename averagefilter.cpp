@@ -1,6 +1,7 @@
 #include "averagefilter.h"
 #include "sizedialog.h"
 #include "colorparser.h"
+#include "photowindow.h"
 
 #include <QVector3D>
 
@@ -30,7 +31,7 @@ bool AverageFilter::setup(const QImage &img)
 	return FilterInterface::setup(img);
 }
 
-QImage AverageFilter::apply()
+DisplayWindow *AverageFilter::apply(QString windowBaseName)
 {
 	QImage result(mImg.size(), mFormat);
 	if (mFormat == QImage::Format_Indexed8 || mFormat == QImage::Format_Mono) {
@@ -56,5 +57,6 @@ QImage AverageFilter::apply()
 			cp.setPixel(x, y, result, average);
 		}
 	}
-	return result;
+	// parent's parent should be MainWindow
+	return new PhotoWindow(result, windowBaseName + ", " + name(), q_check_ptr(qobject_cast<QWidget *>(parent()->parent())));
 }

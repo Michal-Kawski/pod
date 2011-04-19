@@ -14,7 +14,7 @@ signals:
 
 public slots:
 	virtual bool setup(const QImage &img);
-	virtual QImage apply();
+	virtual DisplayWindow *apply(QString windowBaseName);
 
 protected:
 	QVector<QVector<int> > mKernel;

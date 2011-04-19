@@ -5,6 +5,8 @@
 #include <QImage>
 #include <QUuid>
 
+class DisplayWindow;
+
 class FilterInterface : public QObject
 {
     Q_OBJECT
@@ -21,7 +23,7 @@ signals:
 
 public slots:
 	virtual bool setup(const QImage &img);
-	virtual QImage apply() = 0;
+	virtual DisplayWindow *apply(QString windowBaseName) = 0;
 
 protected:
 	QImage mImg;

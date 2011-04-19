@@ -57,7 +57,8 @@ DockWidget::~DockWidget(){
     delete krgb;
 }
 
-void DockWidget::paintEvent(QPaintEvent *event){
+void DockWidget::paintEvent(QPaintEvent */*event*/)
+{
     if(krgb->size() > 1){
         for(int i=0; i<sliders.size(); i++){
             sliders.at(i)->setEnabled(true);

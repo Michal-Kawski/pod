@@ -10,8 +10,8 @@
 #include "contrastfilter.h"
 #include "rosenfeldfilter.h"
 #include "qualitychecker.h"
+#include "fft.h"
 
-#include <QDebug>
 #include <QFileDialog>
 #include <QImage>
 #include <QPixmap>
@@ -19,11 +19,14 @@
 #include <cmath>
 #include <QAction>
 #include <QRgb>
+#include <QDesktopWidget>
+
+#include <QDebug>
 
 Q_DECLARE_METATYPE(QUuid)
 
 PhotoWindow::PhotoWindow(QString newUrl, QString title, QWidget *parent) :
-    QMainWindow(parent),
+	DisplayWindow(parent),
 	ui(new Ui::PhotoWindow),
 	mImage(newUrl)
 {
@@ -31,7 +34,7 @@ PhotoWindow::PhotoWindow(QString newUrl, QString title, QWidget *parent) :
 }
 
 PhotoWindow::PhotoWindow(QImage img, QString title, QWidget *parent) :
-	QMainWindow(parent),
+	DisplayWindow(parent),
 	ui(new Ui::PhotoWindow),
 	mImage(img)
 {
@@ -44,7 +47,7 @@ void PhotoWindow::constructorInternals(const QString &title)
 	ui->setupUi(this);
 
 	dockWidget = new DockWidget(this);
-        connect(dockWidget, SIGNAL(changeHistogram(int,int,float)), this, SLOT(changeHistogram(int,int,float)));
+	connect(dockWidget, SIGNAL(changeHistogram(int,int,float)), this, SLOT(changeHistogram(int,int,float)));
 	menuBar()->addAction(dockWidget->toggleViewAction());
 
 	mFiltersMenu = menuBar()->addMenu("Filters");
@@ -71,12 +74,15 @@ void PhotoWindow::constructorInternals(const QString &title)
 	appendFilter(new ContrastFilter(this));
 	appendFilter(new RosenfeldFilter(this));
 
+	mFiltersMenu->addSeparator();
+
+	appendFilter(new FFT(this));
+
 	connect(mFiltersMenu, SIGNAL(triggered(QAction*)), this, SLOT(applyFilter(QAction*)));
 }
 
 PhotoWindow::~PhotoWindow()
 {
-    emit eraseThis(this);
 	delete dockWidget;
     delete ui;
 }
@@ -87,12 +93,8 @@ void PhotoWindow::applyFilter(QAction *action)
 	FilterInterface *filter = mFiltersHash[action->data().value<QUuid>()];
 	qDebug() << "filter name:" << filter->name();
 	if (filter->setup(mImage)) {
-		QImage img = filter->apply();
-		// new PhotoWindow should always be a child of MainWindow
-		PhotoWindow *pw = new PhotoWindow(img,
-										  windowTitle() + ", " + filter->name(),
-										  this->parentWidget());
-		pw->show();
+		DisplayWindow *dw = filter->apply(windowTitle());
+		q_check_ptr(dw)->show();
 	}
 }
 
@@ -105,14 +107,6 @@ void PhotoWindow::appendFilter(FilterInterface *filter)
 	qDebug() << filter->uuid();
 	menuAction->setData(v);
 	mFiltersMenu->addAction(menuAction);
-}
-
-void PhotoWindow::closeEvent(QCloseEvent *){
-    delete this;
-}
-
-void PhotoWindow::focusInEvent(QFocusEvent *){
-    emit markThisAsCurrent(this);
 }
 
 void PhotoWindow::on_actionGeneruj_histogramy_triggered()
@@ -219,8 +213,7 @@ void PhotoWindow::changeHistogram(int color, int gMin, float alfa){
     //dockWidget->setMaxValues(findMaxValues());
 
     PhotoWindow *newPW = new PhotoWindow(img, "New Photo", (QWidget*)parent());
-    newPW->show();
-    emit addToPhotoList(newPW);
+	newPW->show();
 
     //mImage = img;
     dockWidget->update();

@@ -2,6 +2,7 @@
 #include "kernelvaluesdialog.h"
 #include "sizedialog.h"
 #include "colorparser.h"
+#include "photowindow.h"
 
 #include <QDialog>
 #include <QLayout>
@@ -40,7 +41,7 @@ bool ConvolutionFilter::setup(const QImage &img)
 	return FilterInterface::setup(img);
 }
 
-QImage ConvolutionFilter::apply()
+DisplayWindow *ConvolutionFilter::apply(QString windowBaseName)
 {
 	QImage result(mImg.size(), mFormat);
 	if (mFormat == QImage::Format_Indexed8 || mFormat == QImage::Format_Mono) {
@@ -99,7 +100,8 @@ QImage ConvolutionFilter::apply()
 		}
 	}
 	qDebug() << "spread:" << spread << "max:" << max << "min:" << min;
-	return result;
+	// parent's parent should be MainWindow
+	return new PhotoWindow(result, windowBaseName + ", " + name(), q_check_ptr(qobject_cast<QWidget *>(parent()->parent())));
 }
 
 QString ConvolutionFilter::name() const

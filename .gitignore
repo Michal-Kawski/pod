@@ -1,1 +1,5 @@
-*.pro.user
+*.pro.usersprawko/*.pdf
+sprawko/*.aux
+sprawko/*.log
+sprawko/*.out
+sprawko/*.syntex.gz

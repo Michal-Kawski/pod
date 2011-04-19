@@ -1,6 +1,7 @@
 #include "brightnessfilter.h"
 #include "slidingvaluedialog.h"
 #include "colorparser.h"
+#include "photowindow.h"
 
 BrightnessFilter::BrightnessFilter(QObject *parent) :
     FilterInterface(parent)
@@ -25,7 +26,7 @@ QString BrightnessFilter::name() const
 	return "Brightness";
 }
 
-QImage BrightnessFilter::apply()
+DisplayWindow *BrightnessFilter::apply(QString windowBaseName)
 {
 	QImage result(mImg.size(), mFormat);
 	if (mFormat == QImage::Format_Indexed8 || mFormat == QImage::Format_Mono) {
@@ -41,5 +42,6 @@ QImage BrightnessFilter::apply()
 			cp.setPixel(x, y, result, color);
 		}
 	}
-	return result;
+	// parent's parent should be MainWindow
+	return new PhotoWindow(result, windowBaseName + ", " + name(), q_check_ptr(qobject_cast<QWidget *>(parent()->parent())));
 }

@@ -1,6 +1,7 @@
 #include "rosenfeldfilter.h"
 #include "slidingvaluedialog.h"
 #include "colorparser.h"
+#include "photowindow.h"
 
 #include <QVector3D>
 
@@ -27,7 +28,7 @@ bool RosenfeldFilter::setup(const QImage &img)
 	return FilterInterface::setup(img);
 }
 
-QImage RosenfeldFilter::apply()
+DisplayWindow *RosenfeldFilter::apply(QString windowBaseName)
 {
 	QImage result(mImg.size(), mFormat);
 	if (mFormat == QImage::Format_Indexed8 || mFormat == QImage::Format_Mono) {
@@ -60,5 +61,6 @@ QImage RosenfeldFilter::apply()
 			cp.setPixel(x, y, result, diff);
 		}
 	}
-	return result;
+	// parent's parent should be MainWindow
+	return new PhotoWindow(result, windowBaseName + ", " + name(), q_check_ptr(qobject_cast<QWidget *>(parent()->parent())));
 }

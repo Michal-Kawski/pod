@@ -31,7 +31,12 @@ SOURCES += main.cpp\
     contrastfilter.cpp \
     rosenfeldfilter.cpp \
     qualitychecker.cpp \
-    colorparser.cpp
+    colorparser.cpp \
+    transformfilter.cpp \
+    fft.cpp \
+    complex.cpp \
+    displaywindow.cpp \
+    transformwindow.cpp
 
 HEADERS  += mainwindow.h \
     photowindow.h \
@@ -49,7 +54,14 @@ HEADERS  += mainwindow.h \
     contrastfilter.h \
     rosenfeldfilter.h \
     qualitychecker.h \
-    colorparser.h
+    colorparser.h \
+    transformfilter.h \
+    fft.h \
+    complex.h \
+    complexarray.h \
+    displaywindow.h \
+    transformwindow.h
 
 FORMS    += mainwindow.ui \
-    photowindow.ui
+    photowindow.ui \
+    transformwindow.ui

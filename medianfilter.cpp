@@ -1,6 +1,7 @@
 #include "medianfilter.h"
 #include "sizedialog.h"
 #include "colorparser.h"
+#include "photowindow.h"
 
 MedianFilter::MedianFilter(QObject *parent) :
     FilterInterface(parent)
@@ -28,7 +29,7 @@ bool MedianFilter::setup(const QImage &img)
 	return FilterInterface::setup(img);
 }
 
-QImage MedianFilter::apply()
+DisplayWindow *MedianFilter::apply(QString windowBaseName)
 {
 	QVector<int> red, green, blue;
 	QImage result(mImg.size(), mFormat);
@@ -74,5 +75,6 @@ QImage MedianFilter::apply()
 			cp.setPixel(x, y, result, median);
 		}
 	}
-	return result;
+	// parent's parent should be MainWindow
+	return new PhotoWindow(result, windowBaseName + ", " + name(), q_check_ptr(qobject_cast<QWidget *>(parent()->parent())));
 }
