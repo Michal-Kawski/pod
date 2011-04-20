@@ -58,6 +58,9 @@ DisplayWindow *RosenfeldFilter::apply(QString windowBaseName)
 			}
 			QVector3D diff = sumRight - sumLeft;
 			diff /= (qreal)mValue;
+			diff.setX(qMax(0.0, diff.x()));
+			diff.setY(qMax(0.0, diff.y()));
+			diff.setZ(qMax(0.0, diff.z()));
 			cp.setPixel(x, y, result, diff);
 		}
 	}
