@@ -46,7 +46,7 @@ void PhotoWindow::constructorInternals(const QString &title)
 	qDebug() << "image format:" << mImage.format();
 	ui->setupUi(this);
 
-	dockWidget = new DockWidget(this);
+        dockWidget = new DockWidget(this, mImage.isGrayscale());
 	connect(dockWidget, SIGNAL(changeHistogram(int,int,float)), this, SLOT(changeHistogram(int,int,float)));
 	menuBar()->addAction(dockWidget->toggleViewAction());
 
@@ -127,25 +127,25 @@ void PhotoWindow::on_actionGeneruj_histogramy_triggered()
     uint maxG = 0;
     uint maxB = 0;
 
-	for(int i=0; i < mImage.width(); i++){
-		for(int j=0; j < mImage.height(); j++){
-			color = mImage.pixel(i, j);
+        for(int i=0; i < mImage.width(); i++){
+            for(int j=0; j < mImage.height(); j++){
+                color = mImage.pixel(i, j);
 
-            krgb[0][qGray(color.rgb())]++;
-            if(krgb[0][qGray(color.rgb())] > (int)maxK)
-                maxK = krgb[0][qGray(color.rgb())];
+                krgb[0][color.black()]++;
+                if(krgb[0][color.black()] > (int)maxK)
+                    maxK = krgb[0][color.black()];
 
-            krgb[1][color.red()]++;
-            if(krgb[1][color.red()] > (int)maxR)
-                maxR = krgb[1][color.red()];
+                krgb[1][color.red()]++;
+                if(krgb[1][color.red()] > (int)maxR)
+                    maxR = krgb[1][color.red()];
 
-            krgb[2][color.green()]++;
-            if(krgb[2][color.green()] > (int)maxG)
-                maxG = krgb[2][color.green()];
+                krgb[2][color.green()]++;
+                if(krgb[2][color.green()] > (int)maxG)
+                    maxG = krgb[2][color.green()];
 
-            krgb[3][color.blue()]++;
-            if(krgb[3][color.blue()] > (int)maxB)
-                maxB = krgb[3][color.blue()];
+                krgb[3][color.blue()]++;
+                if(krgb[3][color.blue()] > (int)maxB)
+                    maxB = krgb[3][color.blue()];
         }
     }
 
@@ -172,6 +172,20 @@ void PhotoWindow::changeHistogram(int color, int gMin, float alfa){
 
     switch(color){
     case 0:
+        /*for(int i=0; i<img.width(); i++){
+            for(int j=0; j<img.height(); j++){
+                int pixel = qGray(img.pixel(i,i));
+                int tmp = calculateRaleigh(pixel, gMin, alfa, krgb.at(0));
+                tmpVector[pixel] = tmp;
+
+                if(img.isGrayscale()){
+                    img.setPixel(i,j, pixel);
+                }else{
+                    QColor rgb = QColor(img.pixel(i,j));
+                    img.setPixel(i,j, );
+                }
+            }
+        }*/
         for(int i=0; i<krgb.at(0).size(); i++){
             int tmp = calculateRaleigh(i, gMin, alfa, krgb.at(0));
             tmpVector[i] = tmp;
@@ -295,33 +309,10 @@ void PhotoWindow::changeImageColor(int color, int oldValue, int newValue, QImage
     case 0:
         for(int i=0; i < img->width(); i++){
             for(int j=0; j<img->height(); j++){
-                if(qGray(img->pixel(i,j)) == oldValue){
-                    rgb = QColor(img->pixel(i, j));
-                    int red = rgb.red();
-                    if(red > 11){
-                        red -= 11;
-                        red = round(red/32);
-                    }else{
-                        red = 0;
-                    }
-
-                    int green = rgb.green();
-                    if(green > 16){
-                        green -= 16;
-                        green = round(green/32);
-                    }else{
-                        green = 0;
-                    }
-
-                    int blue = rgb.blue();
-                    if(blue > 5){
-                        blue -= 5;
-                        blue = round(blue/32);
-                    }else{
-                        blue = 0;
-                    }
-
-                    img->setPixel(i,j, QColor(red, green, blue).rgb());
+                if(QColor(img->pixel(i,j)).black() == oldValue){
+                    rgb = img->pixel(i,j);
+                    rgb.setCmyk(rgb.cyan(), rgb.magenta(), rgb.yellow(), newValue);
+                    img->setPixel(i,j,qGray(rgb.rgb()));
                 }
             }
         }

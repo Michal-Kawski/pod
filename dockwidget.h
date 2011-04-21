@@ -7,12 +7,13 @@
 class QSlider;
 class QLineEdit;
 class QLabel;
+class QPushButton;
 
 class DockWidget : public QDockWidget
 {
     Q_OBJECT
 public:
-    explicit DockWidget(QWidget *parent = 0);
+    explicit DockWidget(QWidget *parent = 0, bool grayScale = true);
     ~DockWidget();
     void setKrgb(QVector< QVector<int> > *vector);
     void setMaxValues(QVector<int> max);
@@ -25,15 +26,18 @@ private:
     QVector<QLineEdit*> gLinesEdit;
     QVector<QLabel *> aLabels;
     QVector<QLineEdit *> aLinesEdit;
+    QVector<QPushButton *> buttons;
+    bool grayScale;
     void paintEvent(QPaintEvent *event);
-    //void changeHistogramValues(int histogram);
     int calculateColorValue(int color, int gMin, float alfa);
 
 signals:
     void changeHistogram(int color, int  gMin, float alfa);
 
 public slots:
-	void sliderValueChanged();
+    void buttonClicked();
+    void lineEditChanged();
+        void sliderValueChanged();
 };
 
 #endif // DOCKWIDGET_H
