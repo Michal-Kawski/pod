@@ -134,3 +134,26 @@ void ColorParser::setPixel(const QPoint &pos, QImage &img, QVector3D color)
 			qDebug() << "invalid image format" << mFormat;
 	}
 }
+
+QVector3D ColorParser::merge(const QVector3D &left, const QVector3D &right) const
+{
+	QVector3D result;
+	switch (mFormat) {
+		case QImage::Format_RGB32:
+		case QImage::Format_ARGB32:
+		case QImage::Format_ARGB32_Premultiplied:
+			result.setX((int)left.x() | (int)right.x());
+			result.setY((int)left.y() | (int)right.y());
+			result.setZ((int)left.z() | (int)right.z());
+			break;
+		case QImage::Format_Indexed8:
+			{
+				int val = (int)left.x() | (int)right.x();
+				result = QVector3D(val, val, val);
+			}
+			break;
+		default:
+			qDebug() << "unsupported image format" << mFormat;
+	}
+	return result;
+}

@@ -1,5 +1,6 @@
 #include "fft.h"
 #include "transformwindow.h"
+#include "colorparser.h"
 
 // http://www.librow.com/articles/article-10
 
@@ -67,8 +68,20 @@ DisplayWindow *FFT::apply(QString windowBaseName)
 	perform();
 	QImage resultPhase(mSize, mFormat);
 	QImage resultMagnitude(mSize, mFormat);
-	resultPhase.fill(Qt::black);
-	resultMagnitude.fill(Qt::black);
+	if (mFormat == QImage::Format_Indexed8) {
+		QVector<QRgb> colors;
+		colors.reserve(256);
+		for (int i = 0; i < 256; i++) {
+			colors << qRgb(i, i, i);
+		}
+		resultPhase.setColorTable(colors);
+		resultMagnitude.setColorTable(colors);
+		resultPhase.fill(0);
+		resultMagnitude.fill(0);
+	} else {
+		resultPhase.fill(Qt::black);
+		resultMagnitude.fill(Qt::black);
+	}
 	for (unsigned int i = 0; i < mCA->shape()[0]; i++) {
 		qreal minp = 0;
 		qreal maxp = 0;
@@ -91,15 +104,48 @@ DisplayWindow *FFT::apply(QString windowBaseName)
 			}
 		}
 
+		ColorParser cp(mFormat);
 		for (unsigned int j = 0; j < mCA->shape()[1]; j++) {
 			for (unsigned int k = 0; k < mCA->shape()[2]; k++) {
 				unsigned int p = ((*mCA)[i][j][k].phase() - minp) / (maxp - minp) * 255.0;
-				p <<= (8 * i);
-				resultPhase.setPixel(j, k, resultPhase.pixel(j, k) | p);
+				{
+					QVector3D oldPixel = cp.pixel(j, k, resultPhase);
+					QVector3D newPixel;
+					switch (i) {
+						case 0:
+							newPixel.setX(p);
+							break;
+						case 1:
+							newPixel.setY(p);
+							break;
+						case 2:
+							newPixel.setZ(p);
+							break;
+						default:
+							break;
+					}
+					cp.setPixel(j, k, resultPhase, cp.merge(oldPixel, newPixel));
+				}
 
 				p = ((*mCA)[i][j][k].abs() - minm) / (maxp - minm) * 255.0;
-				p <<= (8 * i);
-				resultMagnitude.setPixel(j, k, resultMagnitude.pixel(j, k) | p);
+				{
+					QVector3D oldPixel = cp.pixel(j, k, resultMagnitude);
+					QVector3D newPixel;
+					switch (i) {
+						case 0:
+							newPixel.setX(p);
+							break;
+						case 1:
+							newPixel.setY(p);
+							break;
+						case 2:
+							newPixel.setZ(p);
+							break;
+						default:
+							break;
+					}
+					cp.setPixel(j, k, resultMagnitude, cp.merge(oldPixel, newPixel));
+				}
 			}
 		}
 	}

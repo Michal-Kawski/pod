@@ -12,6 +12,7 @@ public:
 	QVector3D pixel(const QPoint &pos, const QImage &img) const;
 	void setPixel(int x, int y, QImage &img, QVector3D color);
 	void setPixel(const QPoint &pos, QImage &img, QVector3D color);
+	QVector3D merge(const QVector3D &left, const QVector3D &right) const;
 
 private:
 	const QImage::Format mFormat;
