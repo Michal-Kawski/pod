@@ -2,6 +2,8 @@
 #include "transformwindow.h"
 #include "colorparser.h"
 
+#include "QDebug"
+
 // http://www.librow.com/articles/article-10
 
 FFT::FFT(QObject *parent) :
@@ -18,6 +20,10 @@ FFT::~FFT()
 bool FFT::setup(const QImage &img)
 {
 	if (TransformFilter::setup(img)) {
+		if (mFormat == QImage::Format_ARGB32 || mFormat == QImage::Format_ARGB32_Premultiplied) {
+			qWarning() << "transparancy in the image is discarded";
+			mImg.convertToFormat(QImage::Format_RGB32);
+		}
 		mSize = QSize(1, 1);
 		while (mSize.width() < mImg.width() || mSize.height() < mImg.height()) {
 			mSize *= 2;
