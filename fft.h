@@ -22,6 +22,7 @@ private:
 	void rearrange(QVector<Complex> &elements);
 	void perform(bool inverse = false);
 	void transform(QVector<Complex> &elements, bool inverse);
+	void rearrangeQuadrants(QImage &phase, QImage &magnitude) const;
 	ComplexArray *mCA;
 	QSize mSize;
 };

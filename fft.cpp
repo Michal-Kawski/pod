@@ -111,6 +111,10 @@ DisplayWindow *FFT::apply(QString windowBaseName)
 		}
 
 		ColorParser cp(mFormat);
+		if (mFormat == QImage::Format_Indexed8 || mFormat == QImage::Format_Mono) {
+			resultPhase.setColorTable(mImg.colorTable());
+			resultMagnitude.setColorTable(mImg.colorTable());
+		}
 		for (unsigned int j = 0; j < mCA->shape()[1]; j++) {
 			for (unsigned int k = 0; k < mCA->shape()[2]; k++) {
 				unsigned int p = ((*mCA)[i][j][k].phase() - minp) / (maxp - minp) * 255.0;
@@ -155,9 +159,7 @@ DisplayWindow *FFT::apply(QString windowBaseName)
 			}
 		}
 	}
-	if (mFormat == QImage::Format_Indexed8 || mFormat == QImage::Format_Mono) {
-		resultPhase.setColorTable(mImg.colorTable());
-	}
+	rearrangeQuadrants(resultPhase, resultMagnitude);
 	// parent's parent should be MainWindow
 	return new TransformWindow(resultMagnitude, resultPhase, windowBaseName + ", " + name(), q_check_ptr(qobject_cast<QWidget *>(parent()->parent())));
 }
@@ -233,6 +235,56 @@ void FFT::transform(QVector<Complex> &elements, bool inverse)
 				elements[pair] += product;
 			}
 			factor = multiplier * factor + factor;
+		}
+	}
+}
+
+void FFT::rearrangeQuadrants(QImage &phase, QImage &magnitude) const
+{
+	// http://paulbourke.net/miscellaneous/imagefilter/
+	int hw = phase.width() / 2;
+	int hh = phase.height() / 2;
+	if (phase.format() != QImage::Format_Indexed8) {
+		for (int i = 0; i < hw; i++) {
+			for (int j = 0; j < hh; j++) {
+				QRgb tempColor = phase.pixel(i, j);
+				phase.setPixel(i, j, phase.pixel(i + hw, j + hh));
+				phase.setPixel(i + hw, j + hh, tempColor);
+
+				tempColor = phase.pixel(i + hw, j);
+				phase.setPixel(i + hw, j, phase.pixel(i, j + hh));
+				phase.setPixel(i, j + hh, tempColor);
+
+
+				tempColor = magnitude.pixel(i, j);
+				magnitude.setPixel(i, j, magnitude.pixel(i + hw, j + hh));
+				magnitude.setPixel(i + hw, j + hh, tempColor);
+
+				tempColor = magnitude.pixel(i + hw, j);
+				magnitude.setPixel(i + hw, j, magnitude.pixel(i, j + hh));
+				magnitude.setPixel(i, j + hh, tempColor);
+			}
+		}
+	} else {
+		for (int i = 0; i < hw; i++) {
+			for (int j = 0; j < hh; j++) {
+				int tempColor = phase.pixelIndex(i, j);
+				phase.setPixel(i, j, phase.pixelIndex(i + hw, j + hh));
+				phase.setPixel(i + hw, j + hh, tempColor);
+
+				tempColor = phase.pixelIndex(i + hw, j);
+				phase.setPixel(i + hw, j, phase.pixelIndex(i, j + hh));
+				phase.setPixel(i, j + hh, tempColor);
+
+
+				tempColor = magnitude.pixelIndex(i, j);
+				magnitude.setPixel(i, j, magnitude.pixelIndex(i + hw, j + hh));
+				magnitude.setPixel(i + hw, j + hh, tempColor);
+
+				tempColor = magnitude.pixelIndex(i + hw, j);
+				magnitude.setPixel(i + hw, j, magnitude.pixelIndex(i, j + hh));
+				magnitude.setPixel(i, j + hh, tempColor);
+			}
 		}
 	}
 }
