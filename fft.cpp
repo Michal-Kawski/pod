@@ -196,7 +196,7 @@ void FFT::perform(bool inverse)
 			}
 			rearrange(elements);
 			transform(elements, inverse);
-			for (unsigned int k = 0; k < mCA->shape()[2]; k++) {
+			for (unsigned int k = 0; k < mCA->shape()[1]; k++) {
 				(*mCA)[i][k][j] = elements.at(k);
 			}
 		}
