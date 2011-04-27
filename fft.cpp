@@ -119,7 +119,7 @@ DisplayWindow *FFT::apply(QString windowBaseName)
 			for (unsigned int k = 0; k < mCA->shape()[2]; k++) {
 				unsigned int p = ((*mCA)[i][j][k].phase() - minp) / (maxp - minp) * 255.0;
 				{
-					QVector3D oldPixel = cp.pixel(j, k, resultPhase);
+					QVector3D oldPixel = cp.pixel(k, j, resultPhase);
 					QVector3D newPixel;
 					switch (i) {
 						case 0:
@@ -134,12 +134,12 @@ DisplayWindow *FFT::apply(QString windowBaseName)
 						default:
 							break;
 					}
-					cp.setPixel(j, k, resultPhase, cp.merge(oldPixel, newPixel));
+					cp.setPixel(k, j, resultPhase, cp.merge(oldPixel, newPixel));
 				}
 
 				p = ((*mCA)[i][j][k].abs() - minm) / (maxp - minm) * 255.0;
 				{
-					QVector3D oldPixel = cp.pixel(j, k, resultMagnitude);
+					QVector3D oldPixel = cp.pixel(k, j, resultMagnitude);
 					QVector3D newPixel;
 					switch (i) {
 						case 0:
@@ -154,7 +154,7 @@ DisplayWindow *FFT::apply(QString windowBaseName)
 						default:
 							break;
 					}
-					cp.setPixel(j, k, resultMagnitude, cp.merge(oldPixel, newPixel));
+					cp.setPixel(k, j, resultMagnitude, cp.merge(oldPixel, newPixel));
 				}
 			}
 		}
