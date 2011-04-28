@@ -117,7 +117,7 @@ DisplayWindow *FFT::apply(QString windowBaseName)
 		}
 		for (unsigned int j = 0; j < mCA->shape()[1]; j++) {
 			for (unsigned int k = 0; k < mCA->shape()[2]; k++) {
-				unsigned int p = ((*mCA)[i][j][k].phase() - minp) / (maxp - minp) * 255.0;
+				qreal p = ((*mCA)[i][j][k].phase() - minp) / (maxp - minp) * 255.0;
 				{
 					QVector3D oldPixel = cp.pixel(k, j, resultPhase);
 					QVector3D newPixel;
@@ -137,8 +137,13 @@ DisplayWindow *FFT::apply(QString windowBaseName)
 					cp.setPixel(k, j, resultPhase, cp.merge(oldPixel, newPixel));
 				}
 
-				p = ((*mCA)[i][j][k].abs() - minm) / (maxp - minm) * 255.0;
+				// logarithmic scale
+				// implementaion: http://homepages.inf.ed.ac.uk/rbf/HIPR2/pixlog.htm
+				// idea: http://homepages.inf.ed.ac.uk/rbf/HIPR2/fourier.htm#guidelines
+				p = (*mCA)[i][j][k].abs();
 				{
+					qreal c = 255.0 / log(1.0 + abs(maxm - minm));
+					p = c * log(1.0 + p);
 					QVector3D oldPixel = cp.pixel(k, j, resultMagnitude);
 					QVector3D newPixel;
 					switch (i) {
