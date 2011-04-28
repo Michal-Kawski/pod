@@ -20,6 +20,7 @@
 #include <QAction>
 #include <QRgb>
 #include <QDesktopWidget>
+#include <QMessageBox>
 
 #include <QDebug>
 
@@ -282,6 +283,9 @@ void PhotoWindow::qualityCheck()
 	QualityChecker q;
 	if (q(ref, mImage)) {
 		qDebug() << "mse:" << q.mse << ", snr:" << q.snr;
+		QMessageBox::information(this, "Quality", QString("MSE: %1; SNR: %2")
+								 .arg(QString::number(q.mse),
+									  QString::number(q.snr)));
 	}
 }
 
