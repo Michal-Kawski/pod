@@ -8,7 +8,7 @@ BrightnessFilter::BrightnessFilter(QObject *parent) :
 {
 }
 
-bool BrightnessFilter::setup(const QImage &img)
+bool BrightnessFilter::setup(const QList<QImage> &img)
 {
 	{
 		SlidingValueDialog svd(name(), 0, -255, 255,

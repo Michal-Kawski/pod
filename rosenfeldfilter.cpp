@@ -15,10 +15,10 @@ QString RosenfeldFilter::name() const
 	return "Rosenfeld";
 }
 
-bool RosenfeldFilter::setup(const QImage &img)
+bool RosenfeldFilter::setup(const QList<QImage> &img)
 {
 	{
-		SlidingValueDialog svd(name(), 1, 1, img.width(),
+		SlidingValueDialog svd(name(), 1, 1, img.at(0).width(),
 							   qobject_cast<QWidget *>(this));
 		if (svd.exec() != QDialog::Accepted) {
 			return false;

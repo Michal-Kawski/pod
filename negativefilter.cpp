@@ -9,7 +9,7 @@ NegativeFilter::NegativeFilter(QObject *parent) :
 {
 }
 
-bool NegativeFilter::setup(const QImage &img)
+bool NegativeFilter::setup(const QList<QImage> &img)
 {
 	return FilterInterface::setup(img);
 }

@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QImage>
 #include <QUuid>
+#include <QList>
 
 class DisplayWindow;
 
@@ -22,7 +23,7 @@ private:
 signals:
 
 public slots:
-	virtual bool setup(const QImage &img);
+	virtual bool setup(const QList<QImage> &img);
 	virtual DisplayWindow *apply(QString windowBaseName) = 0;
 
 protected:

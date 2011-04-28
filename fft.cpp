@@ -17,7 +17,7 @@ FFT::~FFT()
 	delete mCA;
 }
 
-bool FFT::setup(const QImage &img)
+bool FFT::setup(const QList<QImage> &img)
 {
 	if (TransformFilter::setup(img)) {
 		if (mFormat == QImage::Format_ARGB32 || mFormat == QImage::Format_ARGB32_Premultiplied) {

@@ -13,7 +13,7 @@ public:
 signals:
 
 public slots:
-	virtual bool setup(const QImage &img);
+	virtual bool setup(const QList<QImage> &img);
 	virtual DisplayWindow *apply(QString windowBaseName);
 
 protected:

@@ -17,7 +17,7 @@ ConvolutionFilter::ConvolutionFilter(QObject *parent) :
 {
 }
 
-bool ConvolutionFilter::setup(const QImage &img)
+bool ConvolutionFilter::setup(const QList<QImage> &img)
 {
 	// get kernel size
 	{

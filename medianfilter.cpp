@@ -13,7 +13,7 @@ QString MedianFilter::name() const
 	return "Median";
 }
 
-bool MedianFilter::setup(const QImage &img)
+bool MedianFilter::setup(const QList<QImage> &img)
 {
 	// get kernel size
 	{

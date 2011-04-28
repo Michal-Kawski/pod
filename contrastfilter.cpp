@@ -17,7 +17,7 @@ QString ContrastFilter::name() const
 	return "Contrast";
 }
 
-bool ContrastFilter::setup(const QImage &img)
+bool ContrastFilter::setup(const QList<QImage> &img)
 {
 	{
 		SlidingValueDialog svd(name(), 0, -255, 255,

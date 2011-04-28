@@ -16,9 +16,10 @@ QUuid FilterInterface::uuid() const
 	return mUuid;
 }
 
-bool FilterInterface::setup(const QImage &img)
+bool FilterInterface::setup(const QList<QImage> &img)
 {
-	mImg = img;
-	mFormat = img.format();
+	Q_ASSERT(img.length() > 0);
+	mImg = img.at(0);
+	mFormat = img.at(0).format();
 	return true;
 }

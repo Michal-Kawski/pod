@@ -16,7 +16,9 @@ signals:
 
 public slots:
 	virtual DisplayWindow *apply(QString windowBaseName);
-	virtual bool setup(const QImage &img);
+	// QImage is QSharedData based, so as long we don't detach it, we don't
+	// consume additional memory
+	virtual bool setup(const QList<QImage> &img);
 
 private:
 	void rearrange(QVector<Complex> &elements);

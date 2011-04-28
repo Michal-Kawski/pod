@@ -19,7 +19,7 @@ QString GrayScaleFilter::name() const
 	return "Grayscale";
 }
 
-bool GrayScaleFilter::setup(const QImage &img)
+bool GrayScaleFilter::setup(const QList<QImage> &img)
 {
 	{
 		QDialog typeDialog(qobject_cast<QWidget *>(this));

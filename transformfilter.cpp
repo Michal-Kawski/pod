@@ -5,7 +5,7 @@ TransformFilter::TransformFilter(QObject *parent) :
 {
 }
 
-bool TransformFilter::setup(const QImage &img)
+bool TransformFilter::setup(const QList<QImage> &img)
 {
 	return FilterInterface::setup(img);
 }

@@ -48,7 +48,9 @@ void TransformWindow::applyFilter(QAction *action)
 	qDebug() << "applying filter" << action->data().value<QUuid>();
 	FilterInterface *filter = mFiltersHash[action->data().value<QUuid>()];
 	qDebug() << "filter name:" << filter->name();
-	if (filter->setup(mPhaseImage)) {
+	QList<QImage> imageList;
+	imageList << mMagnitudeImage << mPhaseImage;
+	if (filter->setup(imageList)) {
 		DisplayWindow *dw = filter->apply(windowTitle());
 		q_check_ptr(dw)->show();
 	}

@@ -15,7 +15,7 @@ QString AverageFilter::name() const
 	return "Average";
 }
 
-bool AverageFilter::setup(const QImage &img)
+bool AverageFilter::setup(const QList<QImage> &img)
 {
 	// get kernel size
 	{
