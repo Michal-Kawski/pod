@@ -3,3 +3,8 @@ sprawko/*.aux
 sprawko/*.log
 sprawko/*.out
 sprawko/*.syntex.gz
+*.pro.user
+*.pro.user.*
+*~
+*.backup
+*.log
