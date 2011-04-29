@@ -11,6 +11,7 @@ public:
 	explicit FFT(QObject *parent = 0);
 	~FFT();
 	virtual QString name() const;
+	void perform(ComplexArray *ca, bool inverse = false);
 
 signals:
 
@@ -22,7 +23,6 @@ public slots:
 
 private:
 	void rearrange(QVector<Complex> &elements);
-	void perform(bool inverse = false);
 	void transform(QVector<Complex> &elements, bool inverse);
 	void rearrangeQuadrants(QImage &phase, QImage &magnitude) const;
 	ComplexArray *mCA;

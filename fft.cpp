@@ -71,7 +71,7 @@ QString FFT::name() const
 
 DisplayWindow *FFT::apply(QString windowBaseName)
 {
-	perform();
+	perform(mCA);
 	QImage resultPhase(mSize, mFormat);
 	QImage resultMagnitude(mSize, mFormat);
 	if (mFormat == QImage::Format_Indexed8) {
@@ -165,8 +165,13 @@ DisplayWindow *FFT::apply(QString windowBaseName)
 		}
 	}
 	rearrangeQuadrants(resultPhase, resultMagnitude);
+	int layers = mCA->shape()[0];
+	int w = mSize.width();
+	int h = mSize.height();
+	ComplexArray *ca = new ComplexArray(boost::extents[layers][w][h]);
+	*ca = *mCA;
 	// parent's parent should be MainWindow
-	return new TransformWindow(resultMagnitude, resultPhase, windowBaseName + ", " + name(), q_check_ptr(qobject_cast<QWidget *>(parent()->parent())));
+	return new TransformWindow(resultMagnitude, resultPhase, ca, windowBaseName + ", " + name(), q_check_ptr(qobject_cast<QWidget *>(parent()->parent())));
 }
 
 void FFT::rearrange(QVector<Complex> &elements)
@@ -189,33 +194,33 @@ void FFT::rearrange(QVector<Complex> &elements)
 	}
 }
 
-void FFT::perform(bool inverse)
+void FFT::perform(ComplexArray *ca, bool inverse)
 {
-	Q_ASSERT(mCA->num_dimensions() == 3);
-	for (unsigned int i = 0; i < mCA->shape()[0]; i++) {
-		for (unsigned int j = 0; j < mCA->shape()[2]; j++) {
+	Q_ASSERT(ca->num_dimensions() == 3);
+	for (unsigned int i = 0; i < ca->shape()[0]; i++) {
+		for (unsigned int j = 0; j < ca->shape()[2]; j++) {
 			QVector<Complex> elements;
-			elements.reserve(mCA->shape()[1]);
-			for (unsigned int k = 0; k < mCA->shape()[1]; k++) {
-				elements << (*mCA)[i][k][j];
+			elements.reserve(ca->shape()[1]);
+			for (unsigned int k = 0; k < ca->shape()[1]; k++) {
+				elements << (*ca)[i][k][j];
 			}
 			rearrange(elements);
 			transform(elements, inverse);
-			for (unsigned int k = 0; k < mCA->shape()[1]; k++) {
-				(*mCA)[i][k][j] = elements.at(k);
+			for (unsigned int k = 0; k < ca->shape()[1]; k++) {
+				(*ca)[i][k][j] = elements.at(k);
 			}
 		}
 
-		for (unsigned int j = 0; j < mCA->shape()[1]; j++) {
+		for (unsigned int j = 0; j < ca->shape()[1]; j++) {
 			QVector<Complex> elements;
-			elements.reserve(mCA->shape()[2]);
-			for (unsigned int k = 0; k < mCA->shape()[2]; k++) {
-				elements << (*mCA)[i][j][k];
+			elements.reserve(ca->shape()[2]);
+			for (unsigned int k = 0; k < ca->shape()[2]; k++) {
+				elements << (*ca)[i][j][k];
 			}
 			rearrange(elements);
 			transform(elements, inverse);
-			for (unsigned int k = 0; k < mCA->shape()[2]; k++) {
-				(*mCA)[i][j][k] = elements.at(k);
+			for (unsigned int k = 0; k < ca->shape()[2]; k++) {
+				(*ca)[i][j][k] = elements.at(k);
 			}
 		}
 	}
