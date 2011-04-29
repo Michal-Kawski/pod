@@ -2,6 +2,7 @@
 #define TRANSFORMWINDOW_H
 
 #include "displaywindow.h"
+#include "complexarray.h"
 
 #include <QHash>
 #include <QUuid>
@@ -17,7 +18,7 @@ class TransformWindow : public DisplayWindow
 	Q_OBJECT
 
 public:
-	explicit TransformWindow(QImage magnitude, QImage phase, QString title, QWidget *parent = 0);
+	explicit TransformWindow(QImage magnitude, QImage phase, ComplexArray *ca, QString title, QWidget *parent = 0);
 	~TransformWindow();
 
 private:
@@ -27,11 +28,13 @@ private:
 	Ui::TransformWindow *ui;
 	QImage mMagnitudeImage;
 	QImage mPhaseImage;
+	ComplexArray *mCA;
 	QHash<QUuid, FilterInterface *> mFiltersHash;
 	QMenu *mFiltersMenu;
 
 private slots:
 	void applyFilter(QAction *action);
+	void invert();
 };
 
 #endif // TRANSFORMWINDOW_H
