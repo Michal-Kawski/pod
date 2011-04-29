@@ -274,7 +274,7 @@ int PhotoWindow::calculateRaleigh(int position, int gMin, float alfa, QVector<in
 
 void PhotoWindow::qualityCheck()
 {
-	QString fileUrl = QFileDialog::getOpenFileName(this, tr("Wybierz plik do otwarcia: "), "photo.jpg");
+	QString fileUrl = QFileDialog::getOpenFileName(this, tr("Wybierz plik do otwarcia: "), QString(), "Images (*.png *.xpm *.jpg *.bmp);;Any (*)");
 	if (fileUrl.isEmpty()) {
 		return;
 	}
