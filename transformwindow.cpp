@@ -125,4 +125,5 @@ void TransformWindow::invert()
 	}
 	PhotoWindow *pw = new PhotoWindow(result, windowTitle() + ", IFFT", qobject_cast<QWidget*>(parent()->parent()));
 	pw->show();
+	delete ca;
 }
