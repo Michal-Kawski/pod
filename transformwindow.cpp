@@ -77,6 +77,7 @@ void TransformWindow::invert()
 	QImage::Format format = mPhaseImage.format();
 	ColorParser cp(format);
 	QImage result(w, h, format);
+	result.fill(Qt::black);
 	if (format == QImage::Format_Indexed8 || format == QImage::Format_Mono) {
 		QVector<QRgb> colors;
 		colors.reserve(256);
@@ -106,13 +107,13 @@ void TransformWindow::invert()
 					QVector3D oldPixel = cp.pixel(k, j, result);
 					QVector3D newPixel;
 					switch (i) {
-						case 0:
+						case 2:
 							newPixel.setX(p);
 							break;
 						case 1:
 							newPixel.setY(p);
 							break;
-						case 2:
+						case 0:
 							newPixel.setZ(p);
 							break;
 						default:
