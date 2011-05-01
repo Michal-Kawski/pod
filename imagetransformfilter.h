@@ -1,5 +1,5 @@
-#ifndef TRANSFORMFILTER_H
-#define TRANSFORMFILTER_H
+#ifndef IMAGETRANSFORMFILTER_H
+#define IMAGETRANSFORMFILTER_H
 
 #include "imagefilter.h"
 
@@ -20,4 +20,4 @@ protected:
 	qreal extractColor(const QRgb &color, int which) const;
 };
 
-#endif // TRANSFORMFILTER_H
+#endif // IMAGETRANSFORMFILTER_H
