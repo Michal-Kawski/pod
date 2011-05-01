@@ -5,6 +5,7 @@
 #include "fft.h"
 #include "colorparser.h"
 #include "photowindow.h"
+#include "highpassfilter.h"
 
 #include <QDebug>
 
@@ -184,6 +185,8 @@ void TransformWindow::constructorInternals(QString title)
 	mFiltersMenu = menuBar()->addMenu("Filters");
 
 	connect(mFiltersMenu, SIGNAL(triggered(QAction*)), this, SLOT(applyFilter(QAction*)));
+
+	appendFilter(new HighPassFilter(this));
 
 	QAction *fftAction = new QAction("Invert", this);
 	connect(fftAction, SIGNAL(triggered()), this, SLOT(invert()));
