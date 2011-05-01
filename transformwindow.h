@@ -19,11 +19,13 @@ class TransformWindow : public DisplayWindow
 
 public:
 	explicit TransformWindow(QImage magnitude, QImage phase, ComplexArray *ca, QString title, QWidget *parent = 0);
+	explicit TransformWindow(ComplexArray *ca, QImage::Format format, QString title, QWidget *parent);
 	~TransformWindow();
 
 private:
 	void constructorInternals(QString title);
 	void appendFilter(FilterInterface *filter);
+	void rearrangeQuadrants(QImage &phase, QImage &magnitude) const;
 
 	Ui::TransformWindow *ui;
 	QImage mMagnitudeImage;

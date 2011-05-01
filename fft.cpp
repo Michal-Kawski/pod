@@ -72,106 +72,13 @@ QString FFT::name() const
 DisplayWindow *FFT::apply(QString windowBaseName)
 {
 	perform(mCA);
-	QImage resultPhase(mSize, mFormat);
-	QImage resultMagnitude(mSize, mFormat);
-	if (mFormat == QImage::Format_Indexed8) {
-		QVector<QRgb> colors;
-		colors.reserve(256);
-		for (int i = 0; i < 256; i++) {
-			colors << qRgb(i, i, i);
-		}
-		resultPhase.setColorTable(colors);
-		resultMagnitude.setColorTable(colors);
-		resultPhase.fill(0);
-		resultMagnitude.fill(0);
-	} else {
-		resultPhase.fill(Qt::black);
-		resultMagnitude.fill(Qt::black);
-	}
-	for (unsigned int i = 0; i < mCA->shape()[0]; i++) {
-		qreal minp = 0;
-		qreal maxp = 0;
-		qreal minm = 0;
-		qreal maxm = 0;
-		for (unsigned int j = 0; j < mCA->shape()[1]; j++) {
-			for (unsigned int k = 0; k < mCA->shape()[2]; k++) {
-				qreal phase = (*mCA)[i][j][k].phase();
-				qreal magnitude = (*mCA)[i][j][k].abs();
-				if (phase > maxp) {
-					maxp = phase;
-				} else if (phase < minp) {
-					minp = phase;
-				}
-				if (magnitude > maxm) {
-					maxm = magnitude;
-				} else if (magnitude < minm) {
-					minm = magnitude;
-				}
-			}
-		}
-
-		ColorParser cp(mFormat);
-		if (mFormat == QImage::Format_Indexed8 || mFormat == QImage::Format_Mono) {
-			resultPhase.setColorTable(mImg.colorTable());
-			resultMagnitude.setColorTable(mImg.colorTable());
-		}
-		for (unsigned int j = 0; j < mCA->shape()[1]; j++) {
-			for (unsigned int k = 0; k < mCA->shape()[2]; k++) {
-				qreal p = ((*mCA)[i][j][k].phase() - minp) / (maxp - minp) * 255.0;
-				{
-					QVector3D oldPixel = cp.pixel(k, j, resultPhase);
-					QVector3D newPixel;
-					switch (i) {
-						case 0:
-							newPixel.setX(p);
-							break;
-						case 1:
-							newPixel.setY(p);
-							break;
-						case 2:
-							newPixel.setZ(p);
-							break;
-						default:
-							break;
-					}
-					cp.setPixel(k, j, resultPhase, cp.merge(oldPixel, newPixel));
-				}
-
-				// logarithmic scale
-				// implementaion: http://homepages.inf.ed.ac.uk/rbf/HIPR2/pixlog.htm
-				// idea: http://homepages.inf.ed.ac.uk/rbf/HIPR2/fourier.htm#guidelines
-				p = (*mCA)[i][j][k].abs();
-				{
-					qreal c = 255.0 / log(1.0 + abs(maxm - minm));
-					p = c * log(1.0 + p);
-					QVector3D oldPixel = cp.pixel(k, j, resultMagnitude);
-					QVector3D newPixel;
-					switch (i) {
-						case 0:
-							newPixel.setX(p);
-							break;
-						case 1:
-							newPixel.setY(p);
-							break;
-						case 2:
-							newPixel.setZ(p);
-							break;
-						default:
-							break;
-					}
-					cp.setPixel(k, j, resultMagnitude, cp.merge(oldPixel, newPixel));
-				}
-			}
-		}
-	}
-	rearrangeQuadrants(resultPhase, resultMagnitude);
 	int layers = mCA->shape()[0];
 	int w = mSize.width();
 	int h = mSize.height();
 	ComplexArray *ca = new ComplexArray(boost::extents[layers][w][h]);
 	*ca = *mCA;
 	// parent's parent should be MainWindow
-	return new TransformWindow(resultMagnitude, resultPhase, ca, windowBaseName + ", " + name(), q_check_ptr(qobject_cast<QWidget *>(parent()->parent())));
+	return new TransformWindow(ca, mFormat, windowBaseName + ", " + name(), q_check_ptr(qobject_cast<QWidget *>(parent()->parent())));
 }
 
 void FFT::rearrange(QVector<Complex> &elements)
@@ -245,56 +152,6 @@ void FFT::transform(QVector<Complex> &elements, bool inverse)
 				elements[pair] += product;
 			}
 			factor = multiplier * factor + factor;
-		}
-	}
-}
-
-void FFT::rearrangeQuadrants(QImage &phase, QImage &magnitude) const
-{
-	// http://paulbourke.net/miscellaneous/imagefilter/
-	int hw = phase.width() / 2;
-	int hh = phase.height() / 2;
-	if (phase.format() != QImage::Format_Indexed8) {
-		for (int i = 0; i < hw; i++) {
-			for (int j = 0; j < hh; j++) {
-				QRgb tempColor = phase.pixel(i, j);
-				phase.setPixel(i, j, phase.pixel(i + hw, j + hh));
-				phase.setPixel(i + hw, j + hh, tempColor);
-
-				tempColor = phase.pixel(i + hw, j);
-				phase.setPixel(i + hw, j, phase.pixel(i, j + hh));
-				phase.setPixel(i, j + hh, tempColor);
-
-
-				tempColor = magnitude.pixel(i, j);
-				magnitude.setPixel(i, j, magnitude.pixel(i + hw, j + hh));
-				magnitude.setPixel(i + hw, j + hh, tempColor);
-
-				tempColor = magnitude.pixel(i + hw, j);
-				magnitude.setPixel(i + hw, j, magnitude.pixel(i, j + hh));
-				magnitude.setPixel(i, j + hh, tempColor);
-			}
-		}
-	} else {
-		for (int i = 0; i < hw; i++) {
-			for (int j = 0; j < hh; j++) {
-				int tempColor = phase.pixelIndex(i, j);
-				phase.setPixel(i, j, phase.pixelIndex(i + hw, j + hh));
-				phase.setPixel(i + hw, j + hh, tempColor);
-
-				tempColor = phase.pixelIndex(i + hw, j);
-				phase.setPixel(i + hw, j, phase.pixelIndex(i, j + hh));
-				phase.setPixel(i, j + hh, tempColor);
-
-
-				tempColor = magnitude.pixelIndex(i, j);
-				magnitude.setPixel(i, j, magnitude.pixelIndex(i + hw, j + hh));
-				magnitude.setPixel(i + hw, j + hh, tempColor);
-
-				tempColor = magnitude.pixelIndex(i + hw, j);
-				magnitude.setPixel(i + hw, j, magnitude.pixelIndex(i, j + hh));
-				magnitude.setPixel(i, j + hh, tempColor);
-			}
 		}
 	}
 }
