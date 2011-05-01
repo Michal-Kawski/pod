@@ -207,6 +207,7 @@ void TransformWindow::applyFilter(QAction *action)
 	qDebug() << "filter name:" << filter->name();
 	FilterData fd;
 	fd.image = mMagnitudeImage;
+	fd.transformData.resize(boost::extents[mCA->shape()[0]][mCA->shape()[1]][mCA->shape()[2]]);
 	fd.transformData = *mCA;
 	if (filter->setup(fd)) {
 		DisplayWindow *dw = filter->apply(windowTitle());
