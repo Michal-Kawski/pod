@@ -3,11 +3,11 @@
 
 #include "imagefilter.h"
 
-class TransformFilter : public ImageFilter
+class ImageTransformFilter : public ImageFilter
 {
 	Q_OBJECT
 public:
-	explicit TransformFilter(QObject *parent);
+	explicit ImageTransformFilter(QObject *parent);
 	virtual QString name() const = 0;
 
 signals:

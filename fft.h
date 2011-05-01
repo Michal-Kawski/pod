@@ -1,10 +1,10 @@
 #ifndef FFT_H
 #define FFT_H
 
-#include "transformfilter.h"
+#include "imagetransformfilter.h"
 #include "complexarray.h"
 
-class FFT : public TransformFilter
+class FFT : public ImageTransformFilter
 {
 	Q_OBJECT
 public:

@@ -7,7 +7,7 @@
 // http://www.librow.com/articles/article-10
 
 FFT::FFT(QObject *parent) :
-	TransformFilter(parent),
+	ImageTransformFilter(parent),
 	mCA(NULL)
 {
 }
@@ -19,7 +19,7 @@ FFT::~FFT()
 
 bool FFT::setup(const FilterData &data)
 {
-	if (TransformFilter::setup(data)) {
+	if (ImageTransformFilter::setup(data)) {
 		if (mFormat == QImage::Format_ARGB32 || mFormat == QImage::Format_ARGB32_Premultiplied) {
 			qWarning() << "transparancy in the image is discarded";
 			mImg.convertToFormat(QImage::Format_RGB32);
