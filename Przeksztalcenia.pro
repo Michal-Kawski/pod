@@ -36,7 +36,9 @@ SOURCES += main.cpp\
     fft.cpp \
     complex.cpp \
     displaywindow.cpp \
-    transformwindow.cpp
+    transformwindow.cpp \
+    filterdata.cpp \
+    imagefilter.cpp
 
 HEADERS  += mainwindow.h \
     photowindow.h \
@@ -60,7 +62,9 @@ HEADERS  += mainwindow.h \
     complex.h \
     complexarray.h \
     displaywindow.h \
-    transformwindow.h
+    transformwindow.h \
+    filterdata.h \
+    imagefilter.h
 
 FORMS    += mainwindow.ui \
     photowindow.ui \

@@ -6,7 +6,7 @@
 #include <QVector3D>
 
 RosenfeldFilter::RosenfeldFilter(QObject *parent) :
-	FilterInterface(parent)
+	ImageFilter(parent)
 {
 }
 
@@ -15,17 +15,17 @@ QString RosenfeldFilter::name() const
 	return "Rosenfeld";
 }
 
-bool RosenfeldFilter::setup(const QList<QImage> &img)
+bool RosenfeldFilter::setup(const FilterData &data)
 {
 	{
-		SlidingValueDialog svd(name(), 1, 1, img.at(0).width(),
+		SlidingValueDialog svd(name(), 1, 1, data.image.width(),
 							   qobject_cast<QWidget *>(this));
 		if (svd.exec() != QDialog::Accepted) {
 			return false;
 		}
 		mValue = svd.value();
 	}
-	return FilterInterface::setup(img);
+	return ImageFilter::setup(data);
 }
 
 DisplayWindow *RosenfeldFilter::apply(QString windowBaseName)

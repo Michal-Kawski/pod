@@ -1,11 +1,9 @@
 #ifndef NEGATIVEFILTER_H
 #define NEGATIVEFILTER_H
 
-#include "filterinterface.h"
+#include "imagefilter.h"
 
-#include <QImage>
-
-class NegativeFilter : public FilterInterface
+class NegativeFilter : public ImageFilter
 {
     Q_OBJECT
 public:
@@ -15,7 +13,7 @@ public:
 signals:
 
 public slots:
-	bool setup(const QList<QImage> &img);
+	virtual bool setup(const FilterData &data);
 	virtual DisplayWindow *apply(QString windowBaseName);
 };
 

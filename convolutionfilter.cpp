@@ -13,11 +13,11 @@
 #include <QDebug>
 
 ConvolutionFilter::ConvolutionFilter(QObject *parent) :
-    FilterInterface(parent)
+	ImageFilter(parent)
 {
 }
 
-bool ConvolutionFilter::setup(const QList<QImage> &img)
+bool ConvolutionFilter::setup(const FilterData &data)
 {
 	// get kernel size
 	{
@@ -38,7 +38,7 @@ bool ConvolutionFilter::setup(const QList<QImage> &img)
 		}
 		mKernel = kernelValuesDialog.values();
 	}
-	return FilterInterface::setup(img);
+	return ImageFilter::setup(data);
 }
 
 DisplayWindow *ConvolutionFilter::apply(QString windowBaseName)

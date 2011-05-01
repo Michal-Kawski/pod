@@ -4,7 +4,7 @@
 #include "photowindow.h"
 
 MedianFilter::MedianFilter(QObject *parent) :
-    FilterInterface(parent)
+	ImageFilter(parent)
 {
 }
 
@@ -13,7 +13,7 @@ QString MedianFilter::name() const
 	return "Median";
 }
 
-bool MedianFilter::setup(const QList<QImage> &img)
+bool MedianFilter::setup(const FilterData &data)
 {
 	// get kernel size
 	{
@@ -26,7 +26,7 @@ bool MedianFilter::setup(const QList<QImage> &img)
 			mKernelHeight = kernelSize.height();
 		}
 	}
-	return FilterInterface::setup(img);
+	return ImageFilter::setup(data);
 }
 
 DisplayWindow *MedianFilter::apply(QString windowBaseName)

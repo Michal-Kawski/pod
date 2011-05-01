@@ -1,9 +1,9 @@
 #ifndef MEDIANFILTER_H
 #define MEDIANFILTER_H
 
-#include "filterinterface.h"
+#include "imagefilter.h"
 
-class MedianFilter : public FilterInterface
+class MedianFilter : public ImageFilter
 {
     Q_OBJECT
 public:
@@ -13,7 +13,7 @@ public:
 signals:
 
 public slots:
-	virtual bool setup(const QList<QImage> &img);
+	virtual bool setup(const FilterData &data);
 	virtual DisplayWindow *apply(QString windowBaseName);
 
 protected:

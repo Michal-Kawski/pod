@@ -1,10 +1,10 @@
 #ifndef FILTERINTERFACE_H
 #define FILTERINTERFACE_H
 
+#include "filterdata.h"
+
 #include <QObject>
-#include <QImage>
 #include <QUuid>
-#include <QList>
 
 class DisplayWindow;
 
@@ -23,12 +23,8 @@ private:
 signals:
 
 public slots:
-	virtual bool setup(const QList<QImage> &img);
+	virtual bool setup(const FilterData &data) = 0;
 	virtual DisplayWindow *apply(QString windowBaseName) = 0;
-
-protected:
-	QImage mImg;
-	QImage::Format mFormat;
 };
 
 #endif // FILTERINTERFACE_H

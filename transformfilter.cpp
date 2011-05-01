@@ -1,13 +1,13 @@
 #include "transformfilter.h"
 
 TransformFilter::TransformFilter(QObject *parent) :
-	FilterInterface(parent)
+	ImageFilter(parent)
 {
 }
 
-bool TransformFilter::setup(const QList<QImage> &img)
+bool TransformFilter::setup(const FilterData &data)
 {
-	return FilterInterface::setup(img);
+	return ImageFilter::setup(data);
 }
 
 qreal TransformFilter::extractColor(const QRgb &color, int which) const

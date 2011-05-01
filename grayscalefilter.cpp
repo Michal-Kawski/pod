@@ -10,7 +10,7 @@
 #include <QMessageBox>
 
 GrayScaleFilter::GrayScaleFilter(QWidget *parent) :
-	FilterInterface(parent)
+	ImageFilter(parent)
 {
 }
 
@@ -19,7 +19,7 @@ QString GrayScaleFilter::name() const
 	return "Grayscale";
 }
 
-bool GrayScaleFilter::setup(const QList<QImage> &img)
+bool GrayScaleFilter::setup(const FilterData &data)
 {
 	{
 		QDialog typeDialog(qobject_cast<QWidget *>(this));
@@ -49,7 +49,7 @@ bool GrayScaleFilter::setup(const QList<QImage> &img)
 			mFilterType = GrayScaleType(bg.checkedId());
 		}
 	}
-	return FilterInterface::setup(img);
+	return ImageFilter::setup(data);
 }
 
 DisplayWindow *GrayScaleFilter::apply(QString windowBaseName)

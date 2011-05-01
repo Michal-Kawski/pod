@@ -1,9 +1,9 @@
 #ifndef CONTRASTFILTER_H
 #define CONTRASTFILTER_H
 
-#include "filterinterface.h"
+#include "imagefilter.h"
 
-class ContrastFilter : public FilterInterface
+class ContrastFilter : public ImageFilter
 {
     Q_OBJECT
 public:
@@ -13,7 +13,7 @@ public:
 signals:
 
 public slots:
-	virtual bool setup(const QList<QImage> &img);
+	virtual bool setup(const FilterData &data);
 	virtual DisplayWindow *apply(QString windowBaseName);
 
 protected:

@@ -93,9 +93,9 @@ void PhotoWindow::applyFilter(QAction *action)
 	qDebug() << "applying filter" << action->data().value<QUuid>();
 	FilterInterface *filter = mFiltersHash[action->data().value<QUuid>()];
 	qDebug() << "filter name:" << filter->name();
-	QList<QImage> imageList;
-	imageList << mImage;
-	if (filter->setup(imageList)) {
+	FilterData fd;
+	fd.image = mImage;
+	if (filter->setup(fd)) {
 		DisplayWindow *dw = filter->apply(windowTitle());
 		q_check_ptr(dw)->show();
 	}

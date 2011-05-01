@@ -17,9 +17,9 @@ FFT::~FFT()
 	delete mCA;
 }
 
-bool FFT::setup(const QList<QImage> &img)
+bool FFT::setup(const FilterData &data)
 {
-	if (TransformFilter::setup(img)) {
+	if (TransformFilter::setup(data)) {
 		if (mFormat == QImage::Format_ARGB32 || mFormat == QImage::Format_ARGB32_Premultiplied) {
 			qWarning() << "transparancy in the image is discarded";
 			mImg.convertToFormat(QImage::Format_RGB32);

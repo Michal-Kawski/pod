@@ -4,11 +4,11 @@
 #include "photowindow.h"
 
 BrightnessFilter::BrightnessFilter(QObject *parent) :
-    FilterInterface(parent)
+	ImageFilter(parent)
 {
 }
 
-bool BrightnessFilter::setup(const QList<QImage> &img)
+bool BrightnessFilter::setup(const FilterData &data)
 {
 	{
 		SlidingValueDialog svd(name(), 0, -255, 255,
@@ -18,7 +18,7 @@ bool BrightnessFilter::setup(const QList<QImage> &img)
 		}
 		mValue = svd.value();
 	}
-	return FilterInterface::setup(img);
+	return ImageFilter::setup(data);
 }
 
 QString BrightnessFilter::name() const

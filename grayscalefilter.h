@@ -1,9 +1,9 @@
 #ifndef GRAYSCALEFILTER_H
 #define GRAYSCALEFILTER_H
 
-#include "filterinterface.h"
+#include "imagefilter.h"
 
-class GrayScaleFilter : public FilterInterface
+class GrayScaleFilter : public ImageFilter
 {
 	Q_OBJECT
 public:
@@ -13,7 +13,7 @@ public:
 signals:
 
 public slots:
-	virtual bool setup(const QList<QImage> &img);
+	virtual bool setup(const FilterData &data);
 	virtual DisplayWindow *apply(QString windowBaseName);
 
 protected:

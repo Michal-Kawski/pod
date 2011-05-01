@@ -5,13 +5,13 @@
 #include <QColor>
 
 NegativeFilter::NegativeFilter(QObject *parent) :
-	FilterInterface(parent)
+	ImageFilter(parent)
 {
 }
 
-bool NegativeFilter::setup(const QList<QImage> &img)
+bool NegativeFilter::setup(const FilterData &data)
 {
-	return FilterInterface::setup(img);
+	return ImageFilter::setup(data);
 }
 
 DisplayWindow *NegativeFilter::apply(QString windowBaseName)

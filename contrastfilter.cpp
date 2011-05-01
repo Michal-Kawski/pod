@@ -9,7 +9,7 @@
 #include <QDebug>
 
 ContrastFilter::ContrastFilter(QObject *parent) :
-	FilterInterface(parent)
+	ImageFilter(parent)
 {
 }
 
@@ -18,7 +18,7 @@ QString ContrastFilter::name() const
 	return "Contrast";
 }
 
-bool ContrastFilter::setup(const QList<QImage> &img)
+bool ContrastFilter::setup(const FilterData &data)
 {
 	{
 		SlidingValueDialog svd(name() + " tan(x); x * 100 =", M_PI_4 * 100, 0, M_PI_2 * 100,
@@ -28,7 +28,7 @@ bool ContrastFilter::setup(const QList<QImage> &img)
 		}
 		mValue = svd.value();
 	}
-	return FilterInterface::setup(img);
+	return ImageFilter::setup(data);
 }
 
 DisplayWindow *ContrastFilter::apply(QString windowBaseName)

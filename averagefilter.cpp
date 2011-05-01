@@ -6,7 +6,7 @@
 #include <QVector3D>
 
 AverageFilter::AverageFilter(QObject *parent) :
-	FilterInterface(parent)
+	ImageFilter(parent)
 {
 }
 
@@ -15,7 +15,7 @@ QString AverageFilter::name() const
 	return "Average";
 }
 
-bool AverageFilter::setup(const QList<QImage> &img)
+bool AverageFilter::setup(const FilterData &data)
 {
 	// get kernel size
 	{
@@ -28,7 +28,7 @@ bool AverageFilter::setup(const QList<QImage> &img)
 			mKernelHeight = kernelSize.height();
 		}
 	}
-	return FilterInterface::setup(img);
+	return ImageFilter::setup(data);
 }
 
 DisplayWindow *AverageFilter::apply(QString windowBaseName)
