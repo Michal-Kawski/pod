@@ -10,6 +10,7 @@ class TransformFilter : public FilterInterface
 public:
 	explicit TransformFilter(QObject *parent = 0);
 	~TransformFilter();
+	virtual QString name() const = 0;
 
 signals:
 
@@ -17,8 +18,9 @@ public slots:
 	virtual bool setup(const FilterData &data);
 	virtual DisplayWindow *apply(QString windowBaseName) = 0;
 
-private:
+protected:
 	ComplexArray *mCA;
+	void rearrangeQuadrants();
 };
 
 #endif // TRANSFORMFILTER_H
