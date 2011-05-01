@@ -38,7 +38,8 @@ SOURCES += main.cpp\
     transformwindow.cpp \
     filterdata.cpp \
     imagefilter.cpp \
-    imagetransformfilter.cpp
+    imagetransformfilter.cpp \
+    transformfilter.cpp
 
 HEADERS  += mainwindow.h \
     photowindow.h \
@@ -64,7 +65,8 @@ HEADERS  += mainwindow.h \
     transformwindow.h \
     filterdata.h \
     imagefilter.h \
-    imagetransformfilter.h
+    imagetransformfilter.h \
+    transformfilter.h
 
 FORMS    += mainwindow.ui \
     photowindow.ui \
