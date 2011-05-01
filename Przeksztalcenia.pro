@@ -40,7 +40,8 @@ SOURCES += main.cpp\
     imagefilter.cpp \
     imagetransformfilter.cpp \
     transformfilter.cpp \
-    highpassfilter.cpp
+    highpassfilter.cpp \
+    lowpassfilter.cpp
 
 HEADERS  += mainwindow.h \
     photowindow.h \
@@ -68,7 +69,8 @@ HEADERS  += mainwindow.h \
     imagefilter.h \
     imagetransformfilter.h \
     transformfilter.h \
-    highpassfilter.h
+    highpassfilter.h \
+    lowpassfilter.h
 
 FORMS    += mainwindow.ui \
     photowindow.ui \
