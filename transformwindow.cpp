@@ -107,13 +107,13 @@ void TransformWindow::invert()
 					QVector3D oldPixel = cp.pixel(k, j, result);
 					QVector3D newPixel;
 					switch (i) {
-						case 2:
+						case 0:
 							newPixel.setX(p);
 							break;
 						case 1:
 							newPixel.setY(p);
 							break;
-						case 0:
+						case 2:
 							newPixel.setZ(p);
 							break;
 						default:
@@ -124,6 +124,7 @@ void TransformWindow::invert()
 			}
 		}
 	}
+	result = result.rgbSwapped();
 	PhotoWindow *pw = new PhotoWindow(result, windowTitle() + ", IFFT", qobject_cast<QWidget*>(parent()));
 	pw->show();
 	delete ca;
