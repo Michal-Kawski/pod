@@ -14,7 +14,7 @@ QString HighPassFilter::name() const
 
 bool HighPassFilter::setup(const FilterData &data)
 {
-	int radiusMax = data.transformData.shape()[1] / 2;
+	int radiusMax = data.transformData.shape()[1] / 2 * M_SQRT2l;
 	SlidingValueDialog svd(name() + ", x: ", 0, 0, radiusMax,
 						   qobject_cast<QWidget *>(this));
 	if (svd.exec() != QDialog::Accepted) {
