@@ -7,6 +7,7 @@
 #include "photowindow.h"
 #include "highpassfilter.h"
 #include "lowpassfilter.h"
+#include "bandpassfilter.h"
 
 #include <QDebug>
 
@@ -189,6 +190,7 @@ void TransformWindow::constructorInternals(QString title)
 
 	appendFilter(new HighPassFilter(this));
 	appendFilter(new LowPassFilter(this));
+	appendFilter(new BandPassFilter(this));
 
 	QAction *fftAction = new QAction("Invert", this);
 	connect(fftAction, SIGNAL(triggered()), this, SLOT(invert()));
