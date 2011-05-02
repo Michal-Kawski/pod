@@ -55,5 +55,5 @@ DisplayWindow *BandStopFilter::apply(QString windowBaseName)
 	int h = mCA->shape()[2];
 	ComplexArray *ca = new ComplexArray(boost::extents[layers][w][h]);
 	*ca = *mCA;
-	return new TransformWindow(ca, mFormat, windowBaseName, q_check_ptr(qobject_cast<QWidget *>(parent()->parent())));
+	return new TransformWindow(ca, mFormat, windowBaseName + ", " + name(), q_check_ptr(qobject_cast<QWidget *>(parent()->parent())));
 }
