@@ -43,7 +43,8 @@ SOURCES += main.cpp\
     highpassfilter.cpp \
     lowpassfilter.cpp \
     multislidingvaluedialog.cpp \
-    bandpassfilter.cpp
+    bandpassfilter.cpp \
+    bandstopfilter.cpp
 
 HEADERS  += mainwindow.h \
     photowindow.h \
@@ -74,7 +75,8 @@ HEADERS  += mainwindow.h \
     highpassfilter.h \
     lowpassfilter.h \
     multislidingvaluedialog.h \
-    bandpassfilter.h
+    bandpassfilter.h \
+    bandstopfilter.h
 
 FORMS    += mainwindow.ui \
     photowindow.ui \
