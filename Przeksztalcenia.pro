@@ -44,7 +44,9 @@ SOURCES += main.cpp\
     lowpassfilter.cpp \
     multislidingvaluedialog.cpp \
     bandpassfilter.cpp \
-    bandstopfilter.cpp
+    bandstopfilter.cpp \
+    phaseshiftfilter.cpp \
+    multispinvaluedialog.cpp
 
 HEADERS  += mainwindow.h \
     photowindow.h \
@@ -76,7 +78,9 @@ HEADERS  += mainwindow.h \
     lowpassfilter.h \
     multislidingvaluedialog.h \
     bandpassfilter.h \
-    bandstopfilter.h
+    bandstopfilter.h \
+    phaseshiftfilter.h \
+    multispinvaluedialog.h
 
 FORMS    += mainwindow.ui \
     photowindow.ui \
