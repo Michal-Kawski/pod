@@ -9,7 +9,7 @@ LowPassFilter::LowPassFilter(QObject *parent) :
 
 QString LowPassFilter::name() const
 {
-	return "Low pass filter";
+	return "Low pass";
 }
 
 bool LowPassFilter::setup(const FilterData &data)

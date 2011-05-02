@@ -11,7 +11,7 @@ BandPassFilter::BandPassFilter(QObject *parent) :
 
 QString BandPassFilter::name() const
 {
-	return "Band pass filter";
+	return "Band pass";
 }
 
 bool BandPassFilter::setup(const FilterData &data)

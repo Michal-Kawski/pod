@@ -9,7 +9,7 @@ PhaseShiftFilter::PhaseShiftFilter(QObject *parent) :
 
 QString PhaseShiftFilter::name() const
 {
-	return "Phase shift filter";
+	return "Phase shift";
 }
 
 bool PhaseShiftFilter::setup(const FilterData &data)

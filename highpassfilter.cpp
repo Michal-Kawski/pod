@@ -9,7 +9,7 @@ HighPassFilter::HighPassFilter(QObject *parent) :
 
 QString HighPassFilter::name() const
 {
-	return "High pass filter";
+	return "High pass";
 }
 
 bool HighPassFilter::setup(const FilterData &data)

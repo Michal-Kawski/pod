@@ -11,7 +11,7 @@ BandStopFilter::BandStopFilter(QObject *parent) :
 
 QString BandStopFilter::name() const
 {
-	return "Band stop filter";
+	return "Band stop";
 }
 
 bool BandStopFilter::setup(const FilterData &data)
